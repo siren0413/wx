@@ -1,18 +1,20 @@
 <template>
   <div>
     <div>Logo</div>
-    <div class="weui-cells weui-cells_form">
-      <div class="weui-cell">
+    <div class="weui-cells weui-cells_form" >
+      <div class="weui-cell" v-bind:class="{'weui-cell_warn' : errors.has('phoneNumber')}">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="tel" v-model="phoneNumber" placeholder="手机号码"/>
+          <input class="weui-input" type="number" v-validate="{max:11}" name="phoneNumber" v-model="phoneNumber"
+                 placeholder="手机号码"/>
         </div>
-      </div>
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          <input class="weui-input" pattern="[0-9a-zA-Z]*" v-model="captcha" placeholder="图形验证码"/>
-        </div>
+
         <div class="weui-cell__ft">
-          <button class="weui-vcode-btn">获取图形验证码</button>
+          <div v-if="errors.has('phoneNumber')">
+            <i class="weui-icon-warn" ></i>
+          </div>
+          <div v-else-if="isValidPhoneNumber">
+            <i class="weui-icon-success" v-if="!errors.has('phoneNumber')"></i>
+          </div>
         </div>
       </div>
 
@@ -50,13 +52,16 @@
     name: 'login',
     data() {
       return {
-        phoneNumber: null,
-        captcha: null,
+        phoneNumber: '',
         smsCode: null,
         agreeTos: false
       }
     },
-    computed: {},
+    computed: {
+      isValidPhoneNumber: function () {
+        return this.phoneNumber.length === 11
+      }
+    },
     methods: {
       ...mapMutations({
         savePhoneNumber: 'savePhoneNumber'
