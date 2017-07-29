@@ -2,23 +2,22 @@
   <div>
     <div class="logo">Logo</div>
     <div class="weui-cells weui-cells_form">
-      <div class="weui-cell" v-bind:class="{'weui-cell_warn' : errors.has('phoneNumber')}">
+      <div class="weui-cell" v-bind:class="{'weui-cell_warn' : errors.has('phoneNumber') || !isValidPhone, 'animated shake': animateTos}" >
         <div class="weui-cell__bd">
-          <input class="weui-input" type="number" v-validate="{max:11}" name="phoneNumber" v-model="phoneNumber"
+          <input class="weui-input" type="number" v-validate="{max:11}" name="phoneNumber" v-model="phoneNumber" @blur="validatePhoneNumber" @focus="isValidPhone=true"
                  placeholder="手机号码"/>
         </div>
-
         <div class="weui-cell__ft">
-          <div v-if="errors.has('phoneNumber')">
+          <div v-if="errors.has('phoneNumber') || !isValidPhone">
             <i class="weui-icon-warn"></i>
           </div>
           <div v-else-if="isValidPhoneNumber">
-            <i class="weui-icon-success" v-if="!errors.has('phoneNumber')"></i>
+            <i class="weui-icon-success"></i>
           </div>
         </div>
       </div>
 
-      <div class="weui-cell">
+      <div class="weui-cell" :class="[{'animated shake': animateTos}]">
         <div class="weui-cell__bd">
           <input class="weui-input" maxlength="6" v-model="smsCode" placeholder="短信验证码"/>
         </div>
@@ -33,7 +32,7 @@
       </div>
     </div>
 
-    <div class="tos weui-cell weui-cell_switch">
+    <div class="tos weui-cell weui-cell_switch" :class="[{'animated shake': animateTos}]">
       <div class="weui-cell__bd">我已经阅读并同意<a href="#">服务条款协议</a></div>
       <div class="weui-cell__ft">
         <label for="switchCP" class="weui-switch-cp">
@@ -69,11 +68,17 @@
         smsCode: null,
         smsDisabled: false,
         time: 60,
-        agreeTos: false
+        agreeTos: false,
+        isValidPhone: true,
+        isValidSms: true,
+        animateTos: false,
+        animatePhone: false,
+        animateSms: true
       }
     },
     computed: {
       ...mapGetters(['getSendCode']),
+
       isValidPhoneNumber: function () {
         return this.phoneNumber.length === 11
       }
@@ -81,13 +86,32 @@
     methods: {
 
       ...mapMutations({
-        savePhoneNumber: 'savePhoneNumber'
+        savePhoneNumber: 'savePhoneNumber',
+        saveToken: 'saveToken'
       }),
 
       login: function () {
+
         this.savePhoneNumber(this.phoneNumber)
         this.$validator.validateAll().then(result => {});
-
+        let success = true;
+        if (this.phoneNumber.length !== 11) {
+          this.animatePhone = true;
+          success = false;
+        }
+        if (!this.agreeTos) {
+          this.animateTos = true;
+          success = false;
+        }
+        if (!this.isValidSms) {
+          this.animateSms = true;
+          success = false;
+        }
+        if (!success) {
+          setTimeout(this.cleanupTimer, 2000);
+        } else {
+          // verify token and login
+        }
       },
 
       sendCode: function () {
@@ -101,6 +125,17 @@
           .catch(function (error) {
             console.log(error);
             this.stopTimer();
+          }.bind(this));
+      },
+
+      verifyCode () {
+        axios.post(this.getSendCode)
+          .then(function (response) {
+            // success
+            this.saveToken(response.token)
+          }.bind(this))
+          .catch(function (error) {
+            this.isValidSms = false;
           }.bind(this));
       },
 
@@ -120,6 +155,13 @@
         this.time = 0;
         this.smsDisabled = false;
       },
+      cleanupTimer () {
+        this.animateTos = false;
+        this.animatePhone = false;
+      },
+      validatePhoneNumber: function () {
+        this.isValidPhone = this.phoneNumber.length === 11;
+      }
     }
   }
 </script>
@@ -154,5 +196,10 @@
     bottom: 10px;
     width: 100%;
     height: 50px; /* Height of the footer */
+  }
+
+  .weui-cell {
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
   }
 </style>

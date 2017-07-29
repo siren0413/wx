@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const state = {
   userInfo: {
-    phoneNumber: null
+    phoneNumber: '',
+    token: null
   },
   host: 'http://127.0.0.1:8090',
   paths: {
@@ -22,6 +23,9 @@ const getters = {
 const mutations = {
   savePhoneNumber(state, phoneNumber) {
     state.userInfo.phoneNumber = phoneNumber;
+  },
+  saveToken(state, token) {
+    state.userInfo.token = token;
   }
 }
 

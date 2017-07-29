@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import 'weui'
+import 'animate.css'
 import VeeValidate from 'vee-validate'
 
 Vue.config.productionTip = false
