@@ -58,7 +58,8 @@
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex'
+  import {mapMutations, mapState, mapGetters} from 'vuex'
+  import axios from 'axios';
 
   export default {
     name: 'login',
@@ -72,22 +73,37 @@
       }
     },
     computed: {
+      ...mapGetters(['getSendCode']),
       isValidPhoneNumber: function () {
         return this.phoneNumber.length === 11
       }
     },
     methods: {
+
       ...mapMutations({
         savePhoneNumber: 'savePhoneNumber'
       }),
+
       login: function () {
         this.savePhoneNumber(this.phoneNumber)
+        this.$validator.validateAll().then(result => {});
+
       },
+
       sendCode: function () {
         this.smsDisabled = true;
-        // ajax
-        this.startTimer()
+
+        axios.get(this.getSendCode)
+          .then(function (response) {
+            console.log(response);
+            this.startTimer();
+          }.bind(this))
+          .catch(function (error) {
+            console.log(error);
+            this.stopTimer();
+          }.bind(this));
       },
+
       timer: function () {
         if (this.time > 0) {
           this.time--;
@@ -113,13 +129,14 @@
   .logo {
     margin-top: 160px;
   }
+
   .weui-cell {
     height: 45px;
     font-size: 18px;
     text-align: left;
   }
 
-  .sms-cooldown-btn{
+  .sms-cooldown-btn {
     color: gray;
   }
 
@@ -134,7 +151,7 @@
 
   .weui-footer {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     width: 100%;
     height: 50px; /* Height of the footer */
   }
