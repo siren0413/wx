@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div>Logo</div>
-    <div class="weui-cells weui-cells_form" >
+    <div class="logo">Logo</div>
+    <div class="weui-cells weui-cells_form">
       <div class="weui-cell" v-bind:class="{'weui-cell_warn' : errors.has('phoneNumber')}">
         <div class="weui-cell__bd">
           <input class="weui-input" type="number" v-validate="{max:11}" name="phoneNumber" v-model="phoneNumber"
@@ -10,7 +10,7 @@
 
         <div class="weui-cell__ft">
           <div v-if="errors.has('phoneNumber')">
-            <i class="weui-icon-warn" ></i>
+            <i class="weui-icon-warn"></i>
           </div>
           <div v-else-if="isValidPhoneNumber">
             <i class="weui-icon-success" v-if="!errors.has('phoneNumber')"></i>
@@ -20,10 +20,15 @@
 
       <div class="weui-cell">
         <div class="weui-cell__bd">
-          <input class="weui-input" v-model="smsCode" placeholder="短信验证码"/>
+          <input class="weui-input" maxlength="6" v-model="smsCode" placeholder="短信验证码"/>
         </div>
         <div class="weui-cell__ft">
-          <button class="weui-vcode-btn">获取短信验证码</button>
+          <div v-if="smsDisabled">
+            <button class="weui-vcode-btn sms-cooldown-btn" :disabled="smsDisabled">{{time}} 秒后重新获取</button>
+          </div>
+          <div v-else>
+            <button class="weui-vcode-btn" @click="sendCode" :disabled="smsDisabled">获取短信验证码</button>
+          </div>
         </div>
       </div>
     </div>
@@ -61,6 +66,8 @@
       return {
         phoneNumber: '',
         smsCode: null,
+        smsDisabled: false,
+        time: 60,
         agreeTos: false
       }
     },
@@ -75,21 +82,50 @@
       }),
       login: function () {
         this.savePhoneNumber(this.phoneNumber)
-      }
+      },
+      sendCode: function () {
+        this.smsDisabled = true;
+        // ajax
+        this.startTimer()
+      },
+      timer: function () {
+        if (this.time > 0) {
+          this.time--;
+          setTimeout(this.timer, 1000);
+        } else {
+          this.smsDisabled = false;
+        }
+      },
+      startTimer: function () {
+        this.time = 60;
+        this.timer();
+      },
+      stopTimer: function () {
+        this.time = 0;
+        this.smsDisabled = false;
+      },
     }
   }
 </script>
 
 <style scoped>
 
+  .logo {
+    margin-top: 160px;
+  }
   .weui-cell {
     height: 45px;
     font-size: 18px;
     text-align: left;
   }
 
+  .sms-cooldown-btn{
+    color: gray;
+  }
+
   .tos {
-    margin-top: 10px;
+    margin-top: 60px;
+    font-size: 17px;
   }
 
   .tos:before {
@@ -97,9 +133,9 @@
   }
 
   .weui-footer {
-    position:absolute;
-    bottom:20px;
-    width:100%;
-    height:50px;   /* Height of the footer */
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    height: 50px; /* Height of the footer */
   }
 </style>
