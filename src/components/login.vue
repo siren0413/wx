@@ -42,6 +42,13 @@
       <a class="weui-btn weui-btn_primary" @click="login">登录</a>
     </div>
 
+    <div class="weui-footer">
+      <p class="weui-footer__links">
+        <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
+        <a href="javascript:void(0);" class="weui-footer__link">底部链接</a>
+      </p>
+      <p class="weui-footer__text">Copyright © 2008-2016 weui.io</p>
+    </div>
   </div>
 </template>
 
@@ -89,5 +96,10 @@
     border: none;
   }
 
-
+  .weui-footer {
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    height:50px;   /* Height of the footer */
+  }
 </style>
