@@ -1,13 +1,16 @@
 <template>
   <div>
-    <button @click="update">update</button>
+    <!--<button @click="update">update</button>-->
+    <tabbar></tabbar>
   </div>
 </template>
 
 <script>
   import {mapMutations, mapState} from 'vuex'
+  import tabbar from "./tabbar.vue";
 
   export default {
+    components: {tabbar},
     name: 'store',
     data() {
       return {

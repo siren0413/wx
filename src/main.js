@@ -24,23 +24,33 @@ Vue.prototype.$http = axios_instance
 
 router.beforeEach(
   (to, from, next) => {
-    if (to.path === '/login') {
-      next()
-    } else {
+    if (localStorage.getItem('accessToken')) {
       axios_instance.get('/tokeninfo')
         .then(function (response) {
-          next()
+          if (to.path === '/login') {
+            router.push('/store')
+          } else {
+            next()
+          }
         })
         .catch(function (error) {
-          router.push('/login')
+          if (to.path !== '/login'){
+            router.push('/login')
+          }
         })
+    } else {
+      if (to.path !== '/login') {
+        router.push('/login')
+      } else {
+        next ()
+      }
     }
   }
 )
 
+
 axios_instance.interceptors.request.use(config => {
   if (localStorage.getItem('accessToken')) {
-    console.log(localStorage.getItem('accessToken'))
     config.headers = {Authorization: 'Bearer ' + localStorage.getItem('accessToken')}
   } else {
   }
@@ -49,10 +59,10 @@ axios_instance.interceptors.request.use(config => {
 })
 
 axios_instance.interceptors.response.use(response => {
-  console.log(response)
   return response;
 }, error => {
   if (error.response.status === 401) {
+    localStorage.removeItem('accessToken')
     router.push('/login')
   }
   return Promise.reject(error.response.data)
