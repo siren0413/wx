@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="update">update</button>
+    <h1>服务台</h1>
     <tabbar></tabbar>
   </div>
 </template>
@@ -21,17 +21,6 @@
 
     },
     methods: {
-      update() {
-        this.$http.post('/hello', {
-          phoneNumber: '13705753423'
-        })
-          .then(function (response) {
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
-      }
 
     }
   }
