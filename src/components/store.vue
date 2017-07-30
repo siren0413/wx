@@ -1,7 +1,6 @@
 <template>
   <div>
     <button @click="update">update</button>
-    <tabbar></tabbar>
   </div>
 </template>
 

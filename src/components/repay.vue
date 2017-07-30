@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>我要还款</h1>
-    <tabbar></tabbar>
   </div>
 </template>
 
@@ -13,16 +12,10 @@
     components: {tabbar},
     name: 'store',
     data() {
-      return {
-
-      }
+      return {}
     },
-    computed: {
-
-    },
-    methods: {
-
-    }
+    computed: {},
+    methods: {}
   }
 </script>
 
