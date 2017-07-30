@@ -2,9 +2,11 @@
   <div>
     <div class="logo">Logo</div>
     <div class="weui-cells weui-cells_form">
-      <div class="weui-cell" v-bind:class="{'weui-cell_warn' : errors.has('phoneNumber') || !isValidPhone, 'animated shake': animateTos}" >
+      <div class="weui-cell"
+           v-bind:class="{'weui-cell_warn' : errors.has('phoneNumber') || !isValidPhone, 'animated shake': animatePhone}">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="number" v-validate="{max:11}" name="phoneNumber" v-model="phoneNumber" @blur="validatePhoneNumber" @focus="isValidPhone=true"
+          <input class="weui-input" type="number" v-validate="{max:11}" name="phoneNumber" v-model="phoneNumber"
+                 @blur="validatePhoneNumber" @focus="isValidPhone=true"
                  placeholder="手机号码"/>
         </div>
         <div class="weui-cell__ft">
@@ -17,7 +19,7 @@
         </div>
       </div>
 
-      <div class="weui-cell" :class="[{'animated shake': animateTos}]">
+      <div class="weui-cell" :class="[{'animated shake': animateSms}]">
         <div class="weui-cell__bd">
           <input class="weui-input" maxlength="6" v-model="smsCode" placeholder="短信验证码"/>
         </div>
@@ -58,14 +60,14 @@
 
 <script>
   import {mapMutations, mapState, mapGetters} from 'vuex'
-  import axios from 'axios';
+  import router from '../router'
 
   export default {
     name: 'login',
     data() {
       return {
         phoneNumber: '',
-        smsCode: null,
+        smsCode: '',
         smsDisabled: false,
         time: 60,
         agreeTos: false,
@@ -73,11 +75,11 @@
         isValidSms: true,
         animateTos: false,
         animatePhone: false,
-        animateSms: true
+        animateSms: false
       }
     },
     computed: {
-      ...mapGetters(['getSendCode']),
+      ...mapGetters(['postSendCode', 'postAuth']),
 
       isValidPhoneNumber: function () {
         return this.phoneNumber.length === 11
@@ -93,7 +95,8 @@
       login: function () {
 
         this.savePhoneNumber(this.phoneNumber)
-        this.$validator.validateAll().then(result => {});
+        this.$validator.validateAll().then(result => {
+        });
         let success = true;
         if (this.phoneNumber.length !== 11) {
           this.animatePhone = true;
@@ -103,39 +106,49 @@
           this.animateTos = true;
           success = false;
         }
-        if (!this.isValidSms) {
+        if (this.smsCode.length !== 6) {
           this.animateSms = true;
           success = false;
         }
+
         if (!success) {
           setTimeout(this.cleanupTimer, 2000);
         } else {
+
           // verify token and login
+          this.$http.post('/auth', {
+            phoneNumber: this.phoneNumber,
+            code: this.smsCode,
+            agreeTos: this.agreeTos
+          })
+            .then(function (response) {
+              // save token
+              localStorage.setItem('accessToken', response.data.accessToken)
+              router.push('/store')
+            })
+            .catch(function (error) {
+            })
         }
       },
 
       sendCode: function () {
+        if (this.phoneNumber.length !== 11) {
+          this.animatePhone = true;
+          setTimeout(this.cleanupTimer, 2000);
+          return
+        }
+
         this.smsDisabled = true;
+        this.startTimer();
 
-        axios.get(this.getSendCode)
+        this.$http.post('/sendcode', {
+          phoneNumber: this.phoneNumber
+        })
           .then(function (response) {
-            console.log(response);
-            this.startTimer();
+
           }.bind(this))
           .catch(function (error) {
-            console.log(error);
             this.stopTimer();
-          }.bind(this));
-      },
-
-      verifyCode () {
-        axios.post(this.getSendCode)
-          .then(function (response) {
-            // success
-            this.saveToken(response.token)
-          }.bind(this))
-          .catch(function (error) {
-            this.isValidSms = false;
           }.bind(this));
       },
 
@@ -155,9 +168,10 @@
         this.time = 0;
         this.smsDisabled = false;
       },
-      cleanupTimer () {
+      cleanupTimer() {
         this.animateTos = false;
         this.animatePhone = false;
+        this.animateSms = false;
       },
       validatePhoneNumber: function () {
         this.isValidPhone = this.phoneNumber.length === 11;

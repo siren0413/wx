@@ -8,15 +8,19 @@ const state = {
     phoneNumber: '',
     token: null
   },
-  host: 'http://127.0.0.1:8090',
+  host: 'http://localhost:8090',
   paths: {
-    SEND_CODE: '/hello'
+    SEND_CODE: '/sendcode',
+    AUTH: '/auth'
   }
 }
 
 const getters = {
-  getSendCode: state => {
+  postSendCode: state => {
     return state.host + state.paths.SEND_CODE;
+  },
+  postAuth: state => {
+    return state.host + state.paths.AUTH;
   }
 }
 
