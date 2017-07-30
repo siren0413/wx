@@ -13,7 +13,7 @@ import VueAxios from 'vue-axios'
 Vue.config.productionTip = false
 
 
-var axios_instance = axios.create({
+const axios_instance = axios.create({
   baseURL: 'http://127.0.0.1:8090',
   headers: {'Content-Type': 'application/json'}
 });
@@ -27,8 +27,13 @@ router.beforeEach(
     if (to.path === '/login') {
       next()
     } else {
-      // auth 用一个dummp API 来验证token有效性
-      next()
+      axios_instance.get('/tokeninfo')
+        .then(function (response) {
+          next()
+        })
+        .catch(function (error) {
+          router.push('/login')
+        })
     }
   }
 )
