@@ -9,20 +9,10 @@ const state = {
     phoneNumber: '',
     token: null
   },
-  host: 'http://localhost:8090',
-  paths: {
-    SEND_CODE: '/sendcode',
-    AUTH: '/auth'
-  }
 }
 
 const getters = {
-  postSendCode: state => {
-    return state.host + state.paths.SEND_CODE;
-  },
-  postAuth: state => {
-    return state.host + state.paths.AUTH;
-  }
+
 }
 
 const mutations = {

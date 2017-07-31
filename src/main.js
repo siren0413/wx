@@ -25,7 +25,7 @@ Vue.prototype.$http = axios_instance
 router.beforeEach(
   (to, from, next) => {
     if (localStorage.getItem('accessToken')) {
-      axios_instance.get('/tokeninfo')
+      axios_instance.get('/api/v1/tokeninfo')
         .then(function (response) {
           if (to.path === '/login') {
             router.push('/store')

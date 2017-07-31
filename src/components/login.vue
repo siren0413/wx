@@ -35,7 +35,7 @@
     </div>
 
     <div class="tos weui-cell weui-cell_switch" :class="[{'animated shake': animateTos}]">
-      <div class="weui-cell__bd">我已经阅读并同意<a href="#">服务条款协议</a></div>
+      <div class="weui-cell__bd ">我已经阅读并同意<a href="#">服务条款协议</a></div>
       <div class="weui-cell__ft">
         <label for="switchCP" class="weui-switch-cp">
           <input id="switchCP" class="weui-switch-cp__input" type="checkbox" v-model="agreeTos">
@@ -79,8 +79,6 @@
       }
     },
     computed: {
-      ...mapGetters(['postSendCode', 'postAuth']),
-
       isValidPhoneNumber: function () {
         return this.phoneNumber.length === 11
       }
@@ -116,7 +114,7 @@
         } else {
 
           // verify token and login
-          this.$http.post('/auth', {
+          this.$http.post('/api/v1/auth', {
             phoneNumber: this.phoneNumber,
             code: this.smsCode,
             agreeTos: this.agreeTos
@@ -141,7 +139,7 @@
         this.smsDisabled = true;
         this.startTimer();
 
-        this.$http.post('/sendcode', {
+        this.$http.post('/api/v1/sendcode', {
           phoneNumber: this.phoneNumber
         })
           .then(function (response) {
@@ -198,7 +196,9 @@
 
   .tos {
     margin-top: 60px;
-    font-size: 17px;
+    padding-left: 18px;
+    font-size: 16px;
+    color: #999999;
   }
 
   .tos:before {
@@ -216,4 +216,6 @@
     animation-duration: 0.5s;
     animation-iteration-count: 1;
   }
+
+
 </style>
