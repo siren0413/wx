@@ -7,20 +7,14 @@ import store from './store'
 import 'weui'
 import 'animate.css'
 import VeeValidate from 'vee-validate'
-import axios from 'axios';
+import axios_instance from './ajax'
 import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 
+Vue.use(axios_instance, VueAxios)
+Vue.use(VeeValidate)
 
-const axios_instance = axios.create({
-  baseURL: 'http://127.0.0.1:8090',
-  headers: {'Content-Type': 'application/json'}
-});
-
-Vue.use(VeeValidate, axios_instance, VueAxios)
-
-Vue.prototype.$http = axios_instance
 
 router.beforeEach(
   (to, from, next) => {
@@ -47,26 +41,6 @@ router.beforeEach(
     }
   }
 )
-
-
-axios_instance.interceptors.request.use(config => {
-  if (localStorage.getItem('accessToken')) {
-    config.headers = {Authorization: 'Bearer ' + localStorage.getItem('accessToken')}
-  } else {
-  }
-  return config;
-}, error => {
-})
-
-axios_instance.interceptors.response.use(response => {
-  return response;
-}, error => {
-  if (error.response.status === 401) {
-    localStorage.removeItem('accessToken')
-    router.push('/login')
-  }
-  return Promise.reject(error.response.data)
-})
 
 
 /* eslint-disable no-new */
