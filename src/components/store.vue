@@ -55,10 +55,13 @@
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">还款日期</label>
-        <span class="weui-form-preview__value">2017-09-13</span>
+        <span class="weui-form-preview__value">{{ computeDeadline }}</span>
       </div>
     </div>
 
+    <div class="weui-btn-area">
+      <a class="weui-btn weui-btn_primary" @click="apply">开始申请</a>
+    </div>
 
   </div>
 
@@ -94,7 +97,7 @@
         })
         return terms.map((elem, pos, arr) => {
           return elem.term
-        })
+        }).reverse()
       },
       updateServiceFee() {
         this.serviceFee = null
@@ -107,10 +110,21 @@
           .then((response) => {
             this.serviceFee = response.data.fee
           })
+      },
+      computeDeadline() {
+        let deadline = new Date();
+        deadline.setDate(deadline.getDate() + this.loanTerms[this.currentTermIndex])
+        let dd = deadline.getDate();
+        let mm = deadline.getMonth() + 1;
+        let yy = deadline.getFullYear();
+        return yy + '年' + mm + '月' + dd + '日'
       }
     },
     methods: {
       ...mapActions(['getLoanConfigs']),
+      apply() {
+
+      }
     },
     created() {
       this.getLoanConfigs()

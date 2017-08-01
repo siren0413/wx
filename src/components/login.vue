@@ -45,7 +45,7 @@
     </div>
 
     <div class="weui-btn-area">
-      <a class="weui-btn weui-btn_primary" @click="login">登录</a>
+      <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_disabled': !allInputValid}]" @click="login">登录</a>
     </div>
 
     <div class="weui-footer">
@@ -81,6 +81,9 @@
     computed: {
       isValidPhoneNumber: function () {
         return this.phoneNumber.length === 11
+      },
+      allInputValid() {
+        return this.phoneNumber.length === 11 && this.agreeTos && this.smsCode.length === 6
       }
     },
     methods: {

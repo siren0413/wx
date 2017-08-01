@@ -3,8 +3,8 @@
     <div class="weui-tabbar">
 
       <router-link to="/store" class="weui-tabbar__item"
-                   :class="{'weui-bar__item_on': currentTab === 'store'}">
-                    <span style="display: inline-block;position: relative;" @click="activateTab('store')">
+                   :class="{'weui-bar__item_on': currentTab === 'store'}"  @click.native="activateTab('store')">
+                    <span style="display: inline-block;position: relative;">
                         <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
                     </span>
@@ -12,14 +12,14 @@
       </router-link>
 
       <router-link to="/repay" class="weui-tabbar__item"
-                   :class="{'weui-bar__item_on': currentTab === 'repay'}">
-        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon" @click="activateTab('repay')">
+                   :class="{'weui-bar__item_on': currentTab === 'repay'}" @click.native="activateTab('repay')">
+        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon" >
         <p class="weui-tabbar__label">我要还款</p>
       </router-link>
 
       <router-link to="/profile" class="weui-tabbar__item"
-                   :class="{'weui-bar__item_on': currentTab === 'profile'}">
-                    <span style="display: inline-block;position: relative;" @click="activateTab('profile')">
+                   :class="{'weui-bar__item_on': currentTab === 'profile'}" @click.native="activateTab('profile')">
+                    <span style="display: inline-block;position: relative;" >
                         <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
                     </span>
@@ -27,8 +27,8 @@
       </router-link>
 
       <router-link to="/service" class="weui-tabbar__item"
-                   :class="{'weui-bar__item_on': currentTab === 'home'}">
-        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon" @click="activateTab('home')">
+                   :class="{'weui-bar__item_on': currentTab === 'home'}" @click.native="activateTab('home')">
+        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon" >
         <p class="weui-tabbar__label">服务台</p>
       </router-link>
     </div>
