@@ -23,4 +23,7 @@
     /*color: #2c3e50;*/
     /*margin-top: 10px;*/
   }
+  .wx-page-title {
+    padding-top: 20px;
+  }
 </style>
