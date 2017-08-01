@@ -6,7 +6,7 @@ import Login from '@/components/login'
 import Store from '@/components/store'
 import Repay from '@/components/repay'
 import Profile from '@/components/profile'
-import ProfilePhone from '@/components/profile-phone'
+import ProfilePhone from '@/components/profile-id'
 import Service from '@/components/service'
 
 Vue.use(Router)
@@ -39,8 +39,8 @@ const router = new Router({
       component: Profile
     },
     {
-      path: '/profile-phone',
-      name: 'Profile-Phone',
+      path: '/profile-id',
+      name: 'Profile-Id',
       component: ProfilePhone
     },
     {

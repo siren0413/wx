@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
     <tabbar v-if="$route.path !== '/login'"></tabbar>
   </div>
 </template>
@@ -10,7 +14,15 @@
 
   export default {
     components: {tabbar},
-    name: 'app'
+    name: 'app',
+    methods: {
+      beforeEnter() {
+        //TODO
+      },
+      afterEnter() {
+        //TODO
+      }
+    }
   }
 </script>
 
@@ -22,8 +34,19 @@
     text-align: center;
     /*color: #2c3e50;*/
     /*margin-top: 10px;*/
+    /*background: rgb(243, 243, 243);*/
   }
+
   .wx-page-title {
-    padding-top: 20px;
+    padding-top: 18px;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .1s
+  }
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+  {
+    opacity: 0
   }
 </style>
