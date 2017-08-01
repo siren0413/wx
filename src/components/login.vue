@@ -84,14 +84,11 @@
       }
     },
     methods: {
-
       ...mapMutations({
         savePhoneNumber: 'savePhoneNumber',
         saveToken: 'saveToken'
       }),
-
       login: function () {
-
         this.savePhoneNumber(this.phoneNumber)
         this.$validator.validateAll().then(result => {
         });
@@ -108,12 +105,7 @@
           this.animateSms = true;
           success = false;
         }
-
-        if (!success) {
-          setTimeout(this.cleanupTimer, 2000);
-        } else {
-
-          // verify token and login
+        if (success) {
           this.$http.post('/api/v1/auth', {
             phoneNumber: this.phoneNumber,
             code: this.smsCode,
@@ -128,14 +120,11 @@
             })
         }
       },
-
       sendCode: function () {
         if (this.phoneNumber.length !== 11) {
           this.animatePhone = true;
-          setTimeout(this.cleanupTimer, 2000);
           return
         }
-
         this.smsDisabled = true;
         this.startTimer();
 
@@ -146,10 +135,10 @@
 
           }.bind(this))
           .catch(function (error) {
+            this.animatePhone = true;
             this.stopTimer();
           }.bind(this));
       },
-
       timer: function () {
         if (this.time > 0) {
           this.time--;
@@ -174,6 +163,9 @@
       validatePhoneNumber: function () {
         this.isValidPhone = this.phoneNumber.length === 11;
       }
+    },
+    created() {
+      setInterval(this.cleanupTimer, 2000)
     }
   }
 </script>
