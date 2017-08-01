@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import axios from '../ajax'
 import Hello from '@/components/Hello'
 import Login from '@/components/login'
 import Store from '@/components/store'
@@ -9,7 +10,7 @@ import Service from '@/components/service'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -43,3 +44,31 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach(
+  (to, from, next) => {
+    if (localStorage.getItem('accessToken')) {
+      axios.get('/api/v1/tokeninfo')
+        .then(function (response) {
+          if (to.path === '/login') {
+            router.push(from.path)
+          } else {
+            next()
+          }
+        })
+        .catch(function (error) {
+          if (to.path !== '/login') {
+            router.push('/login')
+          }
+        })
+    } else {
+      if (to.path !== '/login') {
+        router.push('/login')
+      } else {
+        next()
+      }
+    }
+  }
+)
+
+export default router

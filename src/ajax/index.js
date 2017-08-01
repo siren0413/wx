@@ -1,24 +1,26 @@
 import Vue from 'vue'
-import axios from 'axios';
-// import VueAxios from 'vue-axios'
+import Axios from 'axios';
+import VueAxios from 'vue-axios'
+import router from '../router'
 
-var axios_instance = axios.create({
+const axios = Axios.create({
   baseURL: 'http://127.0.0.1:8090',
   headers: {'Content-Type': 'application/json'}
 });
 
-Vue.prototype.$http = axios_instance
+Vue.use(axios, VueAxios)
 
-axios_instance.interceptors.request.use(config => {
+Vue.prototype.$http = axios
+
+axios.interceptors.request.use(config => {
   if (localStorage.getItem('accessToken')) {
     config.headers = {Authorization: 'Bearer ' + localStorage.getItem('accessToken')}
   } else {
   }
   return config;
-}, error => {
 })
 
-axios_instance.interceptors.response.use(response => {
+axios.interceptors.response.use(response => {
   return response;
 }, error => {
   if (error.response.status === 401) {
@@ -28,6 +30,6 @@ axios_instance.interceptors.response.use(response => {
   return Promise.reject(error.response.data)
 })
 
-export default axios_instance
+export default axios
 
 
