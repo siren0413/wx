@@ -63,6 +63,9 @@
       <a class="weui-btn weui-btn_primary" @click="apply">开始申请</a>
     </div>
 
+    <modal v-if="showModal" @cancel="showModal = false">
+    </modal>
+
   </div>
 
 </template>
@@ -78,7 +81,8 @@
       return {
         serviceFee: null,
         currentAmountIndex: 0,
-        currentTermIndex: 0
+        currentTermIndex: 0,
+        showModal: false
       }
     },
     computed: {
@@ -123,7 +127,7 @@
     methods: {
       ...mapActions(['getLoanConfigs']),
       apply() {
-
+        this.showModal = true;
       }
     },
     created() {

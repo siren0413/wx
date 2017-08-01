@@ -7,8 +7,12 @@ import store from './store'
 import 'weui'
 import 'animate.css'
 import VeeValidate from 'vee-validate'
+import Modal from './components/modal.vue'
 
 Vue.config.productionTip = false
+
+
+Vue.component('modal', Modal)
 
 Vue.use(VeeValidate)
 
