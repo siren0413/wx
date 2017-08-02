@@ -2,7 +2,7 @@
   <div>
 
     <div v-for="(amount, index) in loanAmounts">
-      <input type="radio" id="level1" :value="index" v-on:change="updateServiceFee" v-model="currentAmountIndex"/>
+      <input type="radio" id="level1" :value="index" v-model="currentAmountIndex"/>
       <label>{{ amount }}</label>
     </div>
 
@@ -15,7 +15,7 @@
         <div class="weui-cell__bd">
           <select class="weui-select" name="select1" v-model="currentAmountIndex">
             <template v-for="(amount, index) in loanAmounts">
-              <option class="select-option" :value="index">{{ amount }} 元</option>
+              <option class="select-option" :value="index">¥ {{ amount }} 元</option>
             </template>
           </select>
         </div>
@@ -47,11 +47,13 @@
     <div class="weui-form-preview__bd">
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">服务费用</label>
-        <span class="weui-form-preview__value">{{ serviceFee }}</span>
+        <i v-if="serviceFee === null" class="weui-loading"></i>
+        <span v-else class="weui-form-preview__value">¥ {{ serviceFee }} 元</span>
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">应还金额</label>
-        <span class="weui-form-preview__value">{{ loanAmounts[currentAmountIndex] + serviceFee }}</span>
+        <i v-if="subTotal === null" class="weui-loading"></i>
+        <span v-else class="weui-form-preview__value">¥ {{ subTotal }} 元</span>
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">还款日期</label>
@@ -79,42 +81,17 @@
     name: 'store',
     data() {
       return {
+        loanConfigs: [],
         serviceFee: null,
+        subTotal: null,
+        loanAmounts: [],
+        loanTerms: [],
         currentAmountIndex: 0,
         currentTermIndex: 0,
         showModal: false
       }
     },
     computed: {
-      ...mapState(['loanConfigs']),
-      loanAmounts() {
-        var arr = this.loanConfigs.map((elem, pos, arr) => {
-          return elem.amount
-        })
-        return arr.filter((elem, pos, arr) => {
-          return arr.indexOf(elem) === pos;
-        })
-      },
-      loanTerms() {
-        var terms = this.loanConfigs.filter((elem, pos, arr) => {
-          return elem.amount === this.loanAmounts[this.currentAmountIndex]
-        })
-        return terms.map((elem, pos, arr) => {
-          return elem.term
-        }).reverse()
-      },
-      updateServiceFee() {
-        this.serviceFee = null
-        this.$http.get('/api/v1/loan/servicefee', {
-          params: {
-            amount: this.loanAmounts[this.currentAmountIndex],
-            term: this.loanTerms[this.currentTermIndex]
-          }
-        })
-          .then((response) => {
-            this.serviceFee = response.data.fee
-          })
-      },
       computeDeadline() {
         let deadline = new Date();
         deadline.setDate(deadline.getDate() + this.loanTerms[this.currentTermIndex])
@@ -125,13 +102,51 @@
       }
     },
     methods: {
-      ...mapActions(['getLoanConfigs']),
       apply() {
         this.showModal = true;
+      },
+      updateServiceFee() {
+        this.serviceFee = null
+        this.subTotal = null
+        this.$http.get('/api/v1/loan/servicefee', {
+          params: {
+            amount: this.loanAmounts[this.currentAmountIndex],
+            term: this.loanTerms[this.currentTermIndex]
+          }
+        })
+          .then((response) => {
+            this.serviceFee = response.data.fee
+            this.subTotal = this.serviceFee + this.loanAmounts[this.currentAmountIndex]
+          })
+      }
+    },
+    watch: {
+      loanConfigs: function (updated, old) {
+        this.loanAmounts = updated.map((elem, pos, arr) => {
+          return elem.amount
+        }).filter((elem, pos, arr) => {
+          return arr.indexOf(elem) === pos;
+        })
+        this.loanTerms = updated.filter((elem, pos, arr) => {
+          return elem.amount === this.loanAmounts[this.currentAmountIndex]
+        }).map((elem, pos, arr) => {
+          return elem.term
+        })
+        this.currentTermIndex = this.loanTerms.length - 1
+        this.updateServiceFee()
+      },
+      currentAmountIndex: function () {
+        this.updateServiceFee()
+      },
+      currentTermIndex: function () {
+        this.updateServiceFee()
       }
     },
     created() {
-      this.getLoanConfigs()
+      this.$http.get('/api/v1/loan/configs')
+        .then(function (response) {
+          this.loanConfigs = response.data
+        }.bind(this))
     }
   }
 </script>

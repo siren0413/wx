@@ -8,8 +8,7 @@ const state = {
   userInfo: {
     phoneNumber: '',
     token: null
-  },
-  loanConfigs: []
+  }
 }
 
 const getters = {}
@@ -24,12 +23,7 @@ const mutations = {
 }
 
 const actions = {
-  getLoanConfigs(context) {
-    axios.get('/api/v1/loan/configs')
-      .then(function (response) {
-        state.loanConfigs = response.data
-      })
-  }
+
 }
 
 export default new Vuex.Store({
