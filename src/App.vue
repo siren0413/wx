@@ -49,4 +49,7 @@
   {
     opacity: 0
   }
+  .weui-btn-area {
+    margin-top: 50px;
+  }
 </style>

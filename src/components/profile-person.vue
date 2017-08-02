@@ -20,26 +20,110 @@
       <div class="weui-cell wx-select-box">
         <div class="weui-cell__hd"><label class="weui-label">居住时长</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select1">
-            <option class="select-option" disabled value="">请选择</option>
-            <option class="select-option">一年</option>
+          <select class="weui-select" name="select1" v-model="residentInfo.residentTime">
+            <option class="select-option" disabled value=''>请选择</option>
+            <option class="select-option" value="0">{{ '小于 1 年' }}</option>
+            <option class="select-option" value="1">{{ '1 ~ 3 年' }}</option>
+            <option class="select-option" value="2">{{ '3 ~ 5 年' }}</option>
+            <option class="select-option" value="3">{{ '大于 5 年' }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="weui-cells__title">学历职业</div>
+    <div class="weui-cells weui-cells_form">
+
+      <div class="weui-cell wx-select-box">
+        <div class="weui-cell__hd"><label class="weui-label">最高学历</label></div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="select2" v-model="educationInfo.education">
+            <option class="select-option" disabled value=''>请选择</option>
+            <option class="select-option" value="0">{{ '大学或大学以上' }}</option>
+            <option class="select-option" value="1">{{ '大专' }}</option>
+            <option class="select-option" value="2">{{ '高中' }}</option>
+            <option class="select-option" value="3">{{ '初中' }}</option>
+            <option class="select-option" value="4">{{ '小学' }}</option>
           </select>
         </div>
       </div>
 
+      <div class="weui-cell wx-select-box">
+        <div class="weui-cell__hd"><label class="weui-label">职业</label></div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="select2" v-model="educationInfo.job">
+            <option class="select-option" disabled value=''>请选择</option>
+            <option class="select-option" value="0">{{ '1' }}</option>
+            <option class="select-option" value="1">{{ '2' }}</option>
+            <option class="select-option" value="2">{{ '3' }}</option>
+            <option class="select-option" value="3">{{ '4' }}</option>
+            <option class="select-option" value="4">{{ '5' }}</option>
+          </select>
+        </div>
+      </div>
 
-    </div>
-
-
-    <div class="weui-cells weui-cells_form wx-identity-self-photo">
-      <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">持证自拍</label></div>
+      <div class="weui-cell wx-select-box">
+        <div class="weui-cell__hd"><label class="weui-label">月均收入</label></div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="select2" v-model="educationInfo.income">
+            <option class="select-option" disabled value=''>请选择</option>
+            <option class="select-option" value="0">{{ '小于 500' }}</option>
+            <option class="select-option" value="1">{{ '1000 ~ 2000' }}</option>
+            <option class="select-option" value="2">{{ '2000 ~ 3000' }}</option>
+            <option class="select-option" value="3">{{ '3000 ~ 5000' }}</option>
+            <option class="select-option" value="4">{{ '大于 5000' }}</option>
+          </select>
+        </div>
       </div>
     </div>
 
-    <div class="weui-cells weui-cells_form wx-identity-self-photo">
+
+    <div class="weui-cells__title">其他</div>
+    <div class="weui-cells weui-cells_form">
+
+      <div class="weui-cell wx-select-box">
+        <div class="weui-cell__hd"><label class="weui-label">婚姻状态</label></div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="select2" v-model="otherInfo.marriageStatus">
+            <option class="select-option" disabled value=''>请选择</option>
+            <option class="select-option" value="0">{{ '未婚' }}</option>
+            <option class="select-option" value="1">{{ '已婚' }}</option>
+          </select>
+        </div>
+      </div>
+
       <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label wx-id-label">身份证正面(人像)</label></div>
+        <div class="weui-cell__hd"><label class="weui-label">QQ</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入您的QQ号码">
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="weui-btn-area" v-if="!editable">
+      <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_loading': waitingResponse}]" @click="save"><i
+        v-if="waitingResponse" class="weui-loading"></i>保存</a>
+    </div>
+    <div class="weui-btn-area" v-else>
+      <a class="weui-btn weui-btn_primary" @click="edit">我要修改</a>
+    </div>
+
+    <!--<div id="loadingToast" style="opacity: 0; display: none;">-->
+    <!--<div class="weui-mask_transparent"></div>-->
+    <!--<div class="weui-toast">-->
+    <!--<i class="weui-loading weui-icon_toast"></i>-->
+    <!--<p class="weui-toast__content">数据加载中</p>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div id="toast" :class="[showToast? 'toast-on': 'toast-off']">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+        <p class="weui-toast__content">保存完成</p>
       </div>
     </div>
 
@@ -54,16 +138,57 @@
     components: {tabbar},
     name: 'profile-person',
     data() {
-      return {}
+      return {
+        waitingResponse: false,
+        showToast: false,
+        editable: false,
+        residentInfo: {
+          residentTime: ''
+        },
+        educationInfo: {
+          education: '',
+          job: '',
+          income: ''
+        },
+        otherInfo: {
+          marriageStatus: '',
+          qq: ''
+        }
+      }
     },
     computed: {},
-    methods: {}
+    methods: {
+      save() {
+        this.waitingResponse = true
+        setTimeout(function () {
+          this.waitingResponse = false
+          this.showToast = true
+          this.editable = true
+          setTimeout(function () {
+            this.showToast = false
+          }.bind(this), 2000)
+        }.bind(this), 2000)
+      },
+      edit() {
+        this.editable = false
+      }
+    }
   }
 </script>
 
 <style scoped>
+  .toast-on {
+    opacity: 1;
+  }
+
+  .toast-off {
+    opacity: 0;
+    display: none;
+  }
+
   .weui-cells__title {
     text-align: left;
+    margin-top: 20px;
   }
 
   .weui-cell {
@@ -81,6 +206,7 @@
   .wx-select-box {
     height: 25px;
   }
+
   .weui-select {
     padding-left: 0;
   }
