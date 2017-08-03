@@ -7,13 +7,13 @@
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">现居城市</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的现居城市">
+          <input class="weui-input" placeholder="请输入您的现居城市" v-model="residentInfo.residentCity">
         </div>
       </div>
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的详细地址">
+          <input class="weui-input" placeholder="请输入您的详细地址" v-model="residentInfo.residentAddress">
         </div>
       </div>
 
@@ -144,6 +144,8 @@
         showToast: false,
         editable: false,
         residentInfo: {
+          residentCity: '',
+          residentAddress: '',
           residentTime: ''
         },
         educationInfo: {
@@ -161,7 +163,17 @@
     methods: {
       save() {
         this.waitingResponse = true
-        setTimeout(function () {
+
+        this.$http.post('api/v1/user/profile/general', {
+          residentCity: this.residentInfo.residentCity,
+          residentAddress: this.residentInfo.residentAddress,
+          residentTime: this.residentInfo.residentTime,
+          education: this.educationInfo.education,
+          job: this.educationInfo.job,
+          income: this.educationInfo.income,
+          marriageStatus: this.otherInfo.marriageStatus,
+          qq: this.otherInfo.qq
+        }).then(response => {
           this.waitingResponse = false
           this.showToast = true
           this.editable = true
@@ -172,7 +184,13 @@
             router.push('/profile-id')
 
           }.bind(this), 2000)
-        }.bind(this), 2000)
+
+
+        }).catch(error => {
+          this.waitingResponse = false
+          // TODO show error dialog
+        })
+
       },
       edit() {
         this.editable = false
