@@ -32,7 +32,7 @@
     </div>
 
     <div class="weui-btn-area">
-      <a class="weui-btn weui-btn_primary" @click="apply">保存</a>
+      <a class="weui-btn weui-btn_primary" @click="save">保存</a>
     </div>
 
   </div>
@@ -49,7 +49,11 @@
       return {}
     },
     computed: {},
-    methods: {}
+    methods: {
+      save() {
+
+      }
+    }
   }
 </script>
 

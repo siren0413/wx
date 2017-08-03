@@ -133,6 +133,7 @@
 <script>
   import {mapMutations, mapState} from 'vuex'
   import tabbar from "./tabbar.vue";
+  import router from '../router'
 
   export default {
     components: {tabbar},
@@ -166,6 +167,10 @@
           this.editable = true
           setTimeout(function () {
             this.showToast = false
+
+            // if profile-id is not verified
+            router.push('/profile-id')
+
           }.bind(this), 2000)
         }.bind(this), 2000)
       },

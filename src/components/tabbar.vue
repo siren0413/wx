@@ -5,7 +5,9 @@
       <router-link to="/store" class="weui-tabbar__item"
                    :class="{'weui-bar__item_on': computeCurrentTab === '/store'}">
                     <span style="display: inline-block;position: relative;">
-                        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                      <img src="https://png.icons8.com/money-bag-yen/office/60" class="weui-tabbar__icon"
+                           title="Money Bag Yen" width="30" height="30">
+                      <!--<img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">-->
                         <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
                     </span>
         <p class="weui-tabbar__label">我要借款</p>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="weui-msg__title wx-page-title">我要借款</p>
 
     <div v-for="(amount, index) in loanAmounts">
       <input type="radio" id="level1" :value="index" v-model="currentAmountIndex"/>

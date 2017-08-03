@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>我要还款</h1>
+    <p class="weui-msg__title wx-page-title">我要还款</p>
   </div>
 </template>
 
