@@ -9,6 +9,7 @@ import Profile from '@/components/profile'
 import ProfileId from '@/components/profile-id'
 import ProfilePerson from '@/components/profile-person'
 import Service from '@/components/service'
+import StoreFront from '@/components/store-front'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ const router = new Router({
       path: '/store',
       name: 'Store',
       component: Store
+    },
+    {
+      path: '/store-front',
+      name: 'StoreFront',
+      component: StoreFront
     },
     {
       path: '/repay',
@@ -59,6 +65,7 @@ const router = new Router({
 
 router.beforeEach(
   (to, from, next) => {
+    // console.log("from: " + from.path + " to: " + to.path)
     if (localStorage.getItem('accessToken')) {
       axios.get('/api/v1/tokeninfo')
         .then(function (response) {
@@ -74,7 +81,7 @@ router.beforeEach(
           }
         })
     } else {
-      if (to.path !== '/login') {
+      if (to.path !== '/login' && to.path !== '/store-front') {
         router.push('/login')
       } else {
         next()

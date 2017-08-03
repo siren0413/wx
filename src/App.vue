@@ -5,7 +5,7 @@
         <router-view></router-view>
       </keep-alive>
     </transition>
-    <tabbar v-if="$route.path !== '/login'"></tabbar>
+    <tabbar v-if="$route.path !== '/login' && $route.path !== '/store-front'"></tabbar>
   </div>
 </template>
 
