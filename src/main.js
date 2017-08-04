@@ -7,10 +7,13 @@ import store from './store'
 import 'weui'
 import 'animate.css'
 import VeeValidate from 'vee-validate'
+import {VueMaskDirective} from 'v-mask'
 import Modal from './components/modal.vue'
 
 Vue.config.productionTip = false
 
+
+Vue.directive('mask', VueMaskDirective);
 
 Vue.component('modal', Modal)
 

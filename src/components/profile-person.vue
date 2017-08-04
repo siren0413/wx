@@ -6,21 +6,21 @@
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">现居城市</label></div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的现居城市" v-model="residentInfo.residentCity">
+        <div class="weui-cell__bd" >
+          <input class="weui-input" placeholder="请输入您的现居城市" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentCity">
         </div>
       </div>
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的详细地址" v-model="residentInfo.residentAddress">
+          <input class="weui-input" placeholder="请输入您的详细地址" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentAddress">
         </div>
       </div>
 
       <div class="weui-cell wx-select-box">
         <div class="weui-cell__hd"><label class="weui-label">居住时长</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select1" v-model="residentInfo.residentTime">
+          <select class="weui-select" name="select1" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentTime">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '小于 1 年' }}</option>
             <option class="select-option" value="1">{{ '1 ~ 3 年' }}</option>
@@ -38,7 +38,7 @@
       <div class="weui-cell wx-select-box">
         <div class="weui-cell__hd"><label class="weui-label">最高学历</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" v-model="educationInfo.education">
+          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="educationInfo.education">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '大学或大学以上' }}</option>
             <option class="select-option" value="1">{{ '大专' }}</option>
@@ -52,7 +52,7 @@
       <div class="weui-cell wx-select-box">
         <div class="weui-cell__hd"><label class="weui-label">职业</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" v-model="educationInfo.job">
+          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="educationInfo.job">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '1' }}</option>
             <option class="select-option" value="1">{{ '2' }}</option>
@@ -66,7 +66,7 @@
       <div class="weui-cell wx-select-box">
         <div class="weui-cell__hd"><label class="weui-label">月均收入</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" v-model="educationInfo.income">
+          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="educationInfo.income">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '小于 500' }}</option>
             <option class="select-option" value="1">{{ '1000 ~ 2000' }}</option>
@@ -85,7 +85,7 @@
       <div class="weui-cell wx-select-box">
         <div class="weui-cell__hd"><label class="weui-label">婚姻状态</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" v-model="otherInfo.marriageStatus">
+          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.marriageStatus">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '未婚' }}</option>
             <option class="select-option" value="1">{{ '已婚' }}</option>
@@ -96,14 +96,14 @@
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">QQ</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的QQ号码">
+          <input class="weui-input" placeholder="请输入您的QQ号码" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="qq">
         </div>
       </div>
 
     </div>
 
 
-    <div class="weui-btn-area" v-if="!editable">
+    <div class="weui-btn-area" v-if="editable">
       <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_loading': waitingResponse}]" @click="save"><i
         v-if="waitingResponse" class="weui-loading"></i>保存</a>
     </div>
@@ -142,7 +142,7 @@
       return {
         waitingResponse: false,
         showToast: false,
-        editable: false,
+        editable: true,
         residentInfo: {
           residentCity: '',
           residentAddress: '',
@@ -176,14 +176,13 @@
         }).then(response => {
           this.waitingResponse = false
           this.showToast = true
-          this.editable = true
+          this.editable = false
 
           this.$http.get('/api/v1/user/profile/identity')
             .then(response => {
               setTimeout(() => {
                 this.showToast = false
                 // TODO push to summary page?
-                router.push('/store')
               }, 1500)
             })
             .catch(error => {
@@ -200,7 +199,7 @@
 
       },
       edit() {
-        this.editable = false
+        this.editable = true
       }
     }
   }

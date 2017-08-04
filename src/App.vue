@@ -52,4 +52,7 @@
   .weui-btn-area {
     margin-top: 50px;
   }
+  .text-mask {
+    color: grey;
+  }
 </style>

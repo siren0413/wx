@@ -6,14 +6,26 @@
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的姓名" v-model="name">
+          <template v-if="editable">
+            <input class="weui-input" placeholder="请输入您的姓名" v-model="name">
+          </template>
+          <template v-else>
+            <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ name | maskName
+              }}</label>
+          </template>
         </div>
       </div>
 
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的身份证号" v-model="idNumber">
+          <template v-if="editable">
+            <input class="weui-input" placeholder="请输入您的身份证号" v-mask="'##################'" v-model="idNumber">
+          </template>
+          <template v-else>
+            <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ idNumber | maskId
+              }}</label>
+          </template>
         </div>
       </div>
     </div>
@@ -31,7 +43,7 @@
       </div>
     </div>
 
-    <div class="weui-btn-area" v-if="!editable">
+    <div class="weui-btn-area" v-if="editable">
       <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_loading': waitingResponse}]" @click="save"><i
         v-if="waitingResponse" class="weui-loading"></i>保存</a>
     </div>
@@ -61,7 +73,7 @@
     data() {
       return {
         waitingResponse: false,
-        editable: false,
+        editable: true,
         showToast: false,
         name: '',
         idNumber: ''
@@ -78,14 +90,13 @@
           .then(response => {
             this.waitingResponse = false
             this.showToast = true
-            this.editable = true
+            this.editable = false
 
             this.$http.get('/api/v1/user/profile/general')
               .then(response => {
                 setTimeout(() => {
                   this.showToast = false
                   // TODO push to summary page?
-                  router.push('/store')
                 }, 1500)
               })
               .catch(error => {
@@ -101,7 +112,38 @@
           })
       },
       edit() {
-        this.editable = false
+        this.waitingResponse = true
+        this.$http.get('/api/v1/user/profile/identity')
+          .then((response) => {
+            this.name = response.data.name
+            this.idNumber = response.data.idNumber
+            this.editable = true
+            this.waitingResponse = false
+          })
+          .catch((error) => {
+            this.editable = true
+            this.waitingResponse = false
+          })
+      }
+    },
+    created() {
+      this.$http.get('/api/v1/user/profile/identity')
+        .then((response) => {
+          this.name = response.data.name
+          this.idNumber = response.data.idNumber
+          this.editable = false
+        })
+    },
+    filters: {
+      maskId: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return '********** ' + value.substring(value.length - 4, value.length)
+      },
+      maskName: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return '** ' + value.substring(value.length - 1, value.length)
       }
     }
   }
@@ -119,6 +161,7 @@
   .wx-id-label {
     width: auto;
   }
+
   .toast-on {
     opacity: 1;
   }
