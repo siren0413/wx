@@ -2,7 +2,7 @@
   <div id="app">
     <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
       <keep-alive>
-        <router-view></router-view>
+        <router-view class="haha"></router-view>
       </keep-alive>
     </transition>
     <tabbar v-if="$route.path !== '/login' && $route.path !== '/store-front'"></tabbar>
@@ -34,9 +34,7 @@
     text-align: center;
     /*color: #2c3e50;*/
     /*margin-top: 10px;*/
-    /*background: rgb(243, 243, 243);*/
   }
-
   .wx-page-title {
     padding-top: 18px;
   }
@@ -54,5 +52,12 @@
   }
   .text-mask {
     color: grey;
+  }
+  html, body {
+    background: rgb(250, 250, 250);
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 </style>

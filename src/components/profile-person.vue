@@ -199,8 +199,39 @@
 
       },
       edit() {
-        this.editable = true
+        this.waitingResponse = true
+        this.$http.get('/api/v1/user/profile/general')
+          .then((response) => {
+            this.residentInfo.residentCity = response.data.residentCity
+            this.residentInfo.residentAddress = response.data.residentAddress
+            this.residentInfo.residentTime = response.data.residentTime
+            this.educationInfo.education = response.data.education
+            this.educationInfo.job = response.data.job
+            this.educationInfo.income = response.data.income
+            this.otherInfo.marriageStatus = response.data.marriageStatus
+            this.otherInfo.qq = response.data.qq
+            this.editable = true
+            this.waitingResponse = false
+          })
+          .catch((error) => {
+            this.editable = true
+            this.waitingResponse = false
+          })
       }
+    },
+    created() {
+      this.$http.get('/api/v1/user/profile/general')
+        .then((response) => {
+          this.residentInfo.residentCity = response.data.residentCity
+          this.residentInfo.residentAddress = response.data.residentAddress
+          this.residentInfo.residentTime = response.data.residentTime
+          this.educationInfo.education = response.data.education
+          this.educationInfo.job = response.data.job
+          this.educationInfo.income = response.data.income
+          this.otherInfo.marriageStatus = response.data.marriageStatus
+          this.otherInfo.qq = response.data.qq
+          this.editable = false
+        })
     }
   }
 </script>
