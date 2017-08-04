@@ -97,6 +97,7 @@
                 setTimeout(() => {
                   this.showToast = false
                   // TODO push to summary page?
+                  router.push('/profile')
                 }, 1500)
               })
               .catch(error => {

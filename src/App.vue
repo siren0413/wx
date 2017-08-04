@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
-      <keep-alive>
-        <router-view class="haha"></router-view>
+      <keep-alive exclude="profile">
+        <router-view></router-view>
       </keep-alive>
     </transition>
     <tabbar v-if="$route.path !== '/login' && $route.path !== '/store-front'"></tabbar>

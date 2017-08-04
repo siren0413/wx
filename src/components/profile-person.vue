@@ -96,7 +96,7 @@
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">QQ</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的QQ号码" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="qq">
+          <input class="weui-input" placeholder="请输入您的QQ号码" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.qq">
         </div>
       </div>
 
@@ -183,6 +183,7 @@
               setTimeout(() => {
                 this.showToast = false
                 // TODO push to summary page?
+                router.push('/profile')
               }, 1500)
             })
             .catch(error => {
