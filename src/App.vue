@@ -54,7 +54,7 @@
     color: grey;
   }
   html, body {
-    background: rgb(250, 250, 250);
+    background: rgb(252, 252, 252);
     height: 100%;
     width: 100%;
     margin: 0;
