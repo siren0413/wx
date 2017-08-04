@@ -164,7 +164,7 @@
       save() {
         this.waitingResponse = true
 
-        this.$http.post('api/v1/user/profile/general', {
+        this.$http.post('/api/v1/user/profile/general', {
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,
           residentTime: this.residentInfo.residentTime,
@@ -177,19 +177,26 @@
           this.waitingResponse = false
           this.showToast = true
           this.editable = true
-          setTimeout(function () {
-            this.showToast = false
 
-            // if profile-id is not verified
-            router.push('/profile-id')
-
-          }.bind(this), 2000)
-
-
-        }).catch(error => {
-          this.waitingResponse = false
-          // TODO show error dialog
+          this.$http.get('/api/v1/user/profile/identity')
+            .then(response => {
+              setTimeout(() => {
+                this.showToast = false
+                // TODO push to summary page?
+                router.push('/store')
+              }, 1500)
+            })
+            .catch(error => {
+              setTimeout(() => {
+                this.showToast = false
+                router.push('/profile-id')
+              }, 1500)
+            })
         })
+          .catch(error => {
+            this.waitingResponse = false
+            // TODO show error dialog
+          })
 
       },
       edit() {
