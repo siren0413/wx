@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import axios from '../ajax'
-import Hello from '@/components/Hello'
 import Login from '@/components/login'
 import Store from '@/components/store'
 import Repay from '@/components/repay'
@@ -16,11 +15,11 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello
-    },
+    // {
+    //   path: '/',
+    //   name: 'Hello',
+    //   component: Hello
+    // },
     {
       path: '/login',
       name: 'Login',
@@ -65,6 +64,11 @@ const router = new Router({
       path: '/apply-status',
       name: 'ApplyStatus',
       component: ApplyStatus
+    },
+    {
+      path: '/*',
+      name: 'Error',
+      component: Store
     }
   ]
 })
