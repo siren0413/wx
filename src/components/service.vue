@@ -8,18 +8,19 @@
           <!--<span style="vertical-align:middle; font-size: 17px;">当前状态</span>-->
         </div>
       </router-link>
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <div class="weui-cell weui-cell_access" @click="requestIncreaseCreditLimit">
         <div class="weui-cell__bd">申请提高额度</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png" style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
+          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png"
+                                                                          style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
         </div>
-      </router-link>
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      </div>
+      <div class="weui-cell ">
         <div class="weui-cell__bd">我的信用分</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">400</span>
+          <span style="vertical-align:middle; font-size: 17px;">400 分</span>
         </div>
-      </router-link>
+      </div>
     </div>
 
 
@@ -31,12 +32,12 @@
           <span style="vertical-align:middle; font-size: 17px;">未设置</span>
         </div>
       </router-link>
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
-        <div class="weui-cell__bd">好友推荐</div>
-        <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">获取推荐链接</span>
-        </div>
-      </router-link>
+      <!--<router-link to="/profile-id" class="weui-cell weui-cell_access">-->
+        <!--<div class="weui-cell__bd">好友推荐</div>-->
+        <!--<div class="weui-cell__ft" style="font-size: 0">-->
+          <!--<span style="vertical-align:middle; font-size: 17px;">获取推荐链接</span>-->
+        <!--</div>-->
+      <!--</router-link>-->
       <router-link to="/profile-id" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">领取礼包</div>
         <div class="weui-cell__ft" style="font-size: 0">
@@ -69,6 +70,17 @@
       </router-link>
     </div>
 
+    <div :style="showIncreaseCreditLimitDialog? 'display: block;': 'display:none'">
+      <div class="weui-mask"></div>
+      <div class="weui-dialog">
+        <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{increaseCreditLimitResponse.title}}</strong></div>
+        <div class="weui-dialog__bd">{{increaseCreditLimitResponse.desc}}</div>
+        <div class="weui-dialog__ft">
+          <a href="javascript:;" @click="showIncreaseCreditLimitDialog = false" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+        </div>
+      </div>
+    </div>
+
     <div class="wx-bot-margin"></div>
 
   </div>
@@ -83,11 +95,21 @@
     name: 'store',
     data() {
       return {
-        currentCreditLimit: null
+        currentCreditLimit: null,
+        showIncreaseCreditLimitDialog: false,
+        increaseCreditLimitResponse: {}
       }
     },
     computed: {},
-    methods: {},
+    methods: {
+      requestIncreaseCreditLimit() {
+        this.$http.get('/api/v1/loan/credit/limit/increase')
+          .then((response) => {
+            this.increaseCreditLimitResponse = response.data
+            this.showIncreaseCreditLimitDialog = true
+          })
+      }
+    },
     created() {
       this.$http.get('/api/v1/loan/credit/limit')
         .then((response) => {
@@ -105,5 +127,17 @@
 
   .weui-cell {
     text-align: left;
+  }
+
+  .weui-mask {
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .2s ease;
   }
 </style>
