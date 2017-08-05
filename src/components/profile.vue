@@ -42,7 +42,6 @@
     computed: {},
     methods: {},
     created() {
-      console.log("fdsf")
       this.$http.get('/api/v1/user/profile/general/status')
         .then((response) => {
           this.generalProfileStatus.status = response.data.status

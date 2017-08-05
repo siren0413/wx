@@ -1,17 +1,17 @@
 <template>
-  <div >
+  <div>
     <div class="weui-cells__title">贷款相关</div>
     <div class="weui-cells weui-cells_form">
       <router-link to="/apply-status" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">查询进度</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">当前状态</span>
+          <!--<span style="vertical-align:middle; font-size: 17px;">当前状态</span>-->
         </div>
       </router-link>
       <router-link to="/profile-id" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">申请提高额度</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">当前额度</span>
+          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png" style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
         </div>
       </router-link>
       <router-link to="/profile-id" class="weui-cell weui-cell_access">
@@ -82,10 +82,18 @@
     components: {tabbar},
     name: 'store',
     data() {
-      return {}
+      return {
+        currentCreditLimit: null
+      }
     },
     computed: {},
-    methods: {}
+    methods: {},
+    created() {
+      this.$http.get('/api/v1/loan/credit/limit')
+        .then((response) => {
+          this.currentCreditLimit = response.data.limit
+        })
+    }
   }
 </script>
 

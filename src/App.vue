@@ -2,7 +2,7 @@
   <div id="app">
     <wxHeader></wxHeader>
     <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
-      <keep-alive exclude="profile">
+      <keep-alive :exclude=['profile','service']>
         <router-view class="wx-container"></router-view>
       </keep-alive>
     </transition>

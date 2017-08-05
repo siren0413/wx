@@ -1,21 +1,22 @@
 <template>
   <div class="page__bd page__bd_spacing">
 
-    <div class="icon-box">
-      <i class="weui-icon-waiting weui-icon_msg wx-progress-icon"></i>
-      <div class="icon-box__ctn">
-        <h3 class="icon-box__title">等待</h3>
-        <p class="icon-box__desc">用于表示等待</p>
+    <div v-for="(status,index) in statusList">
+      <div class="icon-box">
+        <i class="weui-icon_msg wx-progress-icon" :class="getClass(status.status)"></i>
+        <div class="icon-box__ctn">
+          <h3 class="icon-box__title">{{status.title}}</h3>
+          <p class="icon-box__desc">{{status.desc}}</p>
+        </div>
       </div>
-    </div>
-    <div class="icon-box">
-      <i class="weui-icon-warn weui-icon_msg"></i>
-      <div class="icon-box__ctn">
-        <h3 class="icon-box__title">强烈警告</h3>
-        <p class="icon-box__desc">用于表示操作后将引起严重的不可挽回的后果的情况</p>
+      <div>
+        <div v-if="index !== statusList.length-1">
+          <img src="../assets/progress-line-success.png" class="wx-progress-line"/>
+        </div>
       </div>
     </div>
 
+    <div class="wx-bot-margin"></div>
   </div>
 </template>
 
@@ -26,22 +27,37 @@
     components: {tabbar},
     name: 'apply-status',
     data() {
-      return {}
+      return {
+        statusList: []
+      }
     },
     computed: {},
-    methods: {}
+    methods: {
+      getClass(id) {
+        if (id === 0) return 'weui-icon-success'
+        else if (id === 1) return 'weui-icon-waiting'
+        else if (id === 2) return 'weui-icon-warn'
+      }
+    },
+    created() {
+      this.$http.get('/api/v1/loan/application/status/all')
+        .then((response) => {
+          this.statusList = response.data.statusList
+        })
+    }
   }
 </script>
 
 <style scoped>
   .icon-box {
-    margin-bottom: 25px;
+    margin-bottom: 5px;
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
     -webkit-box-align: center;
     -webkit-align-items: center;
     align-items: center;
+    min-height: 70px;
   }
 
   .icon-box__ctn {
@@ -51,12 +67,14 @@
   }
 
   .icon-box__title {
-    font-weight: 400
+    font-weight: 400;
+    font-size: 16px;
   }
 
   .icon-box__desc {
     margin-top: 6px;
     font-size: 12px;
+    height: 38px;
     color: #888
   }
 
@@ -71,7 +89,15 @@
   .page__bd_spacing {
     padding: 0 80px
   }
-  .wx-progress-icon{
-    font-size: 80px;
+
+  .wx-progress-icon {
+    font-size: 28px;
+    margin-top: -40px;
+  }
+
+  .wx-progress-line {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: 20px;
   }
 </style>
