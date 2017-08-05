@@ -201,14 +201,20 @@
   }
 
   .weui-footer {
-    position: absolute;
-    bottom: 10px;
+    position: relative;
+    bottom: 0;
     width: 100%;
-    height: 50px; /* Height of the footer */
+    height: 40px; /* Height of the footer */
+    padding-top: 60px;
+    padding-bottom: 10px;
   }
 
   .weui-cell {
     animation-duration: 0.5s;
     animation-iteration-count: 1;
+  }
+  .wx-container{
+    height: 100%;
+    top:0
   }
 </style>

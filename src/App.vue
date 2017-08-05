@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <wxHeader></wxHeader>
+    <wxHeader v-if="$route.path !== '/login' && $route.path !== '/store-front'"></wxHeader>
     <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
       <keep-alive :exclude=['profile','service']>
         <router-view class="wx-container"></router-view>

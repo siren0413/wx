@@ -84,6 +84,8 @@ router.beforeEach(
         .catch(function (error) {
           if (to.path !== '/login') {
             router.push('/login')
+          } else {
+            next()
           }
         })
     } else {
