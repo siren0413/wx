@@ -11,10 +11,11 @@
         <div class="weui-cell__hd">
           <label for="" class="weui-label">借款金额</label>
         </div>
-        <div class="weui-cell__bd">
-          <select class="weui-select" name="select1" v-model="currentAmountIndex">
+        <div class="weui-cell__bd wx-amount-cell">
+          <img src="../assets/rmb-red.png" class="wx-amount-img"/>
+          <select id="loan-amount" class="weui-select wx-amount-select" name="select1" v-model="currentAmountIndex">
             <template v-for="(amount, index) in loanAmounts">
-              <option class="select-option" :value="index">¥ {{ amount }} 元</option>
+              <option class="select-option" :value="index">{{ amount }}</option>
             </template>
           </select>
         </div>
@@ -25,9 +26,10 @@
           <label for="" class="weui-label">借款天数</label>
         </div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" v-model="currentTermIndex">
+          <img src="../assets/loan-term.png" class="wx-term-img"/>
+          <select class="weui-select wx-term-select" name="select2" v-model="currentTermIndex">
             <template v-for="(term, index) in loanTerms">
-              <option :value="index">{{ term }} 天</option>
+              <option :value="index">{{ term }}天</option>
             </template>
           </select>
         </div>
@@ -47,12 +49,12 @@
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">服务费用</label>
         <i v-if="serviceFee === null" class="weui-loading"></i>
-        <span v-else class="weui-form-preview__value">¥ {{ serviceFee }} 元</span>
+        <span v-else class="weui-form-preview__value"><img src="../assets/rmb-gray.png" class="wx-subtotal-img">{{ serviceFee }} 元</span>
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">应还金额</label>
         <i v-if="subTotal === null" class="weui-loading"></i>
-        <span v-else class="weui-form-preview__value">¥ {{ subTotal }} 元</span>
+        <span v-else class="weui-form-preview__value"><img src="../assets/rmb-gray.png" class="wx-subtotal-img">{{ subTotal }} 元</span>
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">还款日期</label>
@@ -188,6 +190,23 @@
   .weui-select {
     text-align-last: right;
     width: 50%;
+  }
+
+  .wx-amount-img, .wx-term-img  {
+    height: 19px;
+    vertical-align: middle;
+    position: absolute;
+    right: 73px;
+    top: 28%
+  }
+  .wx-term-select{
+    padding-right: 28px;
+  }
+  .wx-subtotal-img{
+    height: 14px;
+    padding-right: 5px;
+    vertical-align: middle;
+    margin-top: -5px;
   }
 
 </style>
