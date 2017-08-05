@@ -16,7 +16,8 @@
           '/profile-id': '实名认证',
           '/profile-person': '个人信息',
           '/service': '服务台',
-          '/apply-status': '审核状态'
+          '/apply-status': '审核状态',
+          '/service-password': '密码服务'
         }
       }
     },

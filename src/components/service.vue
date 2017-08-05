@@ -26,18 +26,18 @@
 
     <div class="weui-cells__title">个人账户</div>
     <div class="weui-cells weui-cells_form">
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <router-link to="/service-password" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">设置密码</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;">未设置</span>
         </div>
       </router-link>
-      <!--<router-link to="/profile-id" class="weui-cell weui-cell_access">-->
-        <!--<div class="weui-cell__bd">好友推荐</div>-->
-        <!--<div class="weui-cell__ft" style="font-size: 0">-->
-          <!--<span style="vertical-align:middle; font-size: 17px;">获取推荐链接</span>-->
-        <!--</div>-->
-      <!--</router-link>-->
+      <div class="weui-cell weui-cell_access">
+        <div class="weui-cell__bd">好友推荐</div>
+        <div class="weui-cell__ft" style="font-size: 0">
+          <span style="vertical-align:middle; font-size: 17px;">推荐二维码</span>
+        </div>
+      </div>
       <router-link to="/profile-id" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">领取礼包</div>
         <div class="weui-cell__ft" style="font-size: 0">
@@ -81,6 +81,14 @@
       </div>
     </div>
 
+    <div id="loadingToast" :class="[showIncreaseCreditLimitToast? 'toast-on': 'toast-off']">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">数据加载中</p>
+      </div>
+    </div>
+
     <div class="wx-bot-margin"></div>
 
   </div>
@@ -97,16 +105,22 @@
       return {
         currentCreditLimit: null,
         showIncreaseCreditLimitDialog: false,
+        showIncreaseCreditLimitToast: false,
         increaseCreditLimitResponse: {}
       }
     },
     computed: {},
     methods: {
       requestIncreaseCreditLimit() {
+        this.showIncreaseCreditLimitToast = true
         this.$http.get('/api/v1/loan/credit/limit/increase')
           .then((response) => {
             this.increaseCreditLimitResponse = response.data
+            this.showIncreaseCreditLimitToast = false
             this.showIncreaseCreditLimitDialog = true
+          })
+          .catch((error) => {
+            this.showIncreaseCreditLimitToast = false
           })
       }
     },
@@ -139,5 +153,14 @@
     background-color: rgba(0, 0, 0, .5);
     display: table;
     transition: opacity .2s ease;
+  }
+
+  .toast-on {
+    opacity: 1;
+  }
+
+  .toast-off {
+    opacity: 0;
+    display: none;
   }
 </style>
