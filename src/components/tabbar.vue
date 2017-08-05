@@ -2,12 +2,12 @@
   <div class="weui-tabbar">
     <router-link to="/store" class="weui-tabbar__item"
                  :class="[computeCurrentTab === '/store' ? 'weui-bar__item_on': 'weui-bar__item_off']">
-      <div class="wx-tab" >
+      <div class="wx-tab">
                     <span style="display: inline-block;position: relative;">
                       <img src="https://png.icons8.com/money-bag-yen/office/60" class="weui-tabbar__icon"
                            title="Money Bag Yen" width="30" height="30">
                       <!--<img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">-->
-                        <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
+                      <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
                     </span>
         <p class="weui-tabbar__label">我要借款</p>
       </div>
@@ -68,6 +68,7 @@
     top: 50%;
     transform: translateY(-50%);
   }
+
   .weui-bar__item_off {
     opacity: 0.5;
   }

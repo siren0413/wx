@@ -9,6 +9,7 @@ import Profile from '@/components/profile'
 import ProfileId from '@/components/profile-id'
 import ProfilePerson from '@/components/profile-person'
 import Service from '@/components/service'
+import ApplyStatus from '@/components/apply-status'
 import StoreFront from '@/components/store-front'
 
 Vue.use(Router)
@@ -59,6 +60,11 @@ const router = new Router({
       path: '/service',
       name: 'Service',
       component: Service
+    },
+    {
+      path: '/apply-status',
+      name: 'ApplyStatus',
+      component: ApplyStatus
     }
   ]
 })

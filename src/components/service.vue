@@ -2,7 +2,7 @@
   <div >
     <div class="weui-cells__title">贷款相关</div>
     <div class="weui-cells weui-cells_form">
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <router-link to="/apply-status" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">查询进度</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;">当前状态</span>
