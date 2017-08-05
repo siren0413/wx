@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p class="weui-msg__title wx-page-title">个人信息</p>
-
     <div class="weui-cells__title">居住信息</div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell">

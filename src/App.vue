@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <wxHeader></wxHeader>
     <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
       <keep-alive exclude="profile">
         <router-view class="wx-container"></router-view>
@@ -11,9 +12,10 @@
 
 <script>
   import tabbar from "./components/tabbar.vue";
+  import wxHeader from "./components/header.vue"
 
   export default {
-    components: {tabbar},
+    components: {tabbar, wxHeader},
     name: 'app',
     methods: {
       beforeEnter() {
@@ -37,11 +39,6 @@
     height: 100%;
     width: 100%;
   }
-
-  .wx-page-title {
-    padding-top: 18px;
-  }
-
   .fade-enter-active, .fade-leave-active {
     transition: opacity .1s
   }
@@ -62,7 +59,11 @@
   .wx-bot-margin {
     height: 10%;
   }
-
+  .wx-page-title {
+    color: dimgrey;
+    height: 10%;
+    max-height: 48px;
+  }
   .wx-tabbar {
     position: fixed;
     bottom: 0;
@@ -76,7 +77,7 @@
 
   .wx-container {
     top: 20px;
-    height: 89%;
+    height: 78%;
     overflow: scroll;
   }
 

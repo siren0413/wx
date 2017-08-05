@@ -1,7 +1,5 @@
 <template>
   <div >
-    <p class="weui-msg__title wx-page-title">服务台</p>
-
     <div class="weui-cells__title">贷款相关</div>
     <div class="weui-cells weui-cells_form">
       <router-link to="/profile-id" class="weui-cell weui-cell_access">

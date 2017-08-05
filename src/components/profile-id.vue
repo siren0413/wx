@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p class="weui-msg__title wx-page-title">实名认证</p>
-
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>

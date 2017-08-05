@@ -1,8 +1,5 @@
 <template>
   <div>
-
-    <p class="weui-msg__title wx-page-title">认证中心</p>
-
     <div class="weui-cells">
       <router-link to="/profile-id" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">实名认证</div>
