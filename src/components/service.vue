@@ -38,13 +38,13 @@
           <span style="vertical-align:middle; font-size: 17px;">推荐二维码</span>
         </div>
       </div>
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <div class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">领取礼包</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
           <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
         </div>
-      </router-link>
+      </div>
     </div>
 
 
