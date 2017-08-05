@@ -1,8 +1,8 @@
 <template>
   <div class="weui-tabbar">
     <router-link to="/store" class="weui-tabbar__item"
-                 :class="{'weui-bar__item_on': computeCurrentTab === '/store'}">
-      <div class="wx-tab">
+                 :class="[computeCurrentTab === '/store' ? 'weui-bar__item_on': 'weui-bar__item_off']">
+      <div class="wx-tab" >
                     <span style="display: inline-block;position: relative;">
                       <img src="https://png.icons8.com/money-bag-yen/office/60" class="weui-tabbar__icon"
                            title="Money Bag Yen" width="30" height="30">
@@ -14,7 +14,7 @@
     </router-link>
 
     <router-link to="/repay" class="weui-tabbar__item"
-                 :class="{'weui-bar__item_on': computeCurrentTab === '/repay'}">
+                 :class="[computeCurrentTab === '/repay' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
         <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">我要还款</p>
@@ -22,7 +22,7 @@
     </router-link>
 
     <router-link to="/profile" class="weui-tabbar__item"
-                 :class="{'weui-bar__item_on': computeCurrentTab === '/profile'}">
+                 :class="[computeCurrentTab === '/profile' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
                     <span style="display: inline-block;position: relative;">
                         <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
@@ -33,7 +33,7 @@
     </router-link>
 
     <router-link to="/service" class="weui-tabbar__item"
-                 :class="{'weui-bar__item_on': computeCurrentTab === '/service'}">
+                 :class="[computeCurrentTab === '/service' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
         <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">服务台</p>
@@ -67,5 +67,8 @@
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+  }
+  .weui-bar__item_off {
+    opacity: 0.5;
   }
 </style>

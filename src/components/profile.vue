@@ -4,8 +4,8 @@
       <router-link to="/profile-id" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">实名认证</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">未完成</span>
-          <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
+          <span style="vertical-align:middle; font-size: 17px;">{{ idProfileStatus.desc }}</span>
+          <span v-if="idProfileStatus.status == 1" class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
         </div>
       </router-link>
       <router-link to="/profile-person" class="weui-cell weui-cell_access">
@@ -47,6 +47,11 @@
         .then((response) => {
           this.generalProfileStatus.status = response.data.status
           this.generalProfileStatus.desc = response.data.desc
+        })
+      this.$http.get('/api/v1/user/profile/identity/status')
+        .then((response) => {
+          this.idProfileStatus.status = response.data.status
+          this.idProfileStatus.desc = response.data.desc
         })
     }
   }

@@ -77,7 +77,7 @@
 
   .wx-container {
     top: 20px;
-    height: 78%;
+    height: 79%;
     overflow: scroll;
   }
 
