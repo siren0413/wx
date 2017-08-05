@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <p class="weui-msg__title wx-page-title">服务台</p>
 
     <div class="weui-cells__title">贷款相关</div>
@@ -71,6 +71,7 @@
       </router-link>
     </div>
 
+    <div class="wx-bot-margin"></div>
 
   </div>
 </template>

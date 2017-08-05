@@ -69,6 +69,8 @@
     <modal v-if="showModal" @cancel="showModal = false">
     </modal>
 
+    <div class="wx-bot-margin"></div>
+
   </div>
 
 </template>

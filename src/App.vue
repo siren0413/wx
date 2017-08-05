@@ -2,10 +2,10 @@
   <div id="app">
     <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
       <keep-alive exclude="profile">
-        <router-view></router-view>
+        <router-view class="wx-container"></router-view>
       </keep-alive>
     </transition>
-    <tabbar v-if="$route.path !== '/login' && $route.path !== '/store-front'"></tabbar>
+    <tabbar class="wx-tabbar" v-if="$route.path !== '/login' && $route.path !== '/store-front'"></tabbar>
   </div>
 </template>
 
@@ -34,7 +34,10 @@
     text-align: center;
     /*color: #2c3e50;*/
     /*margin-top: 10px;*/
+    height: 100%;
+    width: 100%;
   }
+
   .wx-page-title {
     padding-top: 18px;
   }
@@ -47,12 +50,36 @@
   {
     opacity: 0
   }
+
   .weui-btn-area {
     margin-top: 50px;
   }
+
   .text-mask {
     color: grey;
   }
+
+  .wx-bot-margin {
+    height: 10%;
+  }
+
+  .wx-tabbar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    opacity: 1;
+    z-index: 1000;
+    height: 10%;
+    min-height: 55px;
+    max-height: 60px;
+  }
+
+  .wx-container {
+    top: 20px;
+    height: 89%;
+    overflow: scroll;
+  }
+
   html, body {
     background: rgb(252, 252, 252);
     height: 100%;
