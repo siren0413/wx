@@ -79,33 +79,33 @@ const router = new Router({
   ]
 })
 
-router.beforeEach(
-  (to, from, next) => {
-    // console.log("from: " + from.path + " to: " + to.path)
-    if (localStorage.getItem('accessToken')) {
-      axios.get('/api/v1/tokeninfo')
-        .then(function (response) {
-          if (to.path === '/login') {
-            router.push(from.path)
-          } else {
-            next()
-          }
-        })
-        .catch(function (error) {
-          if (to.path !== '/login') {
-            router.push('/login')
-          } else {
-            next()
-          }
-        })
-    } else {
-      if (to.path !== '/login' && to.path !== '/store-front') {
-        router.push('/login')
-      } else {
-        next()
-      }
-    }
-  }
-)
+// router.beforeEach(
+//   (to, from, next) => {
+//     // console.log("from: " + from.path + " to: " + to.path)
+//     if (localStorage.getItem('accessToken')) {
+//       axios.get('/api/v1/tokeninfo')
+//         .then(function (response) {
+//           if (to.path === '/login') {
+//             router.push(from.path)
+//           } else {
+//             next()
+//           }
+//         })
+//         .catch(function (error) {
+//           if (to.path !== '/login') {
+//             router.push('/login')
+//           } else {
+//             next()
+//           }
+//         })
+//     } else {
+//       if (to.path !== '/login' && to.path !== '/store-front') {
+//         router.push('/login')
+//       } else {
+//         next()
+//       }
+//     }
+//   }
+// )
 
 export default router

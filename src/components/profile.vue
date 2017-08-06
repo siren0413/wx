@@ -16,12 +16,12 @@
         </div>
       </router-link>
     </div>
-
+    <loading-toast></loading-toast>
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex'
+  import {mapActions, mapState} from 'vuex'
   import tabbar from "./tabbar.vue";
 
   export default {
@@ -29,29 +29,38 @@
     name: 'profile',
     data() {
       return {
+        ...mapActions(['incLoadingCount','decLoadingCount']),
         idProfileStatus: {
-          status:null,
-          desc:''
+          status: null,
+          desc: ''
         },
-        generalProfileStatus:{
-          status:null,
-          desc:''
+        generalProfileStatus: {
+          status: null,
+          desc: ''
         }
       }
     },
     computed: {},
     methods: {},
     created() {
+      this.incLoadingCount()
       this.$http.get('/api/v1/user/profile/general/status')
         .then((response) => {
           this.generalProfileStatus.status = response.data.status
           this.generalProfileStatus.desc = response.data.desc
-        })
+          this.decLoadingCount()
+        }).catch((error) => {
+        this.decLoadingCount()
+      })
+      this.incLoadingCount()
       this.$http.get('/api/v1/user/profile/identity/status')
         .then((response) => {
           this.idProfileStatus.status = response.data.status
           this.idProfileStatus.desc = response.data.desc
-        })
+          this.decLoadingCount()
+        }).catch((error) => {
+        this.decLoadingCount()
+      })
     }
   }
 </script>

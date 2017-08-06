@@ -8,7 +8,8 @@ const state = {
   userInfo: {
     phoneNumber: '',
     token: null
-  }
+  },
+  loadingCount: 0
 }
 
 const getters = {}
@@ -23,7 +24,14 @@ const mutations = {
 }
 
 const actions = {
-
+  incLoadingCount(){
+    console.log("loading count++")
+    state.loadingCount++
+  },
+  decLoadingCount(){
+    console.log("loading count--")
+    state.loadingCount--
+  }
 }
 
 export default new Vuex.Store({
