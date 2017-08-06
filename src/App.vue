@@ -39,6 +39,11 @@
     height: 100%;
     width: 100%;
   }
+  .weui-cell {
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+  }
+
   .fade-enter-active, .fade-leave-active {
     transition: opacity .1s
   }

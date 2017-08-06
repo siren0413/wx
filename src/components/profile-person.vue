@@ -2,20 +2,21 @@
   <div>
     <div class="weui-cells__title">居住信息</div>
     <div class="weui-cells weui-cells_form">
-      <div class="weui-cell">
+      <div class="weui-cell" :class="{'animated shake': animations.city}" >
         <div class="weui-cell__hd"><label class="weui-label">现居城市</label></div>
-        <div class="weui-cell__bd" >
-          <input class="weui-input" type="text" placeholder="请输入您的现居城市" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentCity">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请输入您的现居城市" :disabled="!editable" :class="[{'text-mask': !editable}]"
+                 v-model="residentInfo.residentCity">
         </div>
       </div>
-      <div class="weui-cell">
+      <div class="weui-cell" :class="{'animated shake': animations.address}">
         <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
           <input class="weui-input" placeholder="请输入您的详细地址" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentAddress">
         </div>
       </div>
 
-      <div class="weui-cell wx-select-box">
+      <div class="weui-cell wx-select-box" :class="{'animated shake': animations.time}">
         <div class="weui-cell__hd"><label class="weui-label">居住时长</label></div>
         <div class="weui-cell__bd">
           <select class="weui-select" name="select1" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentTime">
@@ -30,13 +31,21 @@
     </div>
 
 
-    <div class="weui-cells__title">学历职业</div>
+    <div class="weui-cells__title">个人信息</div>
     <div class="weui-cells weui-cells_form">
 
-      <div class="weui-cell wx-select-box">
+      <div class="weui-cell" :class="{'animated shake': animations.age}">
+        <div class="weui-cell__hd"><label class="weui-label">年龄</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" pattern="[0-9]*" v-mask="'##'" placeholder="请输入您的年龄" :disabled="!editable" :class="[{'text-mask': !editable}]"
+                 v-model="personalInfo.age">
+        </div>
+      </div>
+
+      <div class="weui-cell wx-select-box" :class="{'animated shake': animations.education}">
         <div class="weui-cell__hd"><label class="weui-label">最高学历</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="educationInfo.education">
+          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="personalInfo.education">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '大学或大学以上' }}</option>
             <option class="select-option" value="1">{{ '大专' }}</option>
@@ -47,10 +56,10 @@
         </div>
       </div>
 
-      <div class="weui-cell wx-select-box">
+      <div class="weui-cell wx-select-box" :class="{'animated shake': animations.job}">
         <div class="weui-cell__hd"><label class="weui-label">职业</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="educationInfo.job">
+          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="personalInfo.job">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '1' }}</option>
             <option class="select-option" value="1">{{ '2' }}</option>
@@ -61,10 +70,10 @@
         </div>
       </div>
 
-      <div class="weui-cell wx-select-box">
+      <div class="weui-cell wx-select-box" :class="{'animated shake': animations.income}">
         <div class="weui-cell__hd"><label class="weui-label">月均收入</label></div>
         <div class="weui-cell__bd">
-          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="educationInfo.income">
+          <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="personalInfo.income">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '小于 500' }}</option>
             <option class="select-option" value="1">{{ '1000 ~ 2000' }}</option>
@@ -80,7 +89,7 @@
     <div class="weui-cells__title">其他</div>
     <div class="weui-cells weui-cells_form">
 
-      <div class="weui-cell wx-select-box">
+      <div class="weui-cell wx-select-box" :class="{'animated shake': animations.marriage}">
         <div class="weui-cell__hd"><label class="weui-label">婚姻状态</label></div>
         <div class="weui-cell__bd">
           <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.marriageStatus">
@@ -91,7 +100,7 @@
         </div>
       </div>
 
-      <div class="weui-cell">
+      <div class="weui-cell" :class="{'animated shake': animations.qq}">
         <div class="weui-cell__hd"><label class="weui-label">QQ</label></div>
         <div class="weui-cell__bd">
           <input class="weui-input" placeholder="请输入您的QQ号码" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.qq">
@@ -127,7 +136,7 @@
 <script>
   import {mapActions, mapState} from 'vuex'
   import tabbar from "./tabbar.vue";
-  import router from '../router'
+  import router from '../router';
 
   export default {
     components: {tabbar},
@@ -142,7 +151,8 @@
           residentAddress: '',
           residentTime: ''
         },
-        educationInfo: {
+        personalInfo: {
+          age: null,
           education: '',
           job: '',
           income: ''
@@ -150,21 +160,71 @@
         otherInfo: {
           marriageStatus: '',
           qq: ''
+        },
+        animations: {
+          city: false,
+          address: false,
+          time: false,
+          age: false,
+          education: false,
+          job: false,
+          income: false,
+          marriage: false,
+          qq: false
         }
       }
     },
     computed: {},
     methods: {
-      ...mapActions(['incLoadingCount','decLoadingCount']),
+      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       save() {
+        let success = true;
+        if (!this.residentInfo.residentCity) {
+          this.animations.city = true;
+          success = false;
+        }
+        if (!this.residentInfo.residentAddress) {
+          this.animations.address = true;
+          success = false;
+        }
+        if (!this.residentInfo.residentTime) {
+          this.animations.time = true;
+          success = false;
+        }
+        if (!this.personalInfo.age) {
+          this.animations.age = true;
+          success = false;
+        }
+        if (!this.personalInfo.education) {
+          this.animations.education = true;
+          success = false;
+        }
+        if (!this.personalInfo.job) {
+          this.animations.job = true;
+          success = false;
+        }
+        if (!this.personalInfo.income) {
+          this.animations.income = true;
+          success = false;
+        }
+        if (!this.otherInfo.marriageStatus) {
+          this.animations.marriage = true;
+          success = false;
+        }
+        if (!this.otherInfo.qq) {
+          this.animations.qq = true;
+          success = false;
+        }
+        if (!success) return;
+
         this.waitingResponse = true
         this.$http.post('/api/v1/user/profile/general', {
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,
           residentTime: this.residentInfo.residentTime,
-          education: this.educationInfo.education,
-          job: this.educationInfo.job,
-          income: this.educationInfo.income,
+          education: this.personalInfo.education,
+          job: this.personalInfo.job,
+          income: this.personalInfo.income,
           marriageStatus: this.otherInfo.marriageStatus,
           qq: this.otherInfo.qq
         }).then(response => {
@@ -189,7 +249,6 @@
           .catch(error => {
             this.waitingResponse = false
             // TODO show error dialog
-
           })
 
       },
@@ -201,9 +260,9 @@
             this.residentInfo.residentCity = response.data.residentCity
             this.residentInfo.residentAddress = response.data.residentAddress
             this.residentInfo.residentTime = response.data.residentTime
-            this.educationInfo.education = response.data.education
-            this.educationInfo.job = response.data.job
-            this.educationInfo.income = response.data.income
+            this.personalInfo.education = response.data.education
+            this.personalInfo.job = response.data.job
+            this.personalInfo.income = response.data.income
             this.otherInfo.marriageStatus = response.data.marriageStatus
             this.otherInfo.qq = response.data.qq
             this.editable = true
@@ -215,6 +274,17 @@
             this.waitingResponse = false
             this.decLoadingCount()
           })
+      },
+      cleanupTimer() {
+        this.animations.city = false;
+        this.animations.address = false;
+        this.animations.time = false;
+        this.animations.age = false;
+        this.animations.education = false;
+        this.animations.job = false;
+        this.animations.income = false;
+        this.animations.marriage = false;
+        this.animations.qq = false;
       }
     },
     created() {
@@ -224,17 +294,18 @@
           this.residentInfo.residentCity = response.data.residentCity
           this.residentInfo.residentAddress = response.data.residentAddress
           this.residentInfo.residentTime = response.data.residentTime
-          this.educationInfo.education = response.data.education
-          this.educationInfo.job = response.data.job
-          this.educationInfo.income = response.data.income
+          this.personalInfo.education = response.data.education
+          this.personalInfo.job = response.data.job
+          this.personalInfo.income = response.data.income
           this.otherInfo.marriageStatus = response.data.marriageStatus
           this.otherInfo.qq = response.data.qq
           this.editable = false
           this.decLoadingCount()
         })
-        .catch((error)=>{
+        .catch((error) => {
           this.decLoadingCount()
-        })
+        });
+      setInterval(this.cleanupTimer, 2000)
     }
   }
 </script>

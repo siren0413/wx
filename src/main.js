@@ -7,6 +7,7 @@ import store from './store'
 import 'weui'
 import 'animate.css'
 import {VueMaskDirective} from 'v-mask'
+import {VueFocusDirective} from 'vue-focus'
 import Modal from './components/modal.vue'
 import LoadingToast from './components/loading-toast.vue'
 

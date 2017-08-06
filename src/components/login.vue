@@ -203,11 +203,6 @@
     padding-bottom: 10px;
   }
 
-  .weui-cell {
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-  }
-
   .wx-container {
     height: 100%;
     top: 0
