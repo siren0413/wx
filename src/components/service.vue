@@ -88,13 +88,7 @@
       </div>
     </div>
 
-    <div id="loadingToast" :class="[showIncreaseCreditLimitToast? 'toast-on': 'toast-off']">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">数据加载中</p>
-      </div>
-    </div>
+    <loading-toast></loading-toast>
 
     <div class="wx-bot-margin"></div>
 
@@ -102,7 +96,7 @@
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex'
+  import {mapActions} from 'vuex'
   import tabbar from "./tabbar.vue";
 
   export default {
@@ -112,29 +106,37 @@
       return {
         currentCreditLimit: null,
         showIncreaseCreditLimitDialog: false,
-        showIncreaseCreditLimitToast: false,
         increaseCreditLimitResponse: {}
       }
     },
     computed: {},
     methods: {
+      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       requestIncreaseCreditLimit() {
+        this.incLoadingCount()
         this.showIncreaseCreditLimitToast = true
         this.$http.get('/api/v1/loan/credit/limit/increase')
           .then((response) => {
             this.increaseCreditLimitResponse = response.data
             this.showIncreaseCreditLimitToast = false
             this.showIncreaseCreditLimitDialog = true
+            this.decLoadingCount()
           })
           .catch((error) => {
             this.showIncreaseCreditLimitToast = false
+            this.decLoadingCount()
           })
       }
     },
     created() {
+      this.incLoadingCount()
       this.$http.get('/api/v1/loan/credit/limit')
         .then((response) => {
           this.currentCreditLimit = response.data.limit
+          this.decLoadingCount()
+        })
+        .catch((response)=>{
+          this.decLoadingCount()
         })
     }
   }

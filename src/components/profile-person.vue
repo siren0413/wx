@@ -109,13 +109,6 @@
       <a class="weui-btn weui-btn_primary" @click="edit">我要修改</a>
     </div>
 
-    <!--<div id="loadingToast" style="opacity: 0; display: none;">-->
-    <!--<div class="weui-mask_transparent"></div>-->
-    <!--<div class="weui-toast">-->
-    <!--<i class="weui-loading weui-icon_toast"></i>-->
-    <!--<p class="weui-toast__content">数据加载中</p>-->
-    <!--</div>-->
-    <!--</div>-->
 
     <div id="toast" :class="[showToast? 'toast-on': 'toast-off']">
       <div class="weui-mask_transparent"></div>
@@ -125,12 +118,14 @@
       </div>
     </div>
 
+    <loading-toast></loading-toast>
+
     <div class="wx-bot-margin"></div>
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex'
+  import {mapActions, mapState} from 'vuex'
   import tabbar from "./tabbar.vue";
   import router from '../router'
 
@@ -160,9 +155,9 @@
     },
     computed: {},
     methods: {
+      ...mapActions(['incLoadingCount','decLoadingCount']),
       save() {
         this.waitingResponse = true
-
         this.$http.post('/api/v1/user/profile/general', {
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,
@@ -176,7 +171,6 @@
           this.waitingResponse = false
           this.showToast = true
           this.editable = false
-
           this.$http.get('/api/v1/user/profile/identity')
             .then(response => {
               setTimeout(() => {
@@ -195,11 +189,13 @@
           .catch(error => {
             this.waitingResponse = false
             // TODO show error dialog
+
           })
 
       },
       edit() {
         this.waitingResponse = true
+        this.incLoadingCount()
         this.$http.get('/api/v1/user/profile/general')
           .then((response) => {
             this.residentInfo.residentCity = response.data.residentCity
@@ -212,14 +208,17 @@
             this.otherInfo.qq = response.data.qq
             this.editable = true
             this.waitingResponse = false
+            this.decLoadingCount()
           })
           .catch((error) => {
             this.editable = true
             this.waitingResponse = false
+            this.decLoadingCount()
           })
       }
     },
     created() {
+      this.incLoadingCount()
       this.$http.get('/api/v1/user/profile/general')
         .then((response) => {
           this.residentInfo.residentCity = response.data.residentCity
@@ -231,6 +230,10 @@
           this.otherInfo.marriageStatus = response.data.marriageStatus
           this.otherInfo.qq = response.data.qq
           this.editable = false
+          this.decLoadingCount()
+        })
+        .catch((error)=>{
+          this.decLoadingCount()
         })
     }
   }

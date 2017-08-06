@@ -25,11 +25,9 @@ const mutations = {
 
 const actions = {
   incLoadingCount(){
-    console.log("loading count++")
     state.loadingCount++
   },
   decLoadingCount(){
-    console.log("loading count--")
     state.loadingCount--
   }
 }

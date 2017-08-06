@@ -3,20 +3,20 @@
   <div>
 
     <div class="page__bd page__bd_spacing" v-if="statusList.length > 0">
-        <div v-for="(status,index) in statusList">
-          <div class="icon-box">
-            <i class="weui-icon_msg wx-progress-icon" :class="getClass(status.status)"></i>
-            <div class="icon-box__ctn">
-              <h3 class="icon-box__title">{{status.title}}</h3>
-              <p class="icon-box__desc">{{status.desc}}</p>
-            </div>
-          </div>
-          <div>
-            <div v-if="index !== statusList.length-1">
-              <img src="../assets/progress-line-success.png" class="wx-progress-line"/>
-            </div>
+      <div v-for="(status,index) in statusList">
+        <div class="icon-box">
+          <i class="weui-icon_msg wx-progress-icon" :class="getClass(status.status)"></i>
+          <div class="icon-box__ctn">
+            <h3 class="icon-box__title">{{status.title}}</h3>
+            <p class="icon-box__desc">{{status.desc}}</p>
           </div>
         </div>
+        <div>
+          <div v-if="index !== statusList.length-1">
+            <img src="../assets/progress-line-success.png" class="wx-progress-line"/>
+          </div>
+        </div>
+      </div>
     </div>
     <div v-else>
       <img src="../assets/empty.png" style="height: 80px; margin-top: 30%"/>
@@ -25,12 +25,14 @@
       </div>
     </div>
 
+    <loading-toast></loading-toast>
     <div class="wx-bot-margin"></div>
 
   </div>
 </template>
 
 <script>
+  import {mapActions} from 'vuex'
   import tabbar from "./tabbar.vue";
 
   export default {
@@ -43,6 +45,7 @@
     },
     computed: {},
     methods: {
+      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       getClass(id) {
         if (id === 0) return 'weui-icon-success'
         else if (id === 1) return 'weui-icon-waiting'
@@ -50,10 +53,14 @@
       }
     },
     created() {
+      this.incLoadingCount()
       this.$http.get('/api/v1/loan/application/status/all')
         .then((response) => {
           this.statusList = response.data.statusList
-        })
+          this.decLoadingCount()
+        }).catch((error) => {
+        this.decLoadingCount()
+      })
     }
   }
 </script>

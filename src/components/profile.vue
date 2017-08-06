@@ -29,7 +29,7 @@
     name: 'profile',
     data() {
       return {
-        ...mapActions(['incLoadingCount','decLoadingCount']),
+
         idProfileStatus: {
           status: null,
           desc: ''
@@ -41,7 +41,9 @@
       }
     },
     computed: {},
-    methods: {},
+    methods: {
+      ...mapActions(['incLoadingCount', 'decLoadingCount'])
+    },
     created() {
       this.incLoadingCount()
       this.$http.get('/api/v1/user/profile/general/status')

@@ -69,6 +69,8 @@
     <modal v-if="showModal" @cancel="showModal = false">
     </modal>
 
+    <loading-toast></loading-toast>
+
     <div class="wx-bot-margin"></div>
 
   </div>
@@ -105,12 +107,15 @@
       }
     },
     methods: {
+      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       apply() {
         this.showModal = true;
       },
       updateServiceFee() {
         this.serviceFee = null
         this.subTotal = null
+
+        this.incLoadingCount()
         this.$http.get('/api/v1/loan/servicefee', {
           params: {
             amount: this.loanAmounts[this.currentAmountIndex],
@@ -120,7 +125,10 @@
           .then((response) => {
             this.serviceFee = response.data.fee
             this.subTotal = this.serviceFee + this.loanAmounts[this.currentAmountIndex]
-          })
+            this.decLoadingCount()
+          }).catch((error) => {
+          this.decLoadingCount()
+        })
       }
     },
     watch: {
@@ -146,10 +154,14 @@
       }
     },
     created() {
+      this.incLoadingCount()
       this.$http.get('/api/v1/loan/configs')
-        .then(function (response) {
+        .then((response) => {
           this.loanConfigs = response.data
-        }.bind(this))
+          this.decLoadingCount()
+        }).catch((error) => {
+        this.decLoadingCount()
+      })
     }
   }
 </script>
@@ -192,7 +204,7 @@
     width: 100px;
   }
 
-  .wx-amount-img, .wx-term-img  {
+  .wx-amount-img, .wx-term-img {
     height: 19px;
     vertical-align: middle;
     position: relative;
@@ -201,17 +213,19 @@
     padding-left: 20px;
     padding-right: 6px;
   }
-  .wx-term-select{
+
+  .wx-term-select {
     padding-right: 28px;
   }
-  .wx-subtotal-img{
+
+  .wx-subtotal-img {
     height: 14px;
     padding-right: 5px;
     vertical-align: middle;
     margin-top: -5px;
   }
 
-  .weui-label{
+  .weui-label {
     text-align: left;
   }
 

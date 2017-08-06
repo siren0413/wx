@@ -57,11 +57,13 @@
       </div>
     </div>
 
+    <loading-toast></loading-toast>
+
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex'
+  import {mapActions} from 'vuex'
   import tabbar from "./tabbar.vue";
   import router from '../router'
 
@@ -79,6 +81,7 @@
     },
     computed: {},
     methods: {
+      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       save() {
         this.waitingResponse = true
         this.$http.post('/api/v1/user/profile/identity', {
@@ -111,6 +114,7 @@
           })
       },
       edit() {
+        this.incLoadingCount()
         this.waitingResponse = true
         this.$http.get('/api/v1/user/profile/identity')
           .then((response) => {
@@ -118,20 +122,26 @@
             this.idNumber = response.data.idNumber
             this.editable = true
             this.waitingResponse = false
+            this.decLoadingCount()
           })
           .catch((error) => {
             this.editable = true
             this.waitingResponse = false
+            this.decLoadingCount()
           })
       }
     },
     created() {
+      this.incLoadingCount()
       this.$http.get('/api/v1/user/profile/identity')
         .then((response) => {
           this.name = response.data.name
           this.idNumber = response.data.idNumber
           this.editable = false
-        })
+          this.decLoadingCount()
+        }).catch((error) => {
+        this.decLoadingCount()
+      })
     },
     filters: {
       maskId: function (value) {
