@@ -99,20 +99,15 @@
       </div>
     </div>
 
-    <div id="loadingToast" :class="[showLoadingToast? 'toast-on': 'toast-off']">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">数据加载中</p>
-      </div>
-    </div>
+    <loading-toast></loading-toast>
 
   </div>
 </template>
 
 <script>
   import tabbar from "./tabbar.vue";
-  import router from '../router'
+  import router from '../router';
+  import {mapActions} from 'vuex'
 
   export default {
     components: {tabbar},
@@ -134,12 +129,12 @@
           desc: '',
           status: null
         },
-        showLoadingToast: false,
         passwordStatus: null
       }
     },
     computed: {},
     methods: {
+      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       confirmDialog(status) {
         this.getPasswordStatus()
         this.cleanForm()
@@ -153,7 +148,7 @@
       },
       save() {
         if (this.isValidPassword(this.passwordCreate.input) && this.passwordCreate.input === this.passwordCreate.confirm) {
-          this.showLoadingToast = true
+          this.incLoadingCount()
           this.$http.post('/api/v1/user/password/create', {
             password: this.passwordCreate.input
           })
@@ -161,7 +156,7 @@
               this.result.title = "成功"
               this.result.desc = "密码设置成功"
               this.result.status = 0
-              this.showLoadingToast = false
+              this.decLoadingCount()
               this.showResultDialog = true
             })
             .catch((error) => {
@@ -171,14 +166,14 @@
               if (error && error.message) {
                 this.result.desc = error.message
               }
-              this.showLoadingToast = false
+              this.decLoadingCount()
               this.showResultDialog = true
             })
         }
       },
       update() {
         if (this.isValidPassword(this.passwordUpdate.currentPassword) && this.isValidPassword(this.passwordUpdate.input) && this.passwordUpdate.input === this.passwordUpdate.confirm) {
-          this.showLoadingToast = true
+          this.incLoadingCount()
           this.$http.post('/api/v1/user/password/update', {
             currentPassword: this.passwordUpdate.currentPassword,
             newPassword: this.passwordUpdate.input
@@ -187,7 +182,7 @@
               this.result.title = "成功"
               this.result.desc = "密码修改成功"
               this.result.status = 0
-              this.showLoadingToast = false
+              this.decLoadingCount()
               this.showResultDialog = true
             })
             .catch((error) => {
@@ -197,21 +192,21 @@
               if (error && error.message) {
                 this.result.desc = error.message
               }
-              this.showLoadingToast = false
+              this.decLoadingCount()
               this.showResultDialog = true
             })
         }
       },
       getPasswordStatus() {
-        this.showLoadingToast = true
+        this.incLoadingCount()
         this.passwordStatus = null
         this.$http.get('/api/v1/user/password/status')
           .then((response) => {
             this.passwordStatus = response.data.status
-            this.showLoadingToast = false
+            this.decLoadingCount()
           })
           .catch((error) => {
-            this.showLoadingToast = false
+            this.decLoadingCount()
           })
       },
       cleanForm() {

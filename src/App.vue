@@ -79,6 +79,7 @@
     top: 20px;
     height: 82%;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   html, body {
