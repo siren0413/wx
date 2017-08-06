@@ -57,7 +57,7 @@
   }
 
   .wx-bot-margin {
-    height: 10%;
+    height: 12%;
   }
   .wx-page-title {
     color: dimgrey;
@@ -77,7 +77,7 @@
 
   .wx-container {
     top: 20px;
-    height: 79%;
+    height: 82%;
     overflow: scroll;
   }
 
@@ -87,5 +87,11 @@
     width: 100%;
     margin: 0;
     padding: 0;
+  }
+
+  /* ios compatibility */
+  input:disabled {
+    -webkit-text-fill-color: grey;
+    -webkit-opacity: 1;
   }
 </style>

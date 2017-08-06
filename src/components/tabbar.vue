@@ -64,9 +64,14 @@
     /*height: 50%;*/
     /*margin-top: -25%;*/
     /*text-align: center;*/
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    /*position: relative;*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+    /*vertical-align: middle;*/
+  }
+
+  .weui-tabbar__item {
+    padding-top: 8px;
   }
 
   .weui-bar__item_off {

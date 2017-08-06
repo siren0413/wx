@@ -5,7 +5,7 @@
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label">现居城市</label></div>
         <div class="weui-cell__bd" >
-          <input class="weui-input" placeholder="请输入您的现居城市" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentCity">
+          <input class="weui-input" type="text" placeholder="请输入您的现居城市" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentCity">
         </div>
       </div>
       <div class="weui-cell">
@@ -125,6 +125,7 @@
       </div>
     </div>
 
+    <div class="wx-bot-margin"></div>
   </div>
 </template>
 

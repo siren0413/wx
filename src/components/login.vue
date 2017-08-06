@@ -21,7 +21,7 @@
 
       <div class="weui-cell" :class="[{'animated shake': animateSms}]">
         <div class="weui-cell__bd">
-          <input class="weui-input" maxlength="6" v-model="smsCode" placeholder="短信验证码"/>
+          <input class="weui-input" type="number" v-model="smsCode" placeholder="短信验证码"/>
         </div>
         <div class="weui-cell__ft">
           <div v-if="smsDisabled">
@@ -45,7 +45,7 @@
     </div>
 
     <div class="weui-btn-area">
-      <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_disabled': !allInputValid}]" @click="login">登录</a>
+      <a class="weui-btn weui-btn_primary" @click="login">登录</a>
     </div>
 
     <div class="weui-footer">
@@ -92,22 +92,22 @@
         saveToken: 'saveToken'
       }),
       login: function () {
-        this.savePhoneNumber(this.phoneNumber)
-        this.$validator.validateAll().then(result => {
-        });
+//        this.savePhoneNumber(this.phoneNumber)
+//        this.$validator.validateAll().then(result => {
+//        });
         let success = true;
-        if (this.phoneNumber.length !== 11) {
-          this.animatePhone = true;
-          success = false;
-        }
-        if (!this.agreeTos) {
-          this.animateTos = true;
-          success = false;
-        }
-        if (this.smsCode.length !== 6) {
-          this.animateSms = true;
-          success = false;
-        }
+//        if (this.phoneNumber.length !== 11) {
+//          this.animatePhone = true;
+//          success = false;
+//        }
+//        if (!this.agreeTos) {
+//          this.animateTos = true;
+//          success = false;
+//        }
+//        if (this.smsCode.length !== 6) {
+//          this.animateSms = true;
+//          success = false;
+//        }
         if (success) {
           this.$http.post('/api/v1/auth', {
             phoneNumber: this.phoneNumber,
@@ -124,10 +124,10 @@
         }
       },
       sendCode: function () {
-        if (this.phoneNumber.length !== 11) {
-          this.animatePhone = true;
-          return
-        }
+//        if (this.phoneNumber.length !== 11) {
+//          this.animatePhone = true;
+//          return
+//        }
         this.smsDisabled = true;
         this.startTimer();
 
@@ -138,8 +138,8 @@
 
           }.bind(this))
           .catch(function (error) {
-            this.animatePhone = true;
-            this.stopTimer();
+//            this.animatePhone = true;
+//            this.stopTimer();
           }.bind(this));
       },
       timer: function () {
@@ -182,7 +182,7 @@
   .weui-cell {
     height: 45px;
     font-size: 18px;
-    text-align: left;
+    text-align: left  ;
   }
 
   .sms-cooldown-btn {
@@ -213,8 +213,9 @@
     animation-duration: 0.5s;
     animation-iteration-count: 1;
   }
-  .wx-container{
+
+  .wx-container {
     height: 100%;
-    top:0
+    top: 0
   }
 </style>

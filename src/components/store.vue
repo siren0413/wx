@@ -8,28 +8,28 @@
     <div class="weui-cells">
 
       <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <img src="../assets/rmb-red.png" class="wx-amount-img"/>
         <div class="weui-cell__hd">
           <label for="" class="weui-label">借款金额</label>
         </div>
         <div class="weui-cell__bd wx-amount-cell">
-          <img src="../assets/rmb-red.png" class="wx-amount-img"/>
           <select id="loan-amount" class="weui-select wx-amount-select" name="select1" v-model="currentAmountIndex">
             <template v-for="(amount, index) in loanAmounts">
-              <option class="select-option" :value="index">{{ amount }}</option>
+              <option class="select-option" :value="index"> {{ amount }} 元</option>
             </template>
           </select>
         </div>
       </div>
 
       <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <img src="../assets/loan-term.png" class="wx-term-img"/>
         <div class="weui-cell__hd">
           <label for="" class="weui-label">借款天数</label>
         </div>
         <div class="weui-cell__bd">
-          <img src="../assets/loan-term.png" class="wx-term-img"/>
           <select class="weui-select wx-term-select" name="select2" v-model="currentTermIndex">
             <template v-for="(term, index) in loanTerms">
-              <option :value="index">{{ term }}天</option>
+              <option :value="index">{{ term }} 天</option>
             </template>
           </select>
         </div>
@@ -189,15 +189,17 @@
 
   .weui-select {
     text-align-last: right;
-    width: 50%;
+    width: 100px;
   }
 
   .wx-amount-img, .wx-term-img  {
     height: 19px;
     vertical-align: middle;
-    position: absolute;
-    right: 73px;
-    top: 28%
+    position: relative;
+    /*right: 73px;*/
+    /*top: 28%*/
+    padding-left: 20px;
+    padding-right: 6px;
   }
   .wx-term-select{
     padding-right: 28px;
@@ -207,6 +209,10 @@
     padding-right: 5px;
     vertical-align: middle;
     margin-top: -5px;
+  }
+
+  .weui-label{
+    text-align: left;
   }
 
 </style>
