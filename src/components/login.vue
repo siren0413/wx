@@ -2,8 +2,7 @@
   <div>
     <div class="logo">Logo</div>
     <div class="weui-cells weui-cells_form">
-      <div class="weui-cell"
-           v-bind:class="{'weui-cell_warn' : !isValidPhone, 'animated shake': animatePhone}">
+      <div class="weui-cell" :class="{'animated shake': animatePhone}">
         <div class="weui-cell__bd">
           <input class="weui-input wx-input-phone" type="text" pattern="[0-9]*" name="phoneNumber" v-mask="'### #### ####'" v-model="phoneNumber"
                  placeholder="手机号码"/>
@@ -67,8 +66,6 @@
         smsDisabled: false,
         time: 60,
         agreeTos: false,
-        isValidPhone: true,
-        isValidSms: true,
         animateTos: false,
         animatePhone: false,
         animateSms: false
