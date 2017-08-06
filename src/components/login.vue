@@ -3,25 +3,19 @@
     <div class="logo">Logo</div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell"
-           v-bind:class="{'weui-cell_warn' : errors.has('phoneNumber') || !isValidPhone, 'animated shake': animatePhone}">
+           v-bind:class="{'weui-cell_warn' : !isValidPhone, 'animated shake': animatePhone}">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="number" v-validate="{max:11}" name="phoneNumber" v-model="phoneNumber"
-                 @blur="validatePhoneNumber" @focus="isValidPhone=true"
+          <input class="weui-input wx-input-phone" type="text" pattern="[0-9]*" name="phoneNumber" v-mask="'### #### ####'" v-model="phoneNumber"
                  placeholder="手机号码"/>
         </div>
-        <div class="weui-cell__ft">
-          <div v-if="errors.has('phoneNumber') || !isValidPhone">
-            <i class="weui-icon-warn"></i>
-          </div>
-          <div v-else-if="isValidPhoneNumber">
-            <i class="weui-icon-success"></i>
-          </div>
+        <div v-if="isValidPhoneNumber">
+          <i style="display: block" class="weui-icon-success"></i>
         </div>
       </div>
 
       <div class="weui-cell" :class="[{'animated shake': animateSms}]">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="number" v-model="smsCode" placeholder="短信验证码"/>
+          <input class="weui-input wx-input-sms" type="text" pattern="[0-9]*" v-mask="'######'" v-model="smsCode" placeholder="短信验证码"/>
         </div>
         <div class="weui-cell__ft">
           <div v-if="smsDisabled">
@@ -55,11 +49,13 @@
       </p>
       <p class="weui-footer__text">Copyright © 2008-2016 weui.io</p>
     </div>
+
+    <loading-toast></loading-toast>
   </div>
 </template>
 
 <script>
-  import {mapMutations, mapState, mapGetters} from 'vuex'
+  import {mapMutations, mapState, mapGetters, mapActions} from 'vuex'
   import router from '../router'
 
   export default {
@@ -79,11 +75,11 @@
       }
     },
     computed: {
-      isValidPhoneNumber: function () {
-        return this.phoneNumber.length === 11
+      isValidPhoneNumber() {
+        return /[0-9]{11}/.test(this.phoneNumber.replace(/\s+/g, ''))
       },
-      allInputValid() {
-        return this.phoneNumber.length === 11 && this.agreeTos && this.smsCode.length === 6
+      isValidSmsCode() {
+        return /[0-9]{6}/.test(this.smsCode)
       }
     },
     methods: {
@@ -91,56 +87,60 @@
         savePhoneNumber: 'savePhoneNumber',
         saveToken: 'saveToken'
       }),
+      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       login: function () {
-//        this.savePhoneNumber(this.phoneNumber)
-//        this.$validator.validateAll().then(result => {
-//        });
         let success = true;
-//        if (this.phoneNumber.length !== 11) {
-//          this.animatePhone = true;
-//          success = false;
-//        }
-//        if (!this.agreeTos) {
-//          this.animateTos = true;
-//          success = false;
-//        }
-//        if (this.smsCode.length !== 6) {
-//          this.animateSms = true;
-//          success = false;
-//        }
+        if (!this.isValidPhoneNumber) {
+          this.animatePhone = true;
+          success = false;
+        }
+        if (!this.isValidSmsCode) {
+          this.animateSms = true;
+          success = false;
+        }
+        if (!this.agreeTos) {
+          this.animateTos = true;
+          success = false;
+        }
         if (success) {
+          this.incLoadingCount()
           this.$http.post('/api/v1/auth', {
-            phoneNumber: this.phoneNumber,
+            phoneNumber: this.phoneNumber.replace(/\s+/g, ''),
             code: this.smsCode,
             agreeTos: this.agreeTos
           })
-            .then(function (response) {
+            .then((response) => {
               // save token
               localStorage.setItem('accessToken', response.data.accessToken)
+              this.decLoadingCount()
               router.push('/store')
             })
-            .catch(function (error) {
+            .catch((error) => {
+              // TODO dialog
+              this.decLoadingCount()
             })
         }
       },
       sendCode: function () {
-//        if (this.phoneNumber.length !== 11) {
-//          this.animatePhone = true;
-//          return
-//        }
+        if (!this.isValidPhoneNumber) {
+          this.animatePhone = true;
+          return
+        }
         this.smsDisabled = true;
         this.startTimer();
 
+        this.incLoadingCount()
         this.$http.post('/api/v1/sendcode', {
-          phoneNumber: this.phoneNumber
+          phoneNumber: this.phoneNumber.replace(/\s+/g, '')
         })
-          .then(function (response) {
-
-          }.bind(this))
-          .catch(function (error) {
-//            this.animatePhone = true;
-//            this.stopTimer();
-          }.bind(this));
+          .then((response) => {
+            this.decLoadingCount()
+          })
+          .catch((error) => {
+            this.animatePhone = true;
+            this.stopTimer();
+            this.decLoadingCount()
+          });
       },
       timer: function () {
         if (this.time > 0) {
@@ -162,9 +162,6 @@
         this.animateTos = false;
         this.animatePhone = false;
         this.animateSms = false;
-      },
-      validatePhoneNumber: function () {
-        this.isValidPhone = this.phoneNumber.length === 11;
       }
     },
     created() {
@@ -182,7 +179,7 @@
   .weui-cell {
     height: 45px;
     font-size: 18px;
-    text-align: left  ;
+    text-align: left;
   }
 
   .sms-cooldown-btn {
@@ -217,5 +214,11 @@
   .wx-container {
     height: 100%;
     top: 0
+  }
+
+  .wx-input-phone, .wx-input-sms {
+    font-weight: 600;
+    font-size: 20px;
+    color: rgb(90, 90, 90);
   }
 </style>

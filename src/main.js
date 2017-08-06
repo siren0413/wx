@@ -6,7 +6,6 @@ import router from './router'
 import store from './store'
 import 'weui'
 import 'animate.css'
-import VeeValidate from 'vee-validate'
 import {VueMaskDirective} from 'v-mask'
 import Modal from './components/modal.vue'
 import LoadingToast from './components/loading-toast.vue'
@@ -19,7 +18,6 @@ Vue.directive('mask', VueMaskDirective);
 Vue.component('modal', Modal)
 Vue.component('loading-toast', LoadingToast)
 
-Vue.use(VeeValidate)
 
 /* eslint-disable no-new */
 new Vue({

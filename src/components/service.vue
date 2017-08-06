@@ -11,8 +11,7 @@
       <div class="weui-cell weui-cell_access" @click="requestIncreaseCreditLimit">
         <div class="weui-cell__bd">申请提高额度</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png"
-                                                                          style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
+          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png" style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
         </div>
       </div>
       <div class="weui-cell ">
@@ -45,7 +44,7 @@
           <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
         </div>
       </div>
-      <div class="weui-cell weui-cell_access">
+      <div class="weui-cell weui-cell_access" @click="logout">
         <div class="weui-cell__bd">登出</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
@@ -98,6 +97,7 @@
 <script>
   import {mapActions} from 'vuex'
   import tabbar from "./tabbar.vue";
+  import router from '../router'
 
   export default {
     components: {tabbar},
@@ -114,18 +114,19 @@
       ...mapActions(['incLoadingCount', 'decLoadingCount']),
       requestIncreaseCreditLimit() {
         this.incLoadingCount()
-        this.showIncreaseCreditLimitToast = true
         this.$http.get('/api/v1/loan/credit/limit/increase')
           .then((response) => {
             this.increaseCreditLimitResponse = response.data
-            this.showIncreaseCreditLimitToast = false
             this.showIncreaseCreditLimitDialog = true
             this.decLoadingCount()
           })
           .catch((error) => {
-            this.showIncreaseCreditLimitToast = false
             this.decLoadingCount()
           })
+      },
+      logout() {
+        localStorage.removeItem('accessToken')
+        router.push('/login')
       }
     },
     created() {
