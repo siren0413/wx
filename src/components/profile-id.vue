@@ -2,6 +2,7 @@
   <div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell" :class="{'animated shake': animations.name}">
+        <img class="wx-img-name" src="../assets/user.png" title="User">
         <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">
@@ -14,10 +15,11 @@
       </div>
 
       <div class="weui-cell" :class="{'animated shake': animations.idNumber}">
+        <img class="wx-img-id" src="../assets/id.png" title="ID Card Filled" >
         <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">
-            <input class="weui-input" placeholder="请输入您的身份证号" v-mask="'### ### #### #### ####'" v-model="idNumber">
+            <input class="weui-input" pattern="[0-9]*" placeholder="请输入您的身份证号" v-mask="'### ### #### #### ####'" v-model="idNumber">
           </template>
           <template v-else>
             <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ idNumber | maskId}}</label>
@@ -186,6 +188,18 @@
 
   .wx-id-label {
     width: auto;
+  }
+  .wx-img-name {
+    width:20px;
+    height:20px;
+    padding-bottom: 5px;
+    padding-right: 8px;
+  }
+  .wx-img-id{
+    width:22px;
+    height:24px;
+    padding-bottom: 3px;
+    padding-right: 6px;
   }
 
   .toast-on {
