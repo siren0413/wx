@@ -3,19 +3,21 @@
     <div class="weui-cells__title">贷款相关</div>
     <div class="weui-cells weui-cells_form">
       <router-link to="/apply-status" class="weui-cell weui-cell_access">
+        <img class="wx-img-apply-status" src="../assets/apply-status.png" />
         <div class="weui-cell__bd">查询进度</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <!--<span style="vertical-align:middle; font-size: 17px;">当前状态</span>-->
         </div>
       </router-link>
       <div class="weui-cell weui-cell_access" @click="requestIncreaseCreditLimit">
+        <img class="wx-img-increase-limit" src="../assets/increase-limit.png" />
         <div class="weui-cell__bd">申请提高额度</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png"
-                                                                          style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
+          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png" style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
         </div>
       </div>
       <div class="weui-cell ">
+        <img class="wx-img-credit-score" src="../assets/credit-score.png" />
         <div class="weui-cell__bd">我的信用分</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;">400 分</span>
@@ -27,6 +29,7 @@
     <div class="weui-cells__title">个人账户</div>
     <div class="weui-cells weui-cells_form">
       <router-link to="/service-password" class="weui-cell weui-cell_access">
+        <img class="wx-img-password" src="../assets/password.png" />
         <template v-if="passwordStatus === 0">
           <div class="weui-cell__bd">修改密码</div>
         </template>
@@ -44,12 +47,14 @@
         </div>
       </router-link>
       <router-link to="/refer" class="weui-cell weui-cell_access">
+        <img class="wx-img-refer" src="../assets/refer.png" />
         <div class="weui-cell__bd">好友推荐</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;">推荐二维码</span>
         </div>
       </router-link>
       <div class="weui-cell weui-cell_access">
+        <img class="wx-img-gift" src="../assets/gift.png" />
         <div class="weui-cell__bd">领取礼包</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
@@ -57,6 +62,7 @@
         </div>
       </div>
       <div class="weui-cell weui-cell_access" @click="logout">
+        <img class="wx-img-logout" src="../assets/logout.png" />
         <div class="weui-cell__bd">登出</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
@@ -69,18 +75,21 @@
     <div class="weui-cells__title">关于我们</div>
     <div class="weui-cells weui-cells_form">
       <router-link to="/customer-service" class="weui-cell weui-cell_access">
+        <img class="wx-img-customer" src="../assets/customer-service.png" />
         <div class="weui-cell__bd">联系客服</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
         </div>
       </router-link>
       <router-link to="/faq" class="weui-cell weui-cell_access">
+        <img class="wx-img-faq" src="../assets/faq.png" />
         <div class="weui-cell__bd">常见问题</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
         </div>
       </router-link>
       <div  class="weui-cell weui-cell_access">
+        <img class="wx-img-app" src="../assets/app.png" />
         <div class="weui-cell__bd">下载手机 App</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
@@ -187,12 +196,29 @@
     transition: opacity .2s ease;
   }
 
-  .toast-on {
-    opacity: 1;
+  .wx-img-apply-status, .wx-img-increase-limit  {
+    height: 16px;
+    width: 16px;
+    padding-right: 8px;
+    padding-bottom: 2px;
+  }
+  .wx-img-credit-score, .wx-img-app {
+    height: 20px;
+    width: 20px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+  }
+  .wx-img-password, .wx-img-logout, .wx-img-customer, .wx-img-faq, .wx-img-gift {
+    height: 18px;
+    width: 18px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+  }
+  .wx-img-refer {
+    height: 16px;
+    width: 16px;
+    padding-right: 7px;
+    padding-bottom: 2px;
   }
 
-  .toast-off {
-    opacity: 0;
-    display: none;
-  }
 </style>
