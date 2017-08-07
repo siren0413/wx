@@ -82,7 +82,7 @@
 
   .wx-container {
     top: 20px;
-    height: 82%;
+    height: 84%;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
   }
