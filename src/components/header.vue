@@ -18,7 +18,8 @@
           '/service': '服务台',
           '/apply-status': '审核状态',
           '/service-password': '密码服务',
-          '/faq': '常见问题'
+          '/faq': '常见问题',
+          '/customer-service': '联系客服'
         }
       }
     },

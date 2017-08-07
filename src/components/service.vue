@@ -68,7 +68,7 @@
 
     <div class="weui-cells__title">关于我们</div>
     <div class="weui-cells weui-cells_form">
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <router-link to="/customer-service" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">联系客服</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
