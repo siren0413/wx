@@ -11,7 +11,8 @@
       <div class="weui-cell weui-cell_access" @click="requestIncreaseCreditLimit">
         <div class="weui-cell__bd">申请提高额度</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png" style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
+          <span style="vertical-align:middle; font-size: 17px;">当前额度 <img src="../assets/rmb-red.png"
+                                                                          style="vertical-align: middle; margin-bottom: 5px; height: 18px"/> {{currentCreditLimit}}</span>
         </div>
       </div>
       <div class="weui-cell ">
@@ -26,9 +27,20 @@
     <div class="weui-cells__title">个人账户</div>
     <div class="weui-cells weui-cells_form">
       <router-link to="/service-password" class="weui-cell weui-cell_access">
-        <div class="weui-cell__bd">设置密码</div>
+        <template v-if="passwordStatus === 0">
+          <div class="weui-cell__bd">修改密码</div>
+        </template>
+        <template v-if="passwordStatus === 1">
+          <div class="weui-cell__bd">设置密码</div>
+        </template>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">未设置</span>
+          <template v-if="passwordStatus === 0">
+            <span style="vertical-align:middle; font-size: 17px;">已设置</span>
+          </template>
+          <template v-if="passwordStatus === 1">
+            <span style="vertical-align:middle; font-size: 17px;">未设置</span>
+            <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
+          </template>
         </div>
       </router-link>
       <div class="weui-cell weui-cell_access">
@@ -106,6 +118,7 @@
       return {
         currentCreditLimit: null,
         showIncreaseCreditLimitDialog: false,
+        passwordStatus: null,
         increaseCreditLimitResponse: {}
       }
     },
@@ -136,7 +149,16 @@
           this.currentCreditLimit = response.data.limit
           this.decLoadingCount()
         })
-        .catch((response)=>{
+        .catch((response) => {
+          this.decLoadingCount()
+        })
+      this.incLoadingCount()
+      this.$http.get('/api/v1/user/password/status')
+        .then((response) => {
+          this.passwordStatus = response.data.status
+          this.decLoadingCount()
+        })
+        .catch((error) => {
           this.decLoadingCount()
         })
     }
