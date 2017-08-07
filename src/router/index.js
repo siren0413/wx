@@ -11,6 +11,7 @@ import Service from '@/components/service'
 import ApplyStatus from '@/components/apply-status'
 import StoreFront from '@/components/store-front'
 import Password from '@/components/password'
+import FAQ from '@/components/faq'
 
 Vue.use(Router)
 
@@ -70,6 +71,11 @@ const router = new Router({
       path: '/service-password',
       name: 'Password',
       component: Password
+    },
+    {
+      path: '/faq',
+      name: 'faq',
+      component: FAQ
     },
     {
       path: '/*',

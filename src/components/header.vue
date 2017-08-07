@@ -17,7 +17,8 @@
           '/profile-person': '个人信息',
           '/service': '服务台',
           '/apply-status': '审核状态',
-          '/service-password': '密码服务'
+          '/service-password': '密码服务',
+          '/faq': '常见问题'
         }
       }
     },

@@ -74,7 +74,7 @@
           <span style="vertical-align:middle; font-size: 17px;"></span>
         </div>
       </router-link>
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <router-link to="/faq" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">常见问题</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
