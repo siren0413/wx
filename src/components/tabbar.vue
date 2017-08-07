@@ -4,7 +4,7 @@
                  :class="[computeCurrentTab === '/store' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
                     <span style="display: inline-block;position: relative;">
-                      <img src="https://png.icons8.com/money-bag-yen/office/60" class="weui-tabbar__icon"
+                      <img src="../assets/money-bag.png" class="weui-tabbar__icon"
                            title="Money Bag Yen" width="30" height="30">
                       <!--<img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">-->
                       <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
@@ -16,7 +16,7 @@
     <router-link to="/repay" class="weui-tabbar__item"
                  :class="[computeCurrentTab === '/repay' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
-        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+        <img src="../assets/repay.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">我要还款</p>
       </div>
     </router-link>
@@ -25,7 +25,7 @@
                  :class="[computeCurrentTab === '/profile' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
                     <span style="display: inline-block;position: relative;">
-                        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                        <img src="../assets/personal-info.png" alt="" class="weui-tabbar__icon">
                         <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
                     </span>
         <p class="weui-tabbar__label">个人信息</p>
@@ -35,7 +35,7 @@
     <router-link to="/service" class="weui-tabbar__item"
                  :class="[computeCurrentTab === '/service' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
-        <img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+        <img src="../assets/service.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">服务台</p>
       </div>
     </router-link>
