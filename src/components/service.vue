@@ -80,12 +80,12 @@
           <span style="vertical-align:middle; font-size: 17px;"></span>
         </div>
       </router-link>
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <div  class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">下载手机 App</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;"></span>
         </div>
-      </router-link>
+      </div>
     </div>
 
     <div :style="showIncreaseCreditLimitDialog? 'display: block;': 'display:none'">

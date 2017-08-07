@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div class="wx-apply-status-container">
 
     <div class="page__bd page__bd_spacing" v-if="statusList.length > 0">
       <div v-for="(status,index) in statusList">
@@ -104,7 +104,7 @@
   }
 
   .page__bd_spacing {
-    padding: 0 80px
+    padding: 0 20%
   }
 
   .wx-progress-icon {
@@ -116,5 +116,9 @@
     padding-top: 8px;
     padding-bottom: 8px;
     height: 20px;
+  }
+
+  .wx-apply-status-container {
+    padding-top: 40px;
   }
 </style>
