@@ -52,7 +52,7 @@
     padding-bottom: 15px;
     font-weight: 500;
     font-size: 16px;
-    color: #f76260;
+    color: #586c94;
   }
   .wx-space{
     padding-top: 15px;

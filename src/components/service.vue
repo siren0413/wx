@@ -43,12 +43,12 @@
           </template>
         </div>
       </router-link>
-      <div class="weui-cell weui-cell_access">
+      <router-link to="/refer" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">好友推荐</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;">推荐二维码</span>
         </div>
-      </div>
+      </router-link>
       <div class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">领取礼包</div>
         <div class="weui-cell__ft" style="font-size: 0">

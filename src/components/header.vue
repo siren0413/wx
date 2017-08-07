@@ -19,7 +19,8 @@
           '/apply-status': '',
           '/service-password': '密码服务',
           '/faq': '常见问题',
-          '/customer-service': '联系客服'
+          '/customer-service': '',
+          '/refer': '好友推荐'
         }
       }
     },
