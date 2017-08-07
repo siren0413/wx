@@ -1,28 +1,26 @@
 <template>
   <div>
     <div class="weui-cells weui-cells_form">
-      <div class="weui-cell">
+      <div class="weui-cell" :class="{'animated shake': animations.name}">
         <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">
             <input class="weui-input" placeholder="请输入您的姓名" v-model="name">
           </template>
           <template v-else>
-            <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ name | maskName
-              }}</label>
+            <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ name | maskName}}</label>
           </template>
         </div>
       </div>
 
-      <div class="weui-cell">
+      <div class="weui-cell" :class="{'animated shake': animations.idNumber}">
         <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">
-            <input class="weui-input" placeholder="请输入您的身份证号" v-mask="'##################'" v-model="idNumber">
+            <input class="weui-input" placeholder="请输入您的身份证号" v-mask="'### ### #### #### ####'" v-model="idNumber">
           </template>
           <template v-else>
-            <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ idNumber | maskId
-              }}</label>
+            <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ idNumber | maskId}}</label>
           </template>
         </div>
       </div>
@@ -76,13 +74,27 @@
         editable: true,
         showToast: false,
         name: '',
-        idNumber: ''
+        idNumber: '',
+        animations: {
+          name: false,
+          idNumber: false
+        }
       }
     },
     computed: {},
     methods: {
       ...mapActions(['incLoadingCount', 'decLoadingCount']),
       save() {
+        let success = true;
+        if (!this.name) {
+          this.animations.name = true;
+          success = false;
+        }
+        if (!this.idNumber) {
+          this.animations.idNumber = true;
+          success = false;
+        }
+        if (!success) return;
         this.waitingResponse = true
         this.$http.post('/api/v1/user/profile/identity', {
           name: this.name,
@@ -129,6 +141,10 @@
             this.waitingResponse = false
             this.decLoadingCount()
           })
+      },
+      cleanupTimer() {
+        this.animations.name = false;
+        this.animations.idNumber = false;
       }
     },
     created() {
@@ -141,7 +157,8 @@
           this.decLoadingCount()
         }).catch((error) => {
         this.decLoadingCount()
-      })
+      });
+      setInterval(this.cleanupTimer, 2000)
     },
     filters: {
       maskId: function (value) {
