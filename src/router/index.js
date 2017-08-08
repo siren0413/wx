@@ -98,8 +98,6 @@ const router = new Router({
 })
 
 router.beforeEach((to,from,next) => {
-  console.log('to ' +to.path)
-  console.log('from ' +to.path)
   if (to.path !== '/login') {
     axios.get('/api/v1/tokeninfo')
       .then((response) => {

@@ -5,8 +5,8 @@
             <div class="modal-container">
 
               <div class="weui-dialog">
-                <div class="weui-dialog__hd"><strong class="weui-dialog__title">弹窗标题</strong></div>
-                <div class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>
+                <div class="weui-dialog__bd">{{ desc }}</div>
                 <div class="weui-dialog__ft">
                   <a @click="$emit('cancel')" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
                   <a @click="$emit('ok')" class="weui-dialog__btn weui-dialog__btn_primary">确认</a>
@@ -21,6 +21,7 @@
 
 <script>
   export default {
+    props: ['title', 'desc'],
     name: 'modal',
     data() {
       return {}

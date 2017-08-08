@@ -9,7 +9,7 @@
           <!--<span style="vertical-align:middle; font-size: 17px;">当前状态</span>-->
         </div>
       </router-link>
-      <div class="weui-cell weui-cell_access" @click="requestIncreaseCreditLimit">
+      <div class="weui-cell weui-cell_access" @click="showIncreaseCreditLimitModal=true">
         <img class="wx-img-increase-limit" src="../assets/increase-limit.png" />
         <div class="weui-cell__bd">申请提高额度</div>
         <div class="weui-cell__ft" style="font-size: 0">
@@ -24,7 +24,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="weui-cells__title">个人账户</div>
     <div class="weui-cells weui-cells_form">
@@ -108,6 +107,9 @@
       </div>
     </div>
 
+    <modal v-if="showIncreaseCreditLimitModal" @cancel="showIncreaseCreditLimitModal = false" @ok="requestIncreaseCreditLimit" title=" " desc="你确定要申请提高贷款额度吗？">
+    </modal>
+
     <loading-toast></loading-toast>
 
     <div class="wx-bot-margin"></div>
@@ -126,6 +128,7 @@
     data() {
       return {
         currentCreditLimit: null,
+        showIncreaseCreditLimitModal: false,
         showIncreaseCreditLimitDialog: false,
         passwordStatus: null,
         increaseCreditLimitResponse: {}
@@ -135,6 +138,7 @@
     methods: {
       ...mapActions(['incLoadingCount', 'decLoadingCount']),
       requestIncreaseCreditLimit() {
+        this.showIncreaseCreditLimitModal=false
         this.incLoadingCount()
         this.$http.get('/api/v1/loan/credit/limit/increase')
           .then((response) => {

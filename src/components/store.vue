@@ -66,7 +66,7 @@
       <a class="weui-btn weui-btn_primary" @click="apply">开始申请</a>
     </div>
 
-    <modal v-if="showModal" @cancel="showModal = false">
+    <modal v-if="showModal" @cancel="showModal = false" :title="'aaaaa'" :desc="'bbbb'">
     </modal>
 
     <loading-toast></loading-toast>
