@@ -40,8 +40,10 @@
     width: 100%;
   }
   .weui-cell {
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
+    animation-duration: 0.5s !important;
+    animation-iteration-count: 1 !important;
+    -webkit-animation-duration: 0.5s !important;
+    -webkit-animation-iteration-count: 1 !important;
   }
 
   .fade-enter-active, .fade-leave-active {
@@ -54,7 +56,7 @@
   }
 
   .weui-btn-area {
-    margin-top: 50px;
+    margin-top: 30px;
   }
 
   .text-mask {

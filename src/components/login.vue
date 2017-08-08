@@ -1,10 +1,13 @@
 <template>
   <div>
-    <div class="logo">Logo</div>
+    <div class="logo">
+      <p>Logo</p>
+    </div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell" :class="{'animated shake': animatePhone}">
+        <img class="wx-img-phone" src="../assets/phone.png"/>
         <div class="weui-cell__bd">
-          <input class="weui-input wx-input-phone" type="text" pattern="[0-9]*" name="phoneNumber" v-mask="'### #### ####'" v-model="phoneNumber"
+          <input class="weui-input wx-input-phone" type="tel" pattern="[0-9]*" name="phoneNumber" v-mask="'### #### ####'" v-model="phoneNumber"
                  placeholder="手机号码"/>
         </div>
         <div v-if="isValidPhoneNumber">
@@ -13,8 +16,9 @@
       </div>
 
       <div class="weui-cell" :class="[{'animated shake': animateSms}]">
+        <img class="wx-img-sms" src="../assets/sms.png"/>
         <div class="weui-cell__bd">
-          <input class="weui-input wx-input-sms" type="text" pattern="[0-9]*" v-mask="'######'" v-model="smsCode" placeholder="短信验证码"/>
+          <input class="weui-input wx-input-sms" type="tel" pattern="[0-9]*" v-mask="'######'" v-model="smsCode" placeholder="短信验证码"/>
         </div>
         <div class="weui-cell__ft">
           <div v-if="smsDisabled">
@@ -28,7 +32,7 @@
     </div>
 
     <div class="tos weui-cell weui-cell_switch" :class="[{'animated shake': animateTos}]">
-      <div class="weui-cell__bd ">我已经阅读并同意<a href="#">服务条款协议</a></div>
+      <div class="weui-cell__bd ">我已经阅读并同意<a class="tos-agreement" href="javascript:void(0);">&quot;服务条款协议&quot;</a></div>
       <div class="weui-cell__ft">
         <label for="switchCP" class="weui-switch-cp">
           <input id="switchCP" class="weui-switch-cp__input" type="checkbox" v-model="agreeTos">
@@ -37,8 +41,8 @@
       </div>
     </div>
 
-    <div class="weui-btn-area">
-      <a class="weui-btn weui-btn_primary" @click="login">登录</a>
+    <div class="weui-btn-area" @click="login">
+      <a class="weui-btn weui-btn_primary" >登录</a>
     </div>
 
     <div class="weui-footer">
@@ -126,17 +130,14 @@
         this.smsDisabled = true;
         this.startTimer();
 
-        this.incLoadingCount()
         this.$http.post('/api/v1/sendcode', {
           phoneNumber: this.phoneNumber.replace(/\s+/g, '')
         })
           .then((response) => {
-            this.decLoadingCount()
           })
           .catch((error) => {
             this.animatePhone = true;
             this.stopTimer();
-            this.decLoadingCount()
           });
       },
       timer: function () {
@@ -170,7 +171,7 @@
 <style scoped>
 
   .logo {
-    margin-top: 160px;
+    margin-top: 80px;
   }
 
   .weui-cell {
@@ -184,9 +185,9 @@
   }
 
   .tos {
-    margin-top: 60px;
+    margin-top: 30px;
     padding-left: 18px;
-    font-size: 16px;
+    font-size: 14px;
     color: #999999;
   }
 
@@ -194,8 +195,12 @@
     border: none;
   }
 
+  .weui-btn-area {
+    margin-top: 10px;
+  }
+
   .weui-footer {
-    position: relative;
+    position: absolute;
     bottom: 0;
     width: 100%;
     height: 40px; /* Height of the footer */
@@ -208,9 +213,20 @@
     top: 0
   }
 
+  .wx-img-phone, .wx-img-sms {
+    height: 20px;
+    width: 20px;
+    padding-bottom: 2px;
+    padding-right: 10px;
+  }
+
+  .tos-agreement {
+    color: #6681a7;
+  }
+
   .wx-input-phone, .wx-input-sms {
-    font-weight: 600;
-    font-size: 20px;
+    font-weight: 400;
+    font-size: 18px;
     color: rgb(90, 90, 90);
   }
 </style>

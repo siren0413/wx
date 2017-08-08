@@ -41,7 +41,7 @@
         <img class="wx-img-age" src="../assets/age.png" title="Age">
         <div class="weui-cell__hd"><label class="weui-label">年龄</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="text" pattern="[0-9]*" v-mask="'##'" placeholder="请输入您的年龄" :disabled="!editable" :class="[{'text-mask': !editable}]"
+          <input class="weui-input" type="tel" pattern="[0-9]*" v-mask="'##'" placeholder="请输入您的年龄" :disabled="!editable" :class="[{'text-mask': !editable}]"
                  v-model="personalInfo.age">
         </div>
       </div>
@@ -111,7 +111,7 @@
         <img class="wx-img-qq" src="../assets/qq.png" title="QQ">
         <div class="weui-cell__hd"><label class="weui-label">QQ</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入您的QQ号码" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.qq">
+          <input class="weui-input" type="tel" placeholder="请输入您的QQ号码" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.qq">
         </div>
       </div>
 

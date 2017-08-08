@@ -19,7 +19,7 @@
         <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">
-            <input class="weui-input" pattern="[0-9]*" placeholder="请输入您的身份证号" v-mask="'### ### #### #### ####'" v-model="idNumber">
+            <input class="weui-input" type="tel" pattern="[0-9]*" placeholder="请输入您的身份证号" v-mask="'### ### #### #### ####'" v-model="idNumber">
           </template>
           <template v-else>
             <label style="width: 100%" :class="[{'text-mask': !editable}]" class="weui-label"> {{ idNumber | maskId}}</label>

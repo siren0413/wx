@@ -97,28 +97,40 @@ const router = new Router({
   ]
 })
 
+router.beforeEach((to,from,next) => {
+  console.log('to ' +to.path)
+  console.log('from ' +to.path)
+  if (to.path !== '/login') {
+    axios.get('/api/v1/tokeninfo')
+      .then((response) => {
+        next()
+      })
+      .catch((error) => {
+        router.push('/login')
+      })
+  } else {
+    next()
+  }
+})
+
 // router.beforeEach(
 //   (to, from, next) => {
-//     // console.log("from: " + from.path + " to: " + to.path)
-//     if (localStorage.getItem('accessToken')) {
-//       axios.get('/api/v1/tokeninfo')
-//         .then(function (response) {
-//           if (to.path === '/login') {
-//             router.push(from.path)
-//           } else {
-//             next()
-//           }
-//         })
-//         .catch(function (error) {
-//           if (to.path !== '/login') {
-//             router.push('/login')
-//           } else {
-//             next()
-//           }
-//         })
+//     console.log("from: " + from.path + " to: " + to.path)
+//     if (to.path !== '/login') {
+//       next()
 //     } else {
-//       if (to.path !== '/login' && to.path !== '/store-front') {
-//         router.push('/login')
+//       if (localStorage.getItem('accessToken')) {
+//         axios.get('/api/v1/tokeninfo')
+//           .then((response) => {
+//             if (to.path === '/login') {
+//               router.push('/store')
+//             } else {
+//               next()
+//             }
+//           })
+//           .catch((error) => {
+//             next()
+//           })
 //       } else {
 //         next()
 //       }
