@@ -18,7 +18,6 @@
             </div>
           </div>
 
-
           <div class="weui-cell weui-cell_access">
             <div class="weui-cell__bd">手机验证</div>
             <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.phone == false">
@@ -30,7 +29,6 @@
               <i class="weui-icon-success"></i>
             </div>
           </div>
-
 
           <div class="weui-cell weui-cell_access">
             <div class="weui-cell__bd">个人信息</div>
@@ -112,6 +110,7 @@
 <script>
   import {mapActions, mapState} from 'vuex'
   import tabbar from "./tabbar.vue";
+  import moment from 'moment'
 
   export default {
     components: {tabbar},
@@ -135,7 +134,7 @@
         this.incLoadingCount()
         this.$http.post('/api/v1/loan/application', {
           amount: this.applicationInfo.amount,
-          expire: this.applicationInfo.expire,
+          expire: moment(this.applicationInfo.expire, "YYYY年MM月DD日"),
           fee: this.applicationInfo.fee
         })
           .then((response) => {
