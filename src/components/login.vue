@@ -114,7 +114,7 @@
               // save token
               localStorage.setItem('accessToken', response.data.accessToken)
               this.decLoadingCount()
-              router.push('/store')
+              router.push('/home')
             })
             .catch((error) => {
               // TODO dialog

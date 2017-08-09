@@ -29,7 +29,7 @@
 
   export default {
     components: {tabbar},
-    name: 'store',
+    name: 'refer',
     data() {
       return {}
     },

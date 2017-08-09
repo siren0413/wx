@@ -86,7 +86,7 @@
 
   export default {
     components: {tabbar},
-    name: 'store',
+    name: 'faq',
     data() {
       return {}
     },

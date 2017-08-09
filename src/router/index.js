@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import axios from '../ajax'
 import Login from '@/components/login'
-import Store from '@/components/store'
+import Home from '@/page/home'
 import Repay from '@/components/repay'
 import Profile from '@/components/profile'
 import ProfileId from '@/components/profile-id'
@@ -31,9 +31,9 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/store',
-      name: 'Store',
-      component: Store
+      path: '/home',
+      name: 'Home',
+      component: Home
     },
     {
       path: '/store-front',
@@ -98,7 +98,7 @@ const router = new Router({
     {
       path: '/*',
       name: 'Error',
-      component: Store
+      component: Home
     }
   ]
 })

@@ -30,7 +30,7 @@
 
   export default {
     components: {tabbar},
-    name: 'store',
+    name: 'customer-service',
     data() {
       return {}
     },
