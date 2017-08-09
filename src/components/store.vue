@@ -80,6 +80,7 @@
 <script>
   import {mapMutations, mapActions, mapState} from 'vuex'
   import tabbar from "./tabbar.vue";
+  import router from '../router';
 
   export default {
     components: {tabbar},
@@ -97,6 +98,7 @@
       }
     },
     computed: {
+      ...mapState(['applicationInfo']),
       computeDeadline() {
         let deadline = new Date();
         deadline.setDate(deadline.getDate() + this.loanTerms[this.currentTermIndex])
@@ -109,7 +111,12 @@
     methods: {
       ...mapActions(['incLoadingCount', 'decLoadingCount']),
       apply() {
-        this.showModal = true;
+        // TODO check if application exists
+        this.applicationInfo.amount = this.loanAmounts[this.currentAmountIndex]
+        this.applicationInfo.term = this.loanTerms[this.currentTermIndex]
+        this.applicationInfo.fee = this.serviceFee
+        this.applicationInfo.expire = this.computeDeadline
+        router.push('/application-summary')
       },
       updateServiceFee() {
         this.serviceFee = null

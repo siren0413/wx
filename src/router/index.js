@@ -13,6 +13,7 @@ import StoreFront from '@/components/store-front'
 import Password from '@/components/password'
 import FAQ from '@/components/faq'
 import CustomerService from '@/components/customer-service'
+import ApplicationSummary from '@/components/application-summary'
 import Refer from '@/components/refer'
 
 Vue.use(Router)
@@ -88,6 +89,11 @@ const router = new Router({
       path: '/refer',
       name: 'Refer',
       component: Refer
+    },
+    {
+      path: '/application-summary',
+      name: 'ApplicationSummary',
+      component: ApplicationSummary
     },
     {
       path: '/*',

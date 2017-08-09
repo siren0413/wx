@@ -9,6 +9,12 @@ const state = {
     phoneNumber: '',
     token: null
   },
+  applicationInfo: {
+    amount: null,
+    term: null,
+    fee: null,
+    expire: null
+  },
   loadingCount: 0
 }
 
