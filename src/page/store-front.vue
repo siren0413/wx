@@ -69,8 +69,8 @@
 
 <script>
   import {mapMutations, mapActions, mapState} from 'vuex'
-  import tabbar from "./tabbar.vue";
-  import router from '../router'
+  import tabbar from "../components/tabbar.vue";
+  import router from '../router/index'
 
   export default {
     components: {tabbar},

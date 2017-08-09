@@ -25,7 +25,7 @@
 
 <script>
   import {mapMutations, mapState} from 'vuex'
-  import tabbar from "./tabbar.vue";
+  import tabbar from "../components/tabbar.vue";
 
   export default {
     components: {tabbar},

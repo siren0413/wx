@@ -112,7 +112,7 @@
 
 <script>
   import {mapActions, mapState} from 'vuex'
-  import tabbar from "./tabbar.vue";
+  import tabbar from "../components/tabbar.vue";
   import moment from 'moment'
 
   export default {

@@ -59,7 +59,7 @@
 
 <script>
   import {mapMutations, mapState, mapGetters, mapActions} from 'vuex'
-  import router from '../router'
+  import router from '../router/index'
 
   export default {
     name: 'login',
