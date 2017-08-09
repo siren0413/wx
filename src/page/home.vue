@@ -8,7 +8,7 @@
     <div class="weui-cells">
 
       <div class="weui-cell weui-cell_select weui-cell_select-after">
-        <img src="../assets/rmb-red.png" class="wx-amount-img"/>
+        <img src="../assets/home/rmb-red.png" class="wx-amount-img"/>
         <div class="weui-cell__hd">
           <label for="" class="weui-label">借款金额</label>
         </div>
@@ -22,7 +22,7 @@
       </div>
 
       <div class="weui-cell weui-cell_select weui-cell_select-after">
-        <img src="../assets/loan-term.png" class="wx-term-img"/>
+        <img src="../assets/home/loan-term.png" class="wx-term-img"/>
         <div class="weui-cell__hd">
           <label for="" class="weui-label">借款天数</label>
         </div>
@@ -49,12 +49,12 @@
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">服务费用</label>
         <i v-if="serviceFee === null" class="weui-loading"></i>
-        <span v-else class="weui-form-preview__value"><img src="../assets/rmb-gray.png" class="wx-subtotal-img">{{ serviceFee }} 元</span>
+        <span v-else class="weui-form-preview__value"><img src="../assets/home/rmb-gray.png" class="wx-subtotal-img">{{ serviceFee }} 元</span>
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">应还金额</label>
         <i v-if="subTotal === null" class="weui-loading"></i>
-        <span v-else class="weui-form-preview__value"><img src="../assets/rmb-gray.png" class="wx-subtotal-img">{{ subTotal }} 元</span>
+        <span v-else class="weui-form-preview__value"><img src="../assets/home/rmb-gray.png" class="wx-subtotal-img">{{ subTotal }} 元</span>
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">还款日期</label>

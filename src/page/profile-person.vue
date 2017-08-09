@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="weui-cell" :class="{'animated shake': animations.address}">
-        <img class="wx-img-address" src="../assets/location.png" title="Address">
+        <img class="wx-img-address" src="../assets/profile/location.png" title="Address">
         <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
         <div class="weui-cell__bd">
           <input class="weui-input" placeholder="请输入您的详细地址" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentAddress">
@@ -19,7 +19,7 @@
       </div>
 
       <div class="weui-cell wx-select-box" :class="{'animated shake': animations.time}">
-        <img class="wx-img-time" src="../assets/time.png" title="Time">
+        <img class="wx-img-time" src="../assets/profile/time.png" title="Time">
         <div class="weui-cell__hd"><label class="weui-label">居住时长</label></div>
         <div class="weui-cell__bd">
           <select class="weui-select" name="select1" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentTime">
@@ -38,7 +38,7 @@
     <div class="weui-cells weui-cells_form">
 
       <div class="weui-cell" :class="{'animated shake': animations.age}">
-        <img class="wx-img-age" src="../assets/age.png" title="Age">
+        <img class="wx-img-age" src="../assets/profile/age.png" title="Age">
         <div class="weui-cell__hd"><label class="weui-label">年龄</label></div>
         <div class="weui-cell__bd">
           <input class="weui-input" type="tel" pattern="[0-9]*" v-mask="'##'" placeholder="请输入您的年龄" :disabled="!editable" :class="[{'text-mask': !editable}]"
@@ -47,7 +47,7 @@
       </div>
 
       <div class="weui-cell wx-select-box" :class="{'animated shake': animations.education}">
-        <img class="wx-img-education" src="../assets/education.png" title="Education">
+        <img class="wx-img-education" src="../assets/profile/education.png" title="Education">
         <div class="weui-cell__hd"><label class="weui-label">最高学历</label></div>
         <div class="weui-cell__bd">
           <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="personalInfo.education">
@@ -62,7 +62,7 @@
       </div>
 
       <div class="weui-cell wx-select-box" :class="{'animated shake': animations.job}">
-        <img class="wx-img-job" src="../assets/job.png" title="Job">
+        <img class="wx-img-job" src="../assets/profile/job.png" title="Job">
         <div class="weui-cell__hd"><label class="weui-label">职业</label></div>
         <div class="weui-cell__bd">
           <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="personalInfo.job">
@@ -77,7 +77,7 @@
       </div>
 
       <div class="weui-cell wx-select-box" :class="{'animated shake': animations.income}">
-        <img class="wx-img-income" src="../assets/income.png" title="Income">
+        <img class="wx-img-income" src="../assets/profile/income.png" title="Income">
         <div class="weui-cell__hd"><label class="weui-label">月均收入</label></div>
         <div class="weui-cell__bd">
           <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="personalInfo.income">
@@ -96,7 +96,7 @@
     <div class="weui-cells__title">其他</div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell wx-select-box" :class="{'animated shake': animations.marriage}">
-        <img class="wx-img-marriage" src="../assets/marriage.png" title="Marriage">
+        <img class="wx-img-marriage" src="../assets/profile/marriage.png" title="Marriage">
         <div class="weui-cell__hd"><label class="weui-label">婚姻状态</label></div>
         <div class="weui-cell__bd">
           <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.marriageStatus">
@@ -108,7 +108,7 @@
       </div>
 
       <div class="weui-cell" :class="{'animated shake': animations.qq}">
-        <img class="wx-img-qq" src="../assets/qq.png" title="QQ">
+        <img class="wx-img-qq" src="../assets/profile/qq.png" title="QQ">
         <div class="weui-cell__hd"><label class="weui-label">QQ</label></div>
         <div class="weui-cell__bd">
           <input class="weui-input" type="tel" placeholder="请输入您的QQ号码" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="otherInfo.qq">

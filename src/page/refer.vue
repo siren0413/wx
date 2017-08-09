@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wx-qr-img-container">
-      <img class="wx-img-qr" src="../assets/qr-test.png"/>
+      <img class="wx-img-qr" src="../assets/service/qr-test.png"/>
     </div>
 
     <div class="wx-qr-desc-container">

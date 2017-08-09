@@ -2,7 +2,7 @@
   <div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell" :class="{'animated shake': animations.name}">
-        <img class="wx-img-name" src="../assets/user.png" title="User">
+        <img class="wx-img-name" src="../assets/profile/user.png" title="User">
         <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">
@@ -15,7 +15,7 @@
       </div>
 
       <div class="weui-cell" :class="{'animated shake': animations.idNumber}">
-        <img class="wx-img-id" src="../assets/id.png" title="ID Card Filled" >
+        <img class="wx-img-id" src="../assets/profile/id.png" title="ID Card Filled" >
         <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">

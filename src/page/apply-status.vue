@@ -13,13 +13,13 @@
         </div>
         <div>
           <div v-if="index !== statusList.length-1">
-            <img src="../assets/progress-line-success.png" class="wx-progress-line"/>
+            <img src="../assets/service/progress-line-success.png" class="wx-progress-line"/>
           </div>
         </div>
       </div>
     </div>
     <div v-else>
-      <img src="../assets/empty.png" style="height: 80px; margin-top: 30%"/>
+      <img src="../assets/service/empty.png" style="height: 80px; margin-top: 30%"/>
       <div style="margin-top: 20px; font-size: 16px">
         <p>亲，没有找到您的审核申请</p>
       </div>

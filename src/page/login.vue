@@ -5,7 +5,7 @@
     </div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell" :class="{'animated shake': animatePhone}">
-        <img class="wx-img-phone" src="../assets/phone.png"/>
+        <img class="wx-img-phone" src="../assets/home/phone.png"/>
         <div class="weui-cell__bd">
           <input class="weui-input wx-input-phone" type="tel" pattern="[0-9]*" name="phoneNumber" v-mask="'### #### ####'" v-model="phoneNumber"
                  placeholder="手机号码"/>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="weui-cell" :class="[{'animated shake': animateSms}]">
-        <img class="wx-img-sms" src="../assets/sms.png"/>
+        <img class="wx-img-sms" src="../assets/home/sms.png"/>
         <div class="weui-cell__bd">
           <input class="weui-input wx-input-sms" type="tel" pattern="[0-9]*" v-mask="'######'" v-model="smsCode" placeholder="短信验证码"/>
         </div>
