@@ -64,7 +64,7 @@
   }
 
   .wx-bot-margin {
-    height: 12%;
+    height: 20%;
   }
   .wx-page-title {
     color: dimgrey;

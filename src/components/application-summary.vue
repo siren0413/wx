@@ -103,7 +103,10 @@
       </div>
     </div>
 
+    <div class="wx-bot-margin"></div>
+
     <loading-toast></loading-toast>
+    <alert v-if="alerts.showAlert" @ok="alerts.showAlert=false" :title="alerts.alertTitle" :desc="alerts.alertDesc"></alert>
   </div>
 </template>
 
@@ -118,6 +121,11 @@
     data() {
       return {
         submitStatus: 0,
+        alerts: {
+          showAlert: false,
+          alertTitle:'',
+          alertDesc:''
+        },
         profiles: {
           id: null,
           phone: null,
@@ -131,6 +139,24 @@
     methods: {
       ...mapActions(['incLoadingCount', 'decLoadingCount']),
       submit() {
+        if (!this.profiles.id) {
+          this.alerts.alertTitle = '提交失败'
+          this.alerts.alertDesc = '请检查实名认证信息是否填写完整'
+          this.alerts.showAlert = true
+          return
+        }
+        if (!this.profiles.phone) {
+          this.alerts.alertTitle = '提交失败'
+          this.alerts.alertDesc = '请检查完成手机验证是否完成'
+          this.alerts.showAlert = true
+          return
+        }
+        if (!this.profiles.personal) {
+          this.alerts.alertTitle = '提交失败'
+          this.alerts.alertDesc = '请检查个人信息是否填写完整'
+          this.alerts.showAlert = true
+          return
+        }
         this.incLoadingCount()
         this.$http.post('/api/v1/loan/application', {
           amount: this.applicationInfo.amount,

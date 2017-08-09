@@ -8,6 +8,7 @@ import 'weui'
 import 'animate.css'
 import {VueMaskDirective} from 'v-mask'
 import Modal from './components/modal.vue'
+import Alert from './components/alert.vue'
 import LoadingToast from './components/loading-toast.vue'
 
 Vue.config.productionTip = false
@@ -16,6 +17,7 @@ Vue.config.productionTip = false
 Vue.directive('mask', VueMaskDirective);
 
 Vue.component('modal', Modal)
+Vue.component('alert', Alert)
 Vue.component('loading-toast', LoadingToast)
 
 

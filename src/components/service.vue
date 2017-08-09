@@ -96,20 +96,8 @@
       </div>
     </div>
 
-    <div :style="showIncreaseCreditLimitDialog? 'display: block;': 'display:none'">
-      <div class="weui-mask"></div>
-      <div class="weui-dialog">
-        <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{increaseCreditLimitResponse.title}}</strong></div>
-        <div class="weui-dialog__bd">{{increaseCreditLimitResponse.desc}}</div>
-        <div class="weui-dialog__ft">
-          <a href="javascript:;" @click="showIncreaseCreditLimitDialog = false" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
-        </div>
-      </div>
-    </div>
-
-    <modal v-if="showIncreaseCreditLimitModal" @cancel="showIncreaseCreditLimitModal = false" @ok="requestIncreaseCreditLimit" title=" " desc="你确定要申请提高贷款额度吗？">
-    </modal>
-
+    <modal v-if="showIncreaseCreditLimitModal" @cancel="showIncreaseCreditLimitModal = false" @ok="requestIncreaseCreditLimit" title=" " desc="你确定要申请提高贷款额度吗？"></modal>
+    <alert v-if="showIncreaseCreditLimitDialog" @ok="showIncreaseCreditLimitDialog =false" :title="increaseCreditLimitResponse.title" :desc="increaseCreditLimitResponse.desc"></alert>
     <loading-toast></loading-toast>
 
     <div class="wx-bot-margin"></div>
