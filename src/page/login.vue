@@ -135,9 +135,14 @@
           phoneNumber: this.phoneNumber.replace(/\s+/g, '')
         })
           .catch((error) => {
-            this.showErrorToast()
             this.stopTimer();
-          });
+            if (error.response.status === 403) {
+              this.showErrorToast()
+            } else {
+              this.phoneNumber = ''
+              this.animatePhone = true
+            }
+          })
       },
       timer: function () {
         if (this.time > 0) {

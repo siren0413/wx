@@ -15,7 +15,6 @@ Vue.prototype.$http = axios
 axios.interceptors.request.use(config => {
   if (localStorage.getItem('accessToken')) {
     config.headers = {Authorization: 'Bearer ' + localStorage.getItem('accessToken')}
-  } else {
   }
   return config;
 })
@@ -27,7 +26,7 @@ axios.interceptors.response.use(response => {
     localStorage.removeItem('accessToken')
     router.push('/login')
   }
-  return Promise.reject(error.response.data)
+  return Promise.reject(error)
 })
 
 export default axios

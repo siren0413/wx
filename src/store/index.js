@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../ajax'
+import router from '../router'
 
 Vue.use(Vuex)
 
 const state = {
-  token: null,
+  tokenLastChecked: null,
   userInfo: {
     phoneNumber: '',
     token: null
@@ -43,6 +44,16 @@ const actions = {
     setTimeout(() => {
       state.showErrorToast = false
     }, 2000)
+  },
+  checkToken() {
+    let now = new Date().getTime()
+    if (now - state.tokenLastChecked > 10 * 1000) {
+      axios.get('/api/v1/tokeninfo')
+        .catch((error) => {
+          router.push('/login')
+        })
+      state.tokenLastChecked = now
+    }
   }
 }
 
