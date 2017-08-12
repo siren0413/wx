@@ -16,7 +16,8 @@ const state = {
     fee: null,
     expire: null
   },
-  loadingCount: 0
+  loadingCount: 0,
+  showErrorToast: false
 }
 
 const getters = {}
@@ -31,11 +32,17 @@ const mutations = {
 }
 
 const actions = {
-  incLoadingCount(){
+  incLoadingCount() {
     state.loadingCount++
   },
-  decLoadingCount(){
+  decLoadingCount() {
     state.loadingCount--
+  },
+  showErrorToast() {
+    state.showErrorToast = true
+    setTimeout(() => {
+      state.showErrorToast = false
+    }, 2000)
   }
 }
 

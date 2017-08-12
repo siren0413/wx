@@ -6,10 +6,12 @@ import router from './router'
 import store from './store'
 import 'weui'
 import 'animate.css'
+import 'font-awesome/css/font-awesome.css'
 import {VueMaskDirective} from 'v-mask'
 import Modal from './components/modal.vue'
 import Alert from './components/alert.vue'
 import LoadingToast from './components/loading-toast.vue'
+import ErrorToast from './components/error-toast.vue'
 import axios from './ajax'
 
 Vue.config.productionTip = false
@@ -20,6 +22,7 @@ Vue.directive('mask', VueMaskDirective);
 Vue.component('modal', Modal)
 Vue.component('alert', Alert)
 Vue.component('loading-toast', LoadingToast)
+Vue.component('error-toast', ErrorToast)
 
 
 Vue.mixin({

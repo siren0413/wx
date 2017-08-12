@@ -15,7 +15,7 @@
 
   export default {
     props: ['title', 'desc'],
-    name: 'store',
+    name: 'alert',
     data() {
       return {}
     },

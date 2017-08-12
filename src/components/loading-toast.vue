@@ -12,8 +12,7 @@
   import {mapState} from 'vuex'
 
   export default {
-    props: {},
-    name: 'store',
+    name: 'loading-toast',
     data() {
       return {}
     },

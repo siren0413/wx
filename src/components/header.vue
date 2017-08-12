@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'tabbar',
+    name: 'header',
     data() {
       return {
         pathNameMapping: {

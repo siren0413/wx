@@ -54,6 +54,7 @@
     </div>
 
     <loading-toast></loading-toast>
+    <error-toast message="尝试过于频繁"></error-toast>
   </div>
 </template>
 
@@ -88,7 +89,7 @@
         savePhoneNumber: 'savePhoneNumber',
         saveToken: 'saveToken'
       }),
-      ...mapActions(['incLoadingCount', 'decLoadingCount']),
+      ...mapActions(['incLoadingCount', 'decLoadingCount','showErrorToast']),
       login: function () {
         let success = true;
         if (!this.isValidPhoneNumber) {
@@ -133,9 +134,8 @@
         this.$http.post('/api/v1/sms/send', {
           phoneNumber: this.phoneNumber.replace(/\s+/g, '')
         })
-          .then((response) => {
-          })
           .catch((error) => {
+            this.showErrorToast()
             this.stopTimer();
           });
       },
