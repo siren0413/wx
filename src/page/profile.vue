@@ -46,7 +46,7 @@
     },
     created() {
       this.incLoadingCount()
-      this.$http.get('/api/v1/user/profile/general/status')
+      this.$http.get(`/api/v1/user/${this.uid()}/profile/general/status`)
         .then((response) => {
           this.generalProfileStatus.status = response.data.status
           this.generalProfileStatus.desc = response.data.desc
@@ -55,7 +55,7 @@
         this.decLoadingCount()
       })
       this.incLoadingCount()
-      this.$http.get('/api/v1/user/profile/identity/status')
+      this.$http.get(`/api/v1/user/${this.uid()}/profile/identity/status`)
         .then((response) => {
           this.idProfileStatus.status = response.data.status
           this.idProfileStatus.desc = response.data.desc

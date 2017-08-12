@@ -98,7 +98,7 @@
         }
         if (!success) return;
         this.waitingResponse = true
-        this.$http.post('/api/v1/user/profile/identity', {
+        this.$http.post(`/api/v1/user/${this.uid()}/profile/identity`, {
           name: this.name,
           idNumber: this.idNumber
         })
@@ -107,7 +107,7 @@
             this.showToast = true
             this.editable = false
 
-            this.$http.get('/api/v1/user/profile/general')
+            this.$http.get(`/api/v1/user/${this.uid()}/profile/general`)
               .then(response => {
                 setTimeout(() => {
                   this.showToast = false
@@ -130,7 +130,7 @@
       edit() {
         this.incLoadingCount()
         this.waitingResponse = true
-        this.$http.get('/api/v1/user/profile/identity')
+        this.$http.get(`/api/v1/user/${this.uid()}/profile/identity`)
           .then((response) => {
             this.name = response.data.name
             this.idNumber = response.data.idNumber
@@ -151,7 +151,7 @@
     },
     created() {
       this.incLoadingCount()
-      this.$http.get('/api/v1/user/profile/identity')
+      this.$http.get(`/api/v1/user/${this.uid()}/profile/identity`)
         .then((response) => {
           this.name = response.data.name
           this.idNumber = response.data.idNumber

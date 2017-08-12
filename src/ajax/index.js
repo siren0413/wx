@@ -4,7 +4,7 @@ import VueAxios from 'vue-axios'
 import router from '../router'
 
 const axios = Axios.create({
-  baseURL: 'http://192.168.1.29:8090',
+  baseURL: 'http://192.168.1.192',
   headers: {'Content-Type': 'application/json'}
 });
 

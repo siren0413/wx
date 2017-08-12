@@ -226,7 +226,7 @@
         if (!success) return;
 
         this.waitingResponse = true
-        this.$http.post('/api/v1/user/profile/general', {
+        this.$http.post(`/api/v1/user/${this.uid()}/profile/general`, {
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,
           residentTime: this.residentInfo.residentTime,
@@ -239,7 +239,7 @@
           this.waitingResponse = false
           this.showToast = true
           this.editable = false
-          this.$http.get('/api/v1/user/profile/identity')
+          this.$http.get(`/api/v1/user/${this.uid()}/profile/identity`)
             .then(response => {
               setTimeout(() => {
                 this.showToast = false
@@ -263,7 +263,7 @@
       edit() {
         this.waitingResponse = true
         this.incLoadingCount()
-        this.$http.get('/api/v1/user/profile/general')
+        this.$http.get(`/api/v1/user/${this.uid()}/profile/general`)
           .then((response) => {
             this.residentInfo.residentCity = response.data.residentCity
             this.residentInfo.residentAddress = response.data.residentAddress
@@ -297,7 +297,7 @@
     },
     created() {
       this.incLoadingCount()
-      this.$http.get('/api/v1/user/profile/general')
+      this.$http.get(`/api/v1/user/${this.uid()}/profile/general`)
         .then((response) => {
           this.residentInfo.residentCity = response.data.residentCity
           this.residentInfo.residentAddress = response.data.residentAddress

@@ -103,19 +103,19 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to,from,next) => {
-  if (to.path !== '/login') {
-    axios.get('/api/v1/tokeninfo')
-      .then((response) => {
-        next()
-      })
-      .catch((error) => {
-        router.push('/login')
-      })
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to,from,next) => {
+//   if (to.path !== '/login') {
+//     axios.get('/api/v1/tokeninfo')
+//       .then((response) => {
+//         next()
+//       })
+//       .catch((error) => {
+//         router.push('/login')
+//       })
+//   } else {
+//     next()
+//   }
+// })
 
 // router.beforeEach(
 //   (to, from, next) => {

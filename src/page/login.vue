@@ -105,7 +105,7 @@
         }
         if (success) {
           this.incLoadingCount()
-          this.$http.post('/api/v1/auth', {
+          this.$http.post('/auth', {
             phoneNumber: this.phoneNumber.replace(/\s+/g, ''),
             code: this.smsCode,
             agreeTos: this.agreeTos
@@ -130,7 +130,7 @@
         this.smsDisabled = true;
         this.startTimer();
 
-        this.$http.post('/api/v1/sendcode', {
+        this.$http.post('/api/v1/sms/send', {
           phoneNumber: this.phoneNumber.replace(/\s+/g, '')
         })
           .then((response) => {

@@ -175,7 +175,7 @@
     },
     created(){
       this.incLoadingCount()
-      this.$http.get('/api/v1/user/profile/general/status')
+      this.$http.get(`/api/v1/user/${this.uid()}/profile/general/status`)
         .then((response) => {
           if (response.data.status === 0) this.profiles.personal=true;
           else this.profiles.personal=false;
@@ -186,7 +186,7 @@
         })
 
       this.incLoadingCount()
-      this.$http.get('/api/v1/user/profile/identity/status')
+      this.$http.get(`/api/v1/user/${this.uid()}/profile/identity/status`)
         .then((response) => {
           if (response.data.status === 0) this.profiles.id=true;
           else this.profiles.id=false;

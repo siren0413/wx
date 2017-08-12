@@ -5,6 +5,7 @@ import axios from '../ajax'
 Vue.use(Vuex)
 
 const state = {
+  token: null,
   userInfo: {
     phoneNumber: '',
     token: null
