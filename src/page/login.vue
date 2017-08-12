@@ -136,7 +136,6 @@
           .then((response) => {
           })
           .catch((error) => {
-            this.animatePhone = true;
             this.stopTimer();
           });
       },
