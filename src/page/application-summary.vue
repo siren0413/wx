@@ -145,12 +145,12 @@
           this.alerts.showAlert = true
           return
         }
-        if (!this.profiles.phone) {
-          this.alerts.alertTitle = '提交失败'
-          this.alerts.alertDesc = '请检查完成手机验证是否完成'
-          this.alerts.showAlert = true
-          return
-        }
+//        if (!this.profiles.phone) {
+//          this.alerts.alertTitle = '提交失败'
+//          this.alerts.alertDesc = '请检查完成手机验证是否完成'
+//          this.alerts.showAlert = true
+//          return
+//        }
         if (!this.profiles.personal) {
           this.alerts.alertTitle = '提交失败'
           this.alerts.alertDesc = '请检查个人信息是否填写完整'
@@ -158,9 +158,9 @@
           return
         }
         this.incLoadingCount()
-        this.$http.post('/api/public/loan/application', {
+        this.$http.post(`/api/public/user/${this.uid()}/loan/application`, {
           amount: this.applicationInfo.amount,
-          expire: moment(this.applicationInfo.expire, "YYYY年MM月DD日"),
+          term: this.applicationInfo.term,
           fee: this.applicationInfo.fee
         })
           .then((response) => {

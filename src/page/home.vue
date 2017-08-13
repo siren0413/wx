@@ -67,6 +67,8 @@
     </div>
 
     <loading-toast></loading-toast>
+    <error-toast :message="errorMessage"></error-toast>
+    <modal v-if="showModal" @ok="toApplyStatus" @cancel="showModal=!showModal" title="申请失败" desc="您已经有正在审核的申请，您可以前往查看审核进度" ok_text="查看进度" cancel_text="取消"></modal>
     <div class="wx-bot-margin"></div>
 
   </div>
@@ -75,11 +77,9 @@
 
 <script>
   import {mapMutations, mapActions, mapState} from 'vuex'
-  import tabbar from "../components/tabbar.vue";
-  import router from '../router/index';
+  import router from '../router';
 
   export default {
-    components: {tabbar},
     name: 'store',
     data() {
       return {
@@ -90,7 +90,8 @@
         loanTerms: [],
         currentAmountIndex: 0,
         currentTermIndex: 0,
-        showModal: false
+        showModal: false,
+        errorMessage: null
       }
     },
     computed: {
@@ -105,25 +106,38 @@
       }
     },
     methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount']),
+      ...mapActions(['incLoadingCount', 'decLoadingCount','showErrorToast']),
       apply() {
-        // TODO check if application exists
         this.applicationInfo.amount = this.loanAmounts[this.currentAmountIndex]
         this.applicationInfo.term = this.loanTerms[this.currentTermIndex]
         this.applicationInfo.fee = this.serviceFee
         this.applicationInfo.expire = this.computeDeadline
-        router.push('/application-summary')
+
+        this.$http.get(`/api/public/user/${this.uid()}/loan/application/pending/exist`)
+          .then((response) => {
+            this.showModal = true
+          })
+          .catch((error) => {
+            if (error.response.status !== 404) {
+              this.errorMessage = "请稍后再试"
+              this.showErrorToast()
+            } else {
+              router.push('/application-summary')
+            }
+          })
       },
       updateServiceFee() {
         this.serviceFee = null
         this.subTotal = null
 
-        console.log(this.loanConfigs)
         let config = this.serviceFee = this.loanConfigs.find((elem, pos, arr)=>{
           return elem.amount === this.loanAmounts[this.currentAmountIndex] && elem.term === this.loanTerms[this.currentTermIndex]
         })
         this.serviceFee = config.fee
         this.subTotal = this.serviceFee + this.loanAmounts[this.currentAmountIndex]
+      },
+      toApplyStatus() {
+        router.push('/apply-status')
       }
     },
     watch: {

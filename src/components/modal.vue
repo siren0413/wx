@@ -1,27 +1,27 @@
 <template>
-      <transition name="modal">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-container">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
 
-              <div class="weui-dialog">
-                <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>
-                <div class="weui-dialog__bd">{{ desc }}</div>
-                <div class="weui-dialog__ft">
-                  <a @click="$emit('cancel')" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
-                  <a @click="$emit('ok')" class="weui-dialog__btn weui-dialog__btn_primary">确认</a>
-                </div>
-              </div>
-
+          <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{ title }}</strong></div>
+            <div class="weui-dialog__bd">{{ desc }}</div>
+            <div class="weui-dialog__ft">
+              <a @click="$emit('cancel')" class="weui-dialog__btn weui-dialog__btn_default">{{cancel_text}}</a>
+              <a @click="$emit('ok')" class="weui-dialog__btn weui-dialog__btn_primary">{{ok_text}}</a>
             </div>
           </div>
+
         </div>
-      </transition>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
   export default {
-    props: ['title', 'desc'],
+    props: ['title', 'desc', 'ok_text', 'cancel_text'],
     name: 'modal',
     data() {
       return {}
@@ -59,16 +59,16 @@
   }
 
   /*.modal-header h3 {*/
-    /*margin-top: 0;*/
-    /*color: #42b983;*/
+  /*margin-top: 0;*/
+  /*color: #42b983;*/
   /*}*/
 
   /*.modal-body {*/
-    /*margin: 20px 0;*/
+  /*margin: 20px 0;*/
   /*}*/
 
   /*.modal-default-button {*/
-    /*float: right;*/
+  /*float: right;*/
   /*}*/
 
   /*
@@ -88,7 +88,7 @@
     opacity: 0;
   }
 
-  .modal-enter .modal-container ,
+  .modal-enter .modal-container,
   .modal-leave-active .modal-container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
