@@ -41,8 +41,9 @@
       </div>
     </div>
 
-    <div class="weui-btn-area" @click="login">
-      <a class="weui-btn weui-btn_primary" >登录</a>
+    <div class="weui-btn-area"  @click="login">
+      <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_loading': waitingResponse}]"> <i
+        v-if="waitingResponse" class="weui-loading"></i>登录</a>
     </div>
 
     <div class="weui-footer">
@@ -54,7 +55,7 @@
     </div>
 
     <loading-toast></loading-toast>
-    <error-toast message="尝试过于频繁"></error-toast>
+    <error-toast :message="message"></error-toast>
   </div>
 </template>
 
@@ -73,7 +74,9 @@
         agreeTos: false,
         animateTos: false,
         animatePhone: false,
-        animateSms: false
+        animateSms: false,
+        alertMessage:'',
+        waitingResponse: false
       }
     },
     computed: {
@@ -105,7 +108,7 @@
           success = false;
         }
         if (success) {
-          this.incLoadingCount()
+          this.waitingResponse = true
           this.$http.post('/auth', {
             phoneNumber: this.phoneNumber.replace(/\s+/g, ''),
             code: this.smsCode,
@@ -113,13 +116,14 @@
           })
             .then((response) => {
               // save token
+              this.waitingResponse = false
               localStorage.setItem('accessToken', response.data.accessToken)
-              this.decLoadingCount()
               router.push('/home')
             })
             .catch((error) => {
-              // TODO dialog
-              this.decLoadingCount()
+              this.waitingResponse = false
+              this.message = "短信验证码错误"
+              this.showErrorToast()
             })
         }
       },
@@ -137,6 +141,7 @@
           .catch((error) => {
             this.stopTimer();
             if (error.response.status === 403) {
+              this.message = "尝试次数频繁"
               this.showErrorToast()
             } else {
               this.phoneNumber = ''
