@@ -66,8 +66,8 @@
       <a class="weui-btn weui-btn_primary" @click="apply">开始申请</a>
     </div>
 
-    <modal v-if="showModal" @cancel="showModal = false" :title="'aaaaa'" :desc="'bbbb'">
-    </modal>
+    <!--<modal v-if="showModal" @cancel="showModal = false" :title="'aaaaa'" :desc="'bbbb'">-->
+    <!--</modal>-->
 
     <loading-toast></loading-toast>
 
@@ -122,20 +122,12 @@
         this.serviceFee = null
         this.subTotal = null
 
-        this.incLoadingCount()
-        this.$http.get('/api/public/loan/servicefee', {
-          params: {
-            amount: this.loanAmounts[this.currentAmountIndex],
-            term: this.loanTerms[this.currentTermIndex]
-          }
+        console.log(this.loanConfigs)
+        let config = this.serviceFee = this.loanConfigs.find((elem, pos, arr)=>{
+          return elem.amount === this.loanAmounts[this.currentAmountIndex] && elem.term === this.loanTerms[this.currentTermIndex]
         })
-          .then((response) => {
-            this.serviceFee = response.data.fee
-            this.subTotal = this.serviceFee + this.loanAmounts[this.currentAmountIndex]
-            this.decLoadingCount()
-          }).catch((error) => {
-          this.decLoadingCount()
-        })
+        this.serviceFee = config.fee
+        this.subTotal = this.serviceFee + this.loanAmounts[this.currentAmountIndex]
       }
     },
     watch: {
