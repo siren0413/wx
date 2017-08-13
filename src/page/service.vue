@@ -128,7 +128,7 @@
       requestIncreaseCreditLimit() {
         this.showIncreaseCreditLimitModal=false
         this.incLoadingCount()
-        this.$http.get(`/api/v1/user/${this.uid()}/credit/increase`)
+        this.$http.get(`/api/public/user/${this.uid()}/credit/increase`)
           .then((response) => {
             this.increaseCreditLimitResponse = response.data
             this.showIncreaseCreditLimitDialog = true
@@ -145,7 +145,7 @@
     },
     created() {
       this.incLoadingCount()
-      this.$http.get(`/api/v1/user/${this.uid()}/credit/limit`)
+      this.$http.get(`/api/public/user/${this.uid()}/credit/limit`)
         .then((response) => {
           this.currentCreditLimit = response.data.limit
           this.decLoadingCount()
@@ -154,7 +154,7 @@
           this.decLoadingCount()
         })
       this.incLoadingCount()
-      this.$http.get(`/api/v1/user/${this.uid()}/password/status`)
+      this.$http.get(`/api/public/user/${this.uid()}/password/status`)
         .then((response) => {
           this.passwordStatus = response.data.status
           this.decLoadingCount()

@@ -135,7 +135,7 @@
         this.smsDisabled = true;
         this.startTimer();
 
-        this.$http.post('/api/v1/sms/send', {
+        this.$http.post('/api/public/sms/send', {
           phoneNumber: this.phoneNumber.replace(/\s+/g, '')
         })
           .catch((error) => {

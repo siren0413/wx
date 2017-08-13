@@ -48,7 +48,7 @@ const actions = {
   checkToken() {
     let now = new Date().getTime()
     if (now - state.tokenLastChecked > 10 * 1000) {
-      axios.get('/api/v1/tokeninfo')
+      axios.get('/api/public/tokeninfo')
         .catch((error) => {
           router.push('/login')
         })

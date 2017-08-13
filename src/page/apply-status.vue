@@ -2,32 +2,64 @@
 
   <div class="wx-apply-status-container">
 
-    <div class="page__bd page__bd_spacing" v-if="statusList.length > 0">
-      <div v-for="(status,index) in statusList">
-        <div class="icon-box">
-          <i class="weui-icon_msg wx-progress-icon" :class="getClass(status.status)"></i>
-          <div class="icon-box__ctn">
-            <h3 class="icon-box__title">{{status.title}}</h3>
-            <p class="icon-box__desc">{{status.desc}}</p>
-          </div>
+    <!--<div class="page__bd page__bd_spacing" v-if="statusList.length > 0">-->
+      <!--<div v-for="(status,index) in statusList">-->
+        <!--<div class="icon-box">-->
+          <!--<i class="weui-icon_msg wx-progress-icon" :class="getClass(status.status)"></i>-->
+          <!--<div class="icon-box__ctn">-->
+            <!--<h3 class="icon-box__title">{{status.title}}</h3>-->
+            <!--<p class="icon-box__desc">{{status.desc}}</p>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div>-->
+          <!--<div v-if="index !== statusList.length-1">-->
+            <!--<img src="../assets/service/progress-line-success.png" class="wx-progress-line"/>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div v-else>-->
+      <!--<img src="../assets/service/empty.png" style="height: 80px; margin-top: 30%"/>-->
+      <!--<div style="margin-top: 20px; font-size: 16px">-->
+        <!--<p>亲，没有找到您的审核申请</p>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+    <div class="weui-cells__title">当前审核状态</div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"></div>
+        <div class="weui-cell__bd">
+          <p>标题文字</p>
         </div>
-        <div>
-          <div v-if="index !== statusList.length-1">
-            <img src="../assets/service/progress-line-success.png" class="wx-progress-line"/>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <img src="../assets/service/empty.png" style="height: 80px; margin-top: 30%"/>
-      <div style="margin-top: 20px; font-size: 16px">
-        <p>亲，没有找到您的审核申请</p>
+        <div class="weui-cell__ft">说明文字</div>
       </div>
     </div>
 
-    <loading-toast></loading-toast>
+
+
+    <div class="weui-cells__title">最近审核记录</div>
+    <div class="weui-cells">
+      <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cell__bd">
+          <p>cell standard</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+      </a>
+      <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cell__bd">
+          <p>cell standard</p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+      </a>
+    </div>
+
+
     <div class="wx-bot-margin"></div>
-
+    <loading-toast></loading-toast>
   </div>
 </template>
 
@@ -54,7 +86,7 @@
     },
     created() {
       this.incLoadingCount()
-      this.$http.get('/api/v1/loan/application/status/all')
+      this.$http.get('/api/public/loan/application/status/all')
         .then((response) => {
           this.statusList = response.data.statusList
           this.decLoadingCount()
@@ -120,5 +152,14 @@
 
   .wx-apply-status-container {
     padding-top: 40px;
+  }
+
+  .weui-cells__title {
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .weui-cell {
+    text-align: left;
   }
 </style>

@@ -149,7 +149,7 @@
       save() {
         if (this.isValidPassword(this.passwordCreate.input) && this.passwordCreate.input === this.passwordCreate.confirm) {
           this.incLoadingCount()
-          this.$http.post(`/api/v1/user/${this.uid()}/password/create`, {
+          this.$http.post(`/api/public/user/${this.uid()}/password/create`, {
             password: this.passwordCreate.input
           })
             .then((response) => {
@@ -174,7 +174,7 @@
       update() {
         if (this.isValidPassword(this.passwordUpdate.currentPassword) && this.isValidPassword(this.passwordUpdate.input) && this.passwordUpdate.input === this.passwordUpdate.confirm) {
           this.incLoadingCount()
-          this.$http.post(`/api/v1/user/${this.uid()}/password/update`, {
+          this.$http.post(`/api/public/user/${this.uid()}/password/update`, {
             currentPassword: this.passwordUpdate.currentPassword,
             newPassword: this.passwordUpdate.input
           })
@@ -200,7 +200,7 @@
       getPasswordStatus() {
         this.incLoadingCount()
         this.passwordStatus = null
-        this.$http.get(`/api/v1/user/${this.uid()}/password/status`)
+        this.$http.get(`/api/public/user/${this.uid()}/password/status`)
           .then((response) => {
             this.passwordStatus = response.data.status
             this.decLoadingCount()

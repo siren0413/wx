@@ -103,7 +103,7 @@
       updateServiceFee() {
         this.serviceFee = null
         this.subTotal = null
-        this.$http.get('/api/v1/loan/servicefee', {
+        this.$http.get('/api/public/loan/servicefee', {
           params: {
             amount: this.loanAmounts[this.currentAmountIndex],
             term: this.loanTerms[this.currentTermIndex]
@@ -138,7 +138,7 @@
       }
     },
     created() {
-      this.$http.get('/api/v1/loan/configs')
+      this.$http.get('/api/public/loan/configs')
         .then(function (response) {
           this.loanConfigs = response.data
         }.bind(this))

@@ -84,7 +84,7 @@
   }
 
   .wx-container {
-    margin-top: 20px;
+    padding-top: 20px;
     top: 20px;
     height: 90%;
     overflow: scroll;

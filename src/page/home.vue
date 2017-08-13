@@ -123,7 +123,7 @@
         this.subTotal = null
 
         this.incLoadingCount()
-        this.$http.get('/api/v1/loan/servicefee', {
+        this.$http.get('/api/public/loan/servicefee', {
           params: {
             amount: this.loanAmounts[this.currentAmountIndex],
             term: this.loanTerms[this.currentTermIndex]
@@ -162,7 +162,7 @@
     },
     created() {
       this.incLoadingCount()
-      this.$http.get('/api/v1/loan/configs')
+      this.$http.get('/api/public/loan/configs')
         .then((response) => {
           this.loanConfigs = response.data
           this.decLoadingCount()
