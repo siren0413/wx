@@ -38,6 +38,7 @@
     /*margin-top: 10px;*/
     height: 100%;
     width: 100%;
+    touch-action: manipulation;
   }
   .weui-cell {
     animation-duration: 0.5s !important;

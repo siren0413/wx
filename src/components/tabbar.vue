@@ -1,11 +1,11 @@
 <template>
   <div class="weui-tabbar">
-    <router-link to="/store" class="weui-tabbar__item"
-                 :class="[computeCurrentTab === '/store' ? 'weui-bar__item_on': 'weui-bar__item_off']">
+    <router-link to="/home" class="weui-tabbar__item"
+                 :class="[computeCurrentTab === '/home' ? 'weui-bar__item_on': 'weui-bar__item_off']">
       <div class="wx-tab">
                     <span style="display: inline-block;position: relative;">
 
-                      <template v-if="computeCurrentTab === '/store'">
+                      <template v-if="computeCurrentTab === '/home'">
                       <img src="../assets/tab/money-bag.png" class="weui-tabbar__icon" style="height: 28px; width: 28px" title="Money Bag Yen" >
                         </template>
                       <template v-else>
@@ -14,7 +14,7 @@
                       <!--<img src="../assets/icon_tabbar.png" alt="" class="weui-tabbar__icon">-->
                       <!--<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>-->
                     </span>
-        <p class="weui-tabbar__label">我要借款</p>
+        <p class="weui-tabbar__label" :style="computeCurrentTab === '/home' ? 'color: #e98f36': ''">我要借款</p>
       </div>
     </router-link>
 
@@ -27,7 +27,7 @@
         <template v-else>
           <img src="../assets/tab/repay_off.png" alt="" class="weui-tabbar__icon">
         </template>
-        <p class="weui-tabbar__label">我要还款</p>
+        <p class="weui-tabbar__label" :style="computeCurrentTab === '/repay' ? 'color: #87a7d6': ''">我要还款</p>
       </div>
     </router-link>
 
@@ -44,7 +44,7 @@
                         <img src="../assets/tab/personal-info_off.png" alt="" class="weui-tabbar__icon">
                       </template>
                     </span>
-        <p class="weui-tabbar__label">个人信息</p>
+        <p class="weui-tabbar__label" :style="computeCurrentTab === '/profile' ? 'color: #1aaba8': ''">个人信息</p>
       </div>
     </router-link>
 
@@ -57,7 +57,7 @@
         <template v-else>
           <img src="../assets/tab/service_off.png" alt="" class="weui-tabbar__icon">
         </template>
-        <p class="weui-tabbar__label">服务台</p>
+        <p class="weui-tabbar__label" :style="computeCurrentTab === '/service' ? 'color: #be8dbd': ''">服务台</p>
       </div>
     </router-link>
   </div>

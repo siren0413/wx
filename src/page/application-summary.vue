@@ -82,7 +82,7 @@
         <div class="weui-msg__opr-area">
           <p class="weui-btn-area">
             <router-link to="/apply-status" class="weui-btn weui-btn_primary">查看审核进度</router-link>
-            <router-link to="/store" class="weui-btn weui-btn_default">返回</router-link>
+            <router-link to="/home" class="weui-btn weui-btn_default">返回</router-link>
           </p>
         </div>
       </div>

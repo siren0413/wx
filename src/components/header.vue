@@ -10,7 +10,7 @@
     data() {
       return {
         pathNameMapping: {
-          '/store': '我要借款',
+          '/home': '我要借款',
           '/repay': '我要还款',
           '/profile': '认证中心',
           '/profile-id': '实名认证',
