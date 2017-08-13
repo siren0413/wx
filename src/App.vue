@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <wxHeader v-if="$route.path !== '/login' && $route.path !== '/store-front'"></wxHeader>
+    <!--<wxHeader v-if="$route.path !== '/login' && $route.path !== '/store-front'"></wxHeader>-->
     <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
       <keep-alive :include=['home','profile-id','profile-person']>
         <router-view class="wx-container"></router-view>
@@ -84,8 +84,9 @@
   }
 
   .wx-container {
+    margin-top: 20px;
     top: 20px;
-    height: 84%;
+    height: 90%;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
   }
