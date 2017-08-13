@@ -66,11 +66,7 @@
       <a class="weui-btn weui-btn_primary" @click="apply">开始申请</a>
     </div>
 
-    <!--<modal v-if="showModal" @cancel="showModal = false" :title="'aaaaa'" :desc="'bbbb'">-->
-    <!--</modal>-->
-
     <loading-toast></loading-toast>
-
     <div class="wx-bot-margin"></div>
 
   </div>
@@ -154,7 +150,7 @@
     },
     created() {
       this.incLoadingCount()
-      this.$http.get('/api/public/loan/configs')
+      this.$http.get(`/api/public/user/${this.uid()}/loan/configs`)
         .then((response) => {
           this.loanConfigs = response.data
           this.decLoadingCount()

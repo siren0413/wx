@@ -109,7 +109,7 @@
         }
         if (success) {
           this.waitingResponse = true
-          this.$http.post('/auth', {
+          this.$http.post('/api/public/auth', {
             phoneNumber: this.phoneNumber.replace(/\s+/g, ''),
             code: this.smsCode,
             agreeTos: this.agreeTos
