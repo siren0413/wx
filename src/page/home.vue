@@ -1,9 +1,30 @@
 <template>
   <div>
-    <div v-for="(amount, index) in loanAmounts">
-      <input type="radio" id="level1" :value="index" v-model="currentAmountIndex"/>
-      <label>{{ amount }}</label>
+    <!--<div v-for="(amount, index) in loanAmounts">-->
+    <!--<input type="radio" id="level1" :value="index" v-model="currentAmountIndex"/>-->
+    <!--<div class="square">-->
+    <!--<span class="square-span">50</span>-->
+    <!--</div>-->
+    <!--<label>{{ amount }}</label>-->
+    <!--</div>-->
+
+    <div class="wx-square-box">
+      <div class="wx-square-container">
+        <div class="wx-square" style="background: rgba(243, 202, 126, 0.25); color: rgba(115, 71, 41, 0.7);" :class="{'wx-square-select-orange':currentAmountIndex===0}" @click="currentAmountIndex=0">
+          <span class="wx-square-span">500</span>
+          <span class="wx-square-span wx-square-span-small" >元</span>
+        </div>
+        <div class="wx-square" style="background: rgba(158, 181, 215, 0.25); color: rgba(53, 70, 119, 0.8);" :class="{'wx-square-select-blue':currentAmountIndex===1}" @click="currentAmountIndex=1">
+          <span class="wx-square-span">1000</span>
+          <span class="wx-square-span wx-square-span-small" >元</span>
+        </div>
+        <div class="wx-square" style="background: rgba(192, 172, 205, 0.25); color: rgba(87, 47, 109, 0.8);" :class="{'wx-square-select-purple':currentAmountIndex===2}" @click="currentAmountIndex=2">
+          <span class="wx-square-span">1500</span>
+          <span class="wx-square-span wx-square-span-small" >元</span>
+        </div>
+      </div>
     </div>
+
 
     <div class="weui-cells">
 
@@ -68,7 +89,8 @@
 
     <loading-toast></loading-toast>
     <error-toast :message="errorMessage"></error-toast>
-    <modal v-if="showModal" @ok="toApplyStatus" @cancel="showModal=!showModal" title="申请失败" desc="您已经有正在审核的申请，您可以前往查看审核进度" ok_text="查看进度" cancel_text="取消"></modal>
+    <modal v-if="showModal" @ok="toApplyStatus" @cancel="showModal=!showModal" title="申请失败" desc="您已经有正在审核的申请，您可以前往查看审核进度" ok_text="查看进度"
+           cancel_text="取消"></modal>
     <div class="wx-bot-margin"></div>
 
   </div>
@@ -130,7 +152,7 @@
         this.serviceFee = null
         this.subTotal = null
 
-        let config = this.serviceFee = this.loanConfigs.find((elem, pos, arr)=>{
+        let config = this.serviceFee = this.loanConfigs.find((elem, pos, arr) => {
           return elem.amount === this.loanAmounts[this.currentAmountIndex] && elem.term === this.loanTerms[this.currentTermIndex]
         })
         this.serviceFee = config.fee
@@ -232,6 +254,68 @@
 
   .weui-label {
     text-align: left;
+  }
+
+  .wx-square {
+    /*float: left;*/
+    display: inline-block;
+    position: relative;
+    width: 28vw;
+    height: 23vw;
+    /*margin-bottom: 30px;*/
+    /*background-size: cover; !* you change this to "contain" if you don't want the images to be cropped *!*/
+    border-radius: 8%;
+    /*opacity: 1;*/
+    background: rgba(243, 202, 126, 0.3);
+    vertical-align: middle;
+    text-align: center;
+    margin-right: 8px;
+    color: #515151;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+
+  .wx-square-span {
+    display: inline-block;
+    vertical-align: middle;
+    /*line-height: 100px;*/
+    font-weight: 300;
+    font-size: 8vw;
+    margin-top: 5.5vw;
+  }
+  .wx-square-span-small {
+    font-size: 3vw;
+    font-weight: 400;
+    margin-top: 8vw;
+    margin-left: -1vw;
+  }
+  .wx-square-container {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    height: 35vw;
+  }
+
+  .wx-square-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wx-square-select-orange{
+    width: 30vw;
+    height: 25vw;
+    border: 0.4vw solid rgba(243, 202, 126, 0.5);
+  }
+  .wx-square-select-blue{
+    width: 30vw;
+    height: 25vw;
+    border: 0.4vw solid rgba(158, 181, 215, 0.4);
+  }
+  .wx-square-select-purple{
+    width: 30vw;
+    height: 25vw;
+    border: 0.4vw solid rgba(192, 172, 205, 0.4);
   }
 
 </style>
