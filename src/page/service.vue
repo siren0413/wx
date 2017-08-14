@@ -20,7 +20,7 @@
         <img class="wx-img-credit-score" src="../assets/service/credit-score.png" />
         <div class="weui-cell__bd">我的信用分</div>
         <div class="weui-cell__ft" style="font-size: 0">
-          <span style="vertical-align:middle; font-size: 17px;">400 分</span>
+          <span style="vertical-align:middle; font-size: 17px;">{{currentCreditScore}}</span>
         </div>
       </div>
     </div>
@@ -116,6 +116,7 @@
     data() {
       return {
         currentCreditLimit: null,
+        currentCreditScore: null,
         showIncreaseCreditLimitModal: false,
         showIncreaseCreditLimitDialog: false,
         passwordStatus: null,
@@ -138,9 +139,15 @@
       }
     },
     created() {
-      this.$http.get(`/api/public/user/${this.uid()}/credit/limit`)
+      this.$http.get(`/api/public/user/${this.uid()}/credit/profile`)
         .then((response) => {
           this.currentCreditLimit = response.data.limit
+          let score = response.data.score
+          if (score === -1){
+            this.currentCreditScore = '暂无数据'
+          }else {
+            this.currentCreditScore = score
+          }
         })
       this.$http.get(`/api/public/user/${this.uid()}/password/status`)
         .then((response) => {

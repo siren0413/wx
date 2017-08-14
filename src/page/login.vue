@@ -122,7 +122,7 @@
             })
             .catch((error) => {
               this.waitingResponse = false
-              this.message = "短信验证码错误"
+              this.alertMessage = "短信验证码错误"
               this.showErrorToast()
             })
         }
@@ -141,7 +141,7 @@
           .catch((error) => {
             this.stopTimer();
             if (error.response.status === 403) {
-              this.message = "尝试次数频繁"
+              this.alertMessage = "尝试次数频繁"
               this.showErrorToast()
             } else {
               this.phoneNumber = ''
