@@ -134,7 +134,6 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       confirmDialog(status) {
         this.getPasswordStatus()
         this.cleanForm()
@@ -148,7 +147,6 @@
       },
       save() {
         if (this.isValidPassword(this.passwordCreate.input) && this.passwordCreate.input === this.passwordCreate.confirm) {
-          this.incLoadingCount()
           this.$http.post(`/api/public/user/${this.uid()}/password/create`, {
             password: this.passwordCreate.input
           })
@@ -156,7 +154,6 @@
               this.result.title = "成功"
               this.result.desc = "密码设置成功"
               this.result.status = 0
-              this.decLoadingCount()
               this.showResultDialog = true
             })
             .catch((error) => {
@@ -166,14 +163,12 @@
               if (error && error.message) {
                 this.result.desc = error.message
               }
-              this.decLoadingCount()
               this.showResultDialog = true
             })
         }
       },
       update() {
         if (this.isValidPassword(this.passwordUpdate.currentPassword) && this.isValidPassword(this.passwordUpdate.input) && this.passwordUpdate.input === this.passwordUpdate.confirm) {
-          this.incLoadingCount()
           this.$http.post(`/api/public/user/${this.uid()}/password/update`, {
             currentPassword: this.passwordUpdate.currentPassword,
             newPassword: this.passwordUpdate.input
@@ -182,7 +177,6 @@
               this.result.title = "成功"
               this.result.desc = "密码修改成功"
               this.result.status = 0
-              this.decLoadingCount()
               this.showResultDialog = true
             })
             .catch((error) => {
@@ -192,21 +186,15 @@
               if (error && error.message) {
                 this.result.desc = error.message
               }
-              this.decLoadingCount()
               this.showResultDialog = true
             })
         }
       },
       getPasswordStatus() {
-        this.incLoadingCount()
         this.passwordStatus = null
         this.$http.get(`/api/public/user/${this.uid()}/password/status`)
           .then((response) => {
             this.passwordStatus = response.data.status
-            this.decLoadingCount()
-          })
-          .catch((error) => {
-            this.decLoadingCount()
           })
       },
       cleanForm() {

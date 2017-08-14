@@ -124,18 +124,12 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       requestIncreaseCreditLimit() {
         this.showIncreaseCreditLimitModal=false
-        this.incLoadingCount()
         this.$http.get(`/api/public/user/${this.uid()}/credit/increase`)
           .then((response) => {
             this.increaseCreditLimitResponse = response.data
             this.showIncreaseCreditLimitDialog = true
-            this.decLoadingCount()
-          })
-          .catch((error) => {
-            this.decLoadingCount()
           })
       },
       logout() {
@@ -144,23 +138,13 @@
       }
     },
     created() {
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/credit/limit`)
         .then((response) => {
           this.currentCreditLimit = response.data.limit
-          this.decLoadingCount()
         })
-        .catch((response) => {
-          this.decLoadingCount()
-        })
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/password/status`)
         .then((response) => {
           this.passwordStatus = response.data.status
-          this.decLoadingCount()
-        })
-        .catch((error) => {
-          this.decLoadingCount()
         })
     }
   }

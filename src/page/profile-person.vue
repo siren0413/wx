@@ -184,7 +184,6 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       save() {
         let success = true;
         if (!this.residentInfo.residentCity) {
@@ -262,7 +261,6 @@
       },
       edit() {
         this.waitingResponse = true
-        this.incLoadingCount()
         this.$http.get(`/api/public/user/${this.uid()}/profile/general`)
           .then((response) => {
             this.residentInfo.residentCity = response.data.residentCity
@@ -275,12 +273,10 @@
             this.otherInfo.qq = response.data.qq
             this.editable = true
             this.waitingResponse = false
-            this.decLoadingCount()
           })
           .catch((error) => {
             this.editable = true
             this.waitingResponse = false
-            this.decLoadingCount()
           })
       },
       cleanupTimer() {
@@ -296,7 +292,6 @@
       }
     },
     created() {
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/profile/general`)
         .then((response) => {
           this.residentInfo.residentCity = response.data.residentCity
@@ -308,10 +303,6 @@
           this.otherInfo.marriageStatus = response.data.marriageStatus
           this.otherInfo.qq = response.data.qq
           this.editable = false
-          this.decLoadingCount()
-        })
-        .catch((error) => {
-          this.decLoadingCount()
         });
       setInterval(this.cleanupTimer, 2000)
     }

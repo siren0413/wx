@@ -106,7 +106,7 @@
       }
     },
     methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount','showErrorToast']),
+      ...mapActions(['showErrorToast']),
       apply() {
         this.applicationInfo.amount = this.loanAmounts[this.currentAmountIndex]
         this.applicationInfo.term = this.loanTerms[this.currentTermIndex]
@@ -163,14 +163,10 @@
       }
     },
     created() {
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/loan/configs`)
         .then((response) => {
           this.loanConfigs = response.data
-          this.decLoadingCount()
-        }).catch((error) => {
-        this.decLoadingCount()
-      })
+        })
     }
   }
 </script>

@@ -137,7 +137,6 @@
       ...mapState(['applicationInfo'])
     },
     methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       submit() {
         if (!this.profiles.id) {
           this.alerts.alertTitle = '提交失败'
@@ -157,43 +156,27 @@
           this.alerts.showAlert = true
           return
         }
-        this.incLoadingCount()
         this.$http.post(`/api/public/user/${this.uid()}/loan/application`, {
           amount: this.applicationInfo.amount,
           term: this.applicationInfo.term,
           fee: this.applicationInfo.fee
         })
           .then((response) => {
-            this.decLoadingCount()
             this.submitStatus = 1
           })
           .catch((error) => {
-            this.decLoadingCount()
             this.submitStatus = 0
           })
       }
     },
     created(){
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/profile/general/status`)
         .then((response) => {
-          if (response.data.status === 0) this.profiles.personal=true;
-          else this.profiles.personal=false;
-          this.decLoadingCount()
+          this.profiles.personal = response.data.status === 0;
         })
-        .catch((error) => {
-          this.decLoadingCount()
-        })
-
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/profile/identity/status`)
         .then((response) => {
-          if (response.data.status === 0) this.profiles.id=true;
-          else this.profiles.id=false;
-          this.decLoadingCount()
-        })
-        .catch((error) => {
-          this.decLoadingCount()
+          this.profiles.id = response.data.status === 0;
         })
     }
   }

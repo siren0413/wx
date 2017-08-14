@@ -85,7 +85,6 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount']),
       save() {
         let success = true;
         if (!this.name) {
@@ -128,7 +127,6 @@
           })
       },
       edit() {
-        this.incLoadingCount()
         this.waitingResponse = true
         this.$http.get(`/api/public/user/${this.uid()}/profile/identity`)
           .then((response) => {
@@ -136,12 +134,10 @@
             this.idNumber = response.data.idNumber
             this.editable = true
             this.waitingResponse = false
-            this.decLoadingCount()
           })
           .catch((error) => {
             this.editable = true
             this.waitingResponse = false
-            this.decLoadingCount()
           })
       },
       cleanupTimer() {
@@ -150,16 +146,12 @@
       }
     },
     created() {
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/profile/identity`)
         .then((response) => {
           this.name = response.data.name
           this.idNumber = response.data.idNumber
           this.editable = false
-          this.decLoadingCount()
-        }).catch((error) => {
-        this.decLoadingCount()
-      });
+        })
       setInterval(this.cleanupTimer, 2000)
     },
     filters: {

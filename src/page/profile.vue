@@ -41,28 +41,18 @@
       }
     },
     computed: {},
-    methods: {
-      ...mapActions(['incLoadingCount', 'decLoadingCount'])
-    },
+    methods: {},
     created() {
-      this.incLoadingCount()
       this.$http.get(`/api/public/user/${this.uid()}/profile/general/status`)
         .then((response) => {
           this.generalProfileStatus.status = response.data.status
           this.generalProfileStatus.desc = response.data.desc
-          this.decLoadingCount()
-        }).catch((error) => {
-        this.decLoadingCount()
-      })
-      this.incLoadingCount()
+        })
       this.$http.get(`/api/public/user/${this.uid()}/profile/identity/status`)
         .then((response) => {
           this.idProfileStatus.status = response.data.status
           this.idProfileStatus.desc = response.data.desc
-          this.decLoadingCount()
-        }).catch((error) => {
-        this.decLoadingCount()
-      })
+        })
     }
   }
 </script>

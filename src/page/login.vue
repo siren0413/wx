@@ -92,7 +92,7 @@
         savePhoneNumber: 'savePhoneNumber',
         saveToken: 'saveToken'
       }),
-      ...mapActions(['incLoadingCount', 'decLoadingCount','showErrorToast']),
+      ...mapActions(['showErrorToast']),
       login: function () {
         let success = true;
         if (!this.isValidPhoneNumber) {
