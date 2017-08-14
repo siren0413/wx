@@ -27,8 +27,8 @@
     <div class="weui-cells__title wx-recent-history">最近审核记录</div>
     <div class="weui-cells">
 
-      <template v-for="(app,index) in appHistory">
-        <a class="weui-cell weui-cell_access" @click="openApplication(index)">
+      <template v-for="(app, index) in appHistory">
+        <a class="weui-cell weui-cell_access wx-history-cell" ref="history" :id="index" @click="selectApplication(index)">
           <div class="weui-cell__bd">
             <p>
               <span class="app-history-span">{{formatDate(app.date)}} </span>
@@ -62,8 +62,13 @@
     },
     computed: {},
     methods: {
-      openApplication(index) {
+      selectApplication(index) {
         this.currentIndex = index
+        let selectedRef = this.$refs.history.filter((elem, pos, arr) =>{
+          elem.classList.remove('wx-history-select')
+          return parseInt(elem.id) === this.currentIndex
+        })
+        selectedRef[0].classList.add('wx-history-select')
       },
       formatDate(unixTime) {
         return moment(unixTime).format('YYYY-MM-DD')
@@ -161,14 +166,17 @@
     text-align: left;
   }
 
-  .app-history-span {
-    color: #999999;
-    font-size: 16px;
-  }
   .wx-recent-history{
     padding-top: 20px;
   }
   .weui-icon_toast {
     margin-top: auto;
+  }
+  .wx-history-select {
+    color: rgb(9,187,7) !important;
+  }
+  .wx-history-cell {
+    color: #999999;
+    font-size: 16px;
   }
 </style>
