@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <modal v-if="showIncreaseCreditLimitModal" @cancel="showIncreaseCreditLimitModal = false" @ok="requestIncreaseCreditLimit" title=" " desc="你确定要申请提高贷款额度吗？"></modal>
+    <modal v-if="showIncreaseCreditLimitModal" @cancel="showIncreaseCreditLimitModal = false" @ok="requestIncreaseCreditLimit" title=" " desc="你确定要申请提高贷款额度吗？" ok_text="申请提额" cancel_text="取消"></modal>
     <alert v-if="showIncreaseCreditLimitDialog" @ok="showIncreaseCreditLimitDialog =false" :title="increaseCreditLimitResponse.title" :desc="increaseCreditLimitResponse.desc"></alert>
     <loading-toast></loading-toast>
 

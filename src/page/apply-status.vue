@@ -2,54 +2,66 @@
 
   <div class="wx-apply-status-container">
 
-    <div class="weui-cells__title">当前审核状态</div>
-    <div class="weui-cells" v-if="selectedApp.recordHistory && selectedApp.recordHistory.length > 0">
-      <div class="weui-cell" v-for="record in selectedApp.recordHistory">
-        <div class="weui-cell__hd"></div>
-        <div class="weui-cell__bd">
-          <p>
-            <span>{{record.desc}}</span>
-          </p>
+
+    <template v-if="appHistory.length === 0">
+      <div>
+        <img src="../assets/service/empty.png" style="height: 100px; margin-top: 30%"/>
+        <div style="margin-top: 20px; font-size: 16px">
+          <p>暂无申请记录</p>
         </div>
-        <div class="weui-cell__ft" v-if="record.status==='PENDING'"><i class="weui-icon-waiting weui-icon_toast"></i></div>
-        <div class="weui-cell__ft" v-if="record.status==='SUCCESS'"><i class="weui-icon-success weui-icon_toast"></i></div>
-        <div class="weui-cell__ft" v-if="record.status==='FAILURE'"><i class="weui-icon-warn weui-icon_toast"></i></div>
       </div>
-    </div>
-    <div v-if="selectedApp.recordHistory && selectedApp.recordHistory.length == 0">
-      <img src="../assets/service/empty.png" style="height: 80px; margin-top: 10%"/>
-      <div style="margin-top: 20px; font-size: 16px">
-        <p>暂无状态</p>
-      </div>
-    </div>
+    </template>
 
-
-    <div class="weui-cells__title wx-recent-history">最近审核记录</div>
-    <div class="weui-cells">
-
-      <template v-for="(app, index) in appHistory">
-        <a class="weui-cell weui-cell_access wx-history-cell" @click="selectApplication(index)">
-          <div class="weui-cell__bd" >
-            <img v-if="app.selected" src="../assets/service/calendar_on.png" class="wx-img-history-item"/>
-            <img v-if="!app.selected" src="../assets/service/calendar_off.png" class="wx-img-history-item"/>
-            <span class="app-history-span" :class="{'wx-history-select':app.selected}">{{formatDate(app.date)}} </span>
+    <template v-else>
+      <div class="weui-cells__title">当前审核状态</div>
+      <div class="weui-cells" v-if="selectedApp.recordHistory && selectedApp.recordHistory.length > 0">
+        <div class="weui-cell" v-for="record in selectedApp.recordHistory">
+          <div class="weui-cell__hd"></div>
+          <div class="weui-cell__bd">
+            <p>
+              <span>{{record.desc}}</span>
+            </p>
           </div>
-          <div class="weui-cell__ft" ref="history" :id="index">
-            <img v-if="app.selected" src="../assets/service/rmb_on.png" class="wx-img-history-item"/>
-            <img v-if="!app.selected" src="../assets/service/rmb_off.png" class="wx-img-history-item"/>
-            <span class="app-history-span" :class="{'wx-history-select':app.selected}">
+          <div class="weui-cell__ft" v-if="record.status==='PENDING'"><i class="weui-icon-waiting weui-icon_toast"></i></div>
+          <div class="weui-cell__ft" v-if="record.status==='SUCCESS'"><i class="weui-icon-success weui-icon_toast"></i></div>
+          <div class="weui-cell__ft" v-if="record.status==='FAILURE'"><i class="weui-icon-warn weui-icon_toast"></i></div>
+        </div>
+      </div>
+      <div v-if="selectedApp.recordHistory && selectedApp.recordHistory.length == 0">
+        <img src="../assets/service/empty.png" style="height: 80px; margin-top: 10%"/>
+        <div style="margin-top: 20px; font-size: 16px">
+          <p>暂无状态</p>
+        </div>
+      </div>
+
+
+      <div class="weui-cells__title wx-recent-history">最近审核记录</div>
+      <div class="weui-cells">
+
+        <template v-for="(app, index) in appHistory">
+          <a class="weui-cell weui-cell_access wx-history-cell" @click="selectApplication(index)">
+            <div class="weui-cell__bd">
+              <img v-if="app.selected" src="../assets/service/calendar_on.png" class="wx-img-history-item"/>
+              <img v-if="!app.selected" src="../assets/service/calendar_off.png" class="wx-img-history-item"/>
+              <span class="app-history-span" :class="{'wx-history-select':app.selected}">{{formatDate(app.date)}} </span>
+            </div>
+            <div class="weui-cell__ft" ref="history">
+              <img v-if="app.selected" src="../assets/service/rmb_on.png" class="wx-img-history-item"/>
+              <img v-if="!app.selected" src="../assets/service/rmb_off.png" class="wx-img-history-item"/>
+              <span class="app-history-span" :class="{'wx-history-select':app.selected}">
               {{app.loanAmount}} 元
             </span>
-            <img v-if="app.selected" src="../assets/service/loan-term_on.png" class="wx-img-history-item" style="padding-left: 10px"/>
-            <img v-if="!app.selected" src="../assets/service/loan-term_off.png" class="wx-img-history-item" style="padding-left: 10px"/>
-            <span class="app-history-span" :class="{'wx-history-select':app.selected}">
+              <img v-if="app.selected" src="../assets/service/loan-term_on.png" class="wx-img-history-item" style="padding-left: 10px"/>
+              <img v-if="!app.selected" src="../assets/service/loan-term_off.png" class="wx-img-history-item" style="padding-left: 10px"/>
+              <span class="app-history-span" :class="{'wx-history-select':app.selected}">
               {{app.loanTerm}} 天
             </span>
-          </div>
-        </a>
-      </template>
-    </div>
+            </div>
+          </a>
+        </template>
+      </div>
 
+    </template>
 
     <div class="wx-bot-margin"></div>
     <loading-toast></loading-toast>
@@ -77,13 +89,6 @@
         })
         this.currentIndex = index
         this.appHistory[this.currentIndex].selected = true
-//        let selectedRef = this.$refs.history.filter((elem, pos, arr) =>{
-//          elem.classList.remove('wx-history-select')
-//          return parseInt(elem.id) === this.currentIndex
-//        })
-//        selectedRef.forEach((elem) => {
-//          elem.classList.add('wx-history-select')
-//        })
       },
       formatDate(unixTime) {
         return moment(unixTime).format('YYYY-MM-DD')
@@ -196,6 +201,7 @@
   .wx-history-cell {
     color: #999999;
     font-size: 16px;
+    font-weight: 500;
   }
 
   .wx-img-history-item {
