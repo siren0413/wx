@@ -28,15 +28,21 @@
     <div class="weui-cells">
 
       <template v-for="(app, index) in appHistory">
-        <a class="weui-cell weui-cell_access wx-history-cell" ref="history" :id="index" @click="selectApplication(index)">
-          <div class="weui-cell__bd">
-            <p>
-              <span class="app-history-span">{{formatDate(app.date)}} </span>
-              <span class="app-history-span">借款金额:{{app.loanAmount}}</span>
-              <span class="app-history-span">借款天数:{{app.loanTerm}}</span>
-            </p>
+        <a class="weui-cell weui-cell_access wx-history-cell"  @click="selectApplication(index)">
+          <div class="weui-cell__bd" ref="history" :id="index">
+            <img src="../assets/service/calendar.png" class="wx-img-history-item"/>
+            <span class="app-history-span">{{formatDate(app.date)}} </span>
           </div>
-          <div class="weui-cell__ft"></div>
+          <div class="weui-cell__ft" ref="history" :id="index">
+            <img src="../assets/home/rmb-red.png" class="wx-img-history-item"/>
+            <span class="app-history-span">
+              {{app.loanAmount}} 元
+            </span>
+            <img src="../assets/home/loan-term.png" class="wx-img-history-item" style="padding-left: 10px"/>
+            <span class="app-history-span" >
+              {{app.loanTerm}} 天
+            </span>
+          </div>
         </a>
       </template>
     </div>
@@ -68,7 +74,9 @@
           elem.classList.remove('wx-history-select')
           return parseInt(elem.id) === this.currentIndex
         })
-        selectedRef[0].classList.add('wx-history-select')
+        selectedRef.forEach((elem) => {
+          elem.classList.add('wx-history-select')
+        })
       },
       formatDate(unixTime) {
         return moment(unixTime).format('YYYY-MM-DD')
@@ -77,8 +85,8 @@
         this.$http.get(`/api/public/user/${this.uid()}/loan/application/${appId}`)
           .then((response) => {
             this.selectedApp = response.data
-          }).catch((error)=>{
-        })
+            this.selectApplication(this.currentIndex)
+          })
       }
     },
     watch: {
@@ -178,5 +186,13 @@
   .wx-history-cell {
     color: #999999;
     font-size: 16px;
+  }
+
+  .wx-img-history-item{
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 1px;
+    padding-bottom: 3px;
   }
 </style>
