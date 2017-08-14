@@ -5,22 +5,22 @@
       <div>
         <div class="weui-cells__title">申请资料</div>
         <div class="weui-cells weui-cells_form">
-          <div class="weui-cell weui-cell_access">
+          <router-link to="/profile-id" class="weui-cell weui-cell_access" v-if="profiles.id == false">
             <div class="weui-cell__bd">实名认证</div>
 
-            <router-link to="/profile-id" class="weui-cell__ft" style="font-size: 0" v-if="profiles.id == false">
+            <div  class="weui-cell__ft" style="font-size: 0" >
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
-            </router-link>
+            </div>
             <div class="weui-cell wx-cell-noaccess" style="font-size: 0" v-if="profiles.id">
               <span style="vertical-align:middle; font-size: 17px;">已完成</span>
               <i class="weui-icon-success"></i>
             </div>
-          </div>
+          </router-link>
 
-          <div class="weui-cell weui-cell_access">
+          <router-link to="/profile-id" class="weui-cell weui-cell_access" v-if="profiles.phone == false">
             <div class="weui-cell__bd">手机验证</div>
-            <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.phone == false">
+            <div class="weui-cell__ft" style="font-size: 0">
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
             </div>
@@ -28,19 +28,19 @@
               <span style="vertical-align:middle; font-size: 17px;">已完成</span>
               <i class="weui-icon-success"></i>
             </div>
-          </div>
+          </router-link>
 
-          <div class="weui-cell weui-cell_access">
+          <router-link  to="/profile-person" class="weui-cell weui-cell_access" v-if="profiles.personal == false">
             <div class="weui-cell__bd">个人信息</div>
-            <router-link to="/profile-person" class="weui-cell__ft" style="font-size: 0" v-if="profiles.personal == false">
+            <div class="weui-cell__ft" style="font-size: 0" >
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
-            </router-link>
+            </div>
             <div class="weui-cell wx-cell-noaccess" style="font-size: 0" v-if="profiles.personal">
               <span style="vertical-align:middle; font-size: 17px;">已完成</span>
               <i class="weui-icon-success"></i>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
 
