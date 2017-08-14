@@ -28,18 +28,21 @@
     <div class="weui-cells">
 
       <template v-for="(app, index) in appHistory">
-        <a class="weui-cell weui-cell_access wx-history-cell"  @click="selectApplication(index)">
-          <div class="weui-cell__bd" ref="history" :id="index">
-            <img src="../assets/service/calendar.png" class="wx-img-history-item"/>
-            <span class="app-history-span">{{formatDate(app.date)}} </span>
+        <a class="weui-cell weui-cell_access wx-history-cell" @click="selectApplication(index)">
+          <div class="weui-cell__bd" >
+            <img v-if="app.selected" src="../assets/service/calendar_on.png" class="wx-img-history-item"/>
+            <img v-if="!app.selected" src="../assets/service/calendar_off.png" class="wx-img-history-item"/>
+            <span class="app-history-span" :class="{'wx-history-select':app.selected}">{{formatDate(app.date)}} </span>
           </div>
           <div class="weui-cell__ft" ref="history" :id="index">
-            <img src="../assets/home/rmb-red.png" class="wx-img-history-item"/>
-            <span class="app-history-span">
+            <img v-if="app.selected" src="../assets/service/rmb_on.png" class="wx-img-history-item"/>
+            <img v-if="!app.selected" src="../assets/service/rmb_off.png" class="wx-img-history-item"/>
+            <span class="app-history-span" :class="{'wx-history-select':app.selected}">
               {{app.loanAmount}} 元
             </span>
-            <img src="../assets/home/loan-term.png" class="wx-img-history-item" style="padding-left: 10px"/>
-            <span class="app-history-span" >
+            <img v-if="app.selected" src="../assets/service/loan-term_on.png" class="wx-img-history-item" style="padding-left: 10px"/>
+            <img v-if="!app.selected" src="../assets/service/loan-term_off.png" class="wx-img-history-item" style="padding-left: 10px"/>
+            <span class="app-history-span" :class="{'wx-history-select':app.selected}">
               {{app.loanTerm}} 天
             </span>
           </div>
@@ -69,14 +72,18 @@
     computed: {},
     methods: {
       selectApplication(index) {
+        this.appHistory.forEach((elem) => {
+          elem.selected = false
+        })
         this.currentIndex = index
-        let selectedRef = this.$refs.history.filter((elem, pos, arr) =>{
-          elem.classList.remove('wx-history-select')
-          return parseInt(elem.id) === this.currentIndex
-        })
-        selectedRef.forEach((elem) => {
-          elem.classList.add('wx-history-select')
-        })
+        this.appHistory[this.currentIndex].selected = true
+//        let selectedRef = this.$refs.history.filter((elem, pos, arr) =>{
+//          elem.classList.remove('wx-history-select')
+//          return parseInt(elem.id) === this.currentIndex
+//        })
+//        selectedRef.forEach((elem) => {
+//          elem.classList.add('wx-history-select')
+//        })
       },
       formatDate(unixTime) {
         return moment(unixTime).format('YYYY-MM-DD')
@@ -174,21 +181,24 @@
     text-align: left;
   }
 
-  .wx-recent-history{
+  .wx-recent-history {
     padding-top: 20px;
   }
+
   .weui-icon_toast {
     margin-top: auto;
   }
+
   .wx-history-select {
-    color: rgb(9,187,7) !important;
+    color: #87c890 !important;
   }
+
   .wx-history-cell {
     color: #999999;
     font-size: 16px;
   }
 
-  .wx-img-history-item{
+  .wx-img-history-item {
     width: 16px;
     height: 16px;
     vertical-align: middle;

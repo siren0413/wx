@@ -55,7 +55,7 @@
     </div>
 
     <loading-toast></loading-toast>
-    <error-toast :message="message"></error-toast>
+    <error-toast :message="alertMessage"></error-toast>
   </div>
 </template>
 
