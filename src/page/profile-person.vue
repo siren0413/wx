@@ -123,7 +123,7 @@
         v-if="waitingResponse" class="weui-loading"></i>保存</a>
     </div>
     <div class="weui-btn-area" v-else>
-      <a class="weui-btn weui-btn_primary" @click="edit">我要修改</a>
+      <a class="weui-btn weui-btn_primary" :class="{'weui-btn_disabled': pendingApplication}" @click="edit">我要修改</a>
     </div>
 
 
@@ -136,6 +136,7 @@
     </div>
 
     <loading-toast></loading-toast>
+    <error-toast :message="errorToastMessage"></error-toast>
 
     <div class="wx-bot-margin"></div>
   </div>
@@ -143,17 +144,19 @@
 
 <script>
   import {mapActions, mapState} from 'vuex'
-  import tabbar from "../components/tabbar.vue";
   import router from '../router/index';
+  import ErrorToast from "../components/error-toast.vue";
 
   export default {
-    components: {tabbar},
+    components: {ErrorToast},
     name: 'profile-person',
     data() {
       return {
         waitingResponse: false,
         showToast: false,
         editable: true,
+        pendingApplication: false,
+        errorToastMessage:'',
         residentInfo: {
           residentCity: '',
           residentAddress: '',
@@ -184,6 +187,7 @@
     },
     computed: {},
     methods: {
+      ...mapActions(['showErrorToast']),
       save() {
         let success = true;
         if (!this.residentInfo.residentCity) {
@@ -229,6 +233,7 @@
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,
           residentTime: this.residentInfo.residentTime,
+          age: this.personalInfo.age,
           education: this.personalInfo.education,
           job: this.personalInfo.job,
           income: this.personalInfo.income,
@@ -260,12 +265,18 @@
 
       },
       edit() {
+        if (this.pendingApplication) {
+          this.errorToastMessage = '资料审核中...'
+          this.showErrorToast()
+          return
+        }
         this.waitingResponse = true
         this.$http.get(`/api/public/user/${this.uid()}/profile/general`)
           .then((response) => {
             this.residentInfo.residentCity = response.data.residentCity
             this.residentInfo.residentAddress = response.data.residentAddress
             this.residentInfo.residentTime = response.data.residentTime
+            this.personalInfo.age = response.data.age
             this.personalInfo.education = response.data.education
             this.personalInfo.job = response.data.job
             this.personalInfo.income = response.data.income
@@ -304,6 +315,10 @@
           this.otherInfo.qq = response.data.qq
           this.editable = false
         });
+      this.$http.get(`/api/public/user/${this.uid()}/loan/application/pending/exist`)
+        .then((response) => {
+          this.pendingApplication = response.data.result === true;
+        })
       setInterval(this.cleanupTimer, 2000)
     }
   }

@@ -46,7 +46,7 @@
         v-if="waitingResponse" class="weui-loading"></i>保存</a>
     </div>
     <div class="weui-btn-area" v-else>
-      <a class="weui-btn weui-btn_primary" @click="edit">我要修改</a>
+      <a class="weui-btn weui-btn_primary" :class="{'weui-btn_disabled': pendingApplication}" @click="edit">我要修改</a>
     </div>
 
     <div id="toast" :class="[showToast? 'toast-on': 'toast-off']">
@@ -58,23 +58,24 @@
     </div>
 
     <loading-toast></loading-toast>
+    <error-toast :message="errorToastMessage"></error-toast>
 
   </div>
 </template>
 
 <script>
   import {mapActions} from 'vuex'
-  import tabbar from "../components/tabbar.vue";
   import router from '../router/index'
 
   export default {
-    components: {tabbar},
     name: 'profile-id',
     data() {
       return {
         waitingResponse: false,
         editable: true,
         showToast: false,
+        pendingApplication: false,
+        errorToastMessage:'',
         name: '',
         idNumber: '',
         animations: {
@@ -85,6 +86,7 @@
     },
     computed: {},
     methods: {
+      ...mapActions(['showErrorToast']),
       save() {
         let success = true;
         if (!this.name) {
@@ -127,6 +129,11 @@
           })
       },
       edit() {
+        if (this.pendingApplication) {
+          this.errorToastMessage = '资料审核中...'
+          this.showErrorToast()
+          return
+        }
         this.waitingResponse = true
         this.$http.get(`/api/public/user/${this.uid()}/profile/identity`)
           .then((response) => {
@@ -151,6 +158,10 @@
           this.name = response.data.name
           this.idNumber = response.data.idNumber
           this.editable = false
+        })
+      this.$http.get(`/api/public/user/${this.uid()}/loan/application/pending/exist`)
+        .then((response) => {
+          this.pendingApplication = response.data.result === true;
         })
       setInterval(this.cleanupTimer, 2000)
     },

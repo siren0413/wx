@@ -137,15 +137,14 @@
 
         this.$http.get(`/api/public/user/${this.uid()}/loan/application/pending/exist`)
           .then((response) => {
-            this.showModal = true
-          })
-          .catch((error) => {
-            if (error.response.status !== 404) {
-              this.errorMessage = "请稍后再试"
-              this.showErrorToast()
+            if (response.data.result === true) {
+              this.showModal = true
             } else {
               router.push('/application-summary')
             }
+          }).catch((error) => {
+            this.errorMessage = "请稍后再试"
+            this.showErrorToast()
           })
       },
       updateServiceFee() {
