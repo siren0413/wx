@@ -25,8 +25,8 @@
           <select class="weui-select" name="select1" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="residentInfo.residentTime">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '小于 1 年' }}</option>
-            <option class="select-option" value="1">{{ '1 ~ 3 年' }}</option>
-            <option class="select-option" value="2">{{ '3 ~ 5 年' }}</option>
+            <option class="select-option" value="1">{{ '1 至 3 年' }}</option>
+            <option class="select-option" value="2">{{ '3 至 5 年' }}</option>
             <option class="select-option" value="3">{{ '大于 5 年' }}</option>
           </select>
         </div>
@@ -83,9 +83,9 @@
           <select class="weui-select" name="select2" :disabled="!editable" :class="[{'text-mask': !editable}]" v-model="personalInfo.income">
             <option class="select-option" disabled value=''>请选择</option>
             <option class="select-option" value="0">{{ '小于 500' }}</option>
-            <option class="select-option" value="1">{{ '1000 ~ 2000' }}</option>
-            <option class="select-option" value="2">{{ '2000 ~ 3000' }}</option>
-            <option class="select-option" value="3">{{ '3000 ~ 5000' }}</option>
+            <option class="select-option" value="1">{{ '1000 至 2000' }}</option>
+            <option class="select-option" value="2">{{ '2000 至 3000' }}</option>
+            <option class="select-option" value="3">{{ '3000 至 5000' }}</option>
             <option class="select-option" value="4">{{ '大于 5000' }}</option>
           </select>
         </div>
