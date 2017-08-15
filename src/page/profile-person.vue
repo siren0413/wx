@@ -308,6 +308,7 @@
           this.residentInfo.residentCity = response.data.residentCity
           this.residentInfo.residentAddress = response.data.residentAddress
           this.residentInfo.residentTime = response.data.residentTime
+          this.personalInfo.age = response.data.age
           this.personalInfo.education = response.data.education
           this.personalInfo.job = response.data.job
           this.personalInfo.income = response.data.income
