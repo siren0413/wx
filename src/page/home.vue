@@ -292,10 +292,10 @@
   .wx-square-container {
     padding-left: 20px;
     padding-right: 20px;
-    margin-top: 20px;
+    margin-top: 8vw;
     overflow-x: auto;
     white-space: nowrap;
-    height: 35vw;
+    height: 32vw;
   }
 
   .wx-square-container::-webkit-scrollbar {
@@ -305,17 +305,17 @@
   .wx-square-select-orange{
     width: 30vw;
     height: 25vw;
-    border: 0.4vw solid rgba(243, 202, 126, 0.5);
+    /*border: 0.3vw solid rgba(243, 202, 126, 0.5);*/
   }
   .wx-square-select-blue{
     width: 30vw;
     height: 25vw;
-    border: 0.4vw solid rgba(158, 181, 215, 0.4);
+    /*border: 0.3vw solid rgba(158, 181, 215, 0.4);*/
   }
   .wx-square-select-purple{
     width: 30vw;
     height: 25vw;
-    border: 0.4vw solid rgba(192, 172, 205, 0.4);
+    /*border: 0.3vw solid rgba(192, 172, 205, 0.4);*/
   }
 
 </style>
