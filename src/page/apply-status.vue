@@ -209,6 +209,6 @@
     height: 16px;
     vertical-align: middle;
     margin-right: 1px;
-    padding-bottom: 3px;
+    padding-bottom: 4px;
   }
 </style>
