@@ -5,10 +5,10 @@
       <div>
         <div class="weui-cells__title">申请资料</div>
         <div class="weui-cells weui-cells_form">
-          <router-link to="/profile-id" class="weui-cell weui-cell_access" v-if="profiles.id == false">
+          <router-link to="/profile-id" class="weui-cell weui-cell_access" >
             <div class="weui-cell__bd">实名认证</div>
 
-            <div  class="weui-cell__ft" style="font-size: 0" >
+            <div  class="weui-cell__ft" style="font-size: 0" v-if="profiles.id === false">
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
             </div>
@@ -18,9 +18,9 @@
             </div>
           </router-link>
 
-          <router-link to="/profile-id" class="weui-cell weui-cell_access" v-if="profiles.phone == false">
+          <router-link to="/profile-id" class="weui-cell weui-cell_access" >
             <div class="weui-cell__bd">手机验证</div>
-            <div class="weui-cell__ft" style="font-size: 0">
+            <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.phone === false">
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
             </div>
@@ -30,9 +30,9 @@
             </div>
           </router-link>
 
-          <router-link  to="/profile-person" class="weui-cell weui-cell_access" v-if="profiles.personal == false">
+          <router-link  to="/profile-person" class="weui-cell weui-cell_access">
             <div class="weui-cell__bd">个人信息</div>
-            <div class="weui-cell__ft" style="font-size: 0" >
+            <div class="weui-cell__ft" style="font-size: 0"  v-if="profiles.personal === false">
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
             </div>
