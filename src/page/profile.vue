@@ -21,9 +21,6 @@
 </template>
 
 <script>
-  import {mapActions, mapState} from 'vuex'
-  import tabbar from "../components/tabbar.vue";
-
   export default {
     components: {tabbar},
     name: 'profile',
