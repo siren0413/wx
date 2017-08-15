@@ -22,7 +22,6 @@
 
 <script>
   export default {
-    components: {tabbar},
     name: 'profile',
     data() {
       return {
