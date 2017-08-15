@@ -5,10 +5,10 @@
       <div>
         <div class="weui-cells__title">申请资料</div>
         <div class="weui-cells weui-cells_form">
-          <router-link to="/profile-id" class="weui-cell weui-cell_access" >
+          <router-link to="/profile-id" class="weui-cell weui-cell_access">
             <div class="weui-cell__bd">实名认证</div>
 
-            <div  class="weui-cell__ft" style="font-size: 0" v-if="profiles.id === false">
+            <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.id === false">
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
             </div>
@@ -18,21 +18,9 @@
             </div>
           </router-link>
 
-          <router-link to="/profile-id" class="weui-cell weui-cell_access" >
-            <div class="weui-cell__bd">手机验证</div>
-            <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.phone === false">
-              <span style="vertical-align:middle; font-size: 17px;">未完成</span>
-              <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
-            </div>
-            <div class="weui-cell wx-cell-noaccess" style="font-size: 0" v-if="profiles.phone">
-              <span style="vertical-align:middle; font-size: 17px;">已完成</span>
-              <i class="weui-icon-success"></i>
-            </div>
-          </router-link>
-
-          <router-link  to="/profile-person" class="weui-cell weui-cell_access">
+          <router-link to="/profile-person" class="weui-cell weui-cell_access">
             <div class="weui-cell__bd">个人信息</div>
-            <div class="weui-cell__ft" style="font-size: 0"  v-if="profiles.personal === false">
+            <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.personal === false">
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
               <span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
             </div>
@@ -41,6 +29,12 @@
               <i class="weui-icon-success"></i>
             </div>
           </router-link>
+          <div class="weui-cell" :class="{'animated shake': animatePin}">
+            <div class="weui-cell__hd"><label class="weui-label">手机PIN码</label></div>
+            <div class="weui-cell__bd">
+              <input class="weui-input" style="text-align: right" type="number" pattern="[0-9]*" v-mask="'####'" v-model="pin" placeholder="请输入手机PIN码">
+            </div>
+          </div>
         </div>
       </div>
 
@@ -123,14 +117,15 @@
         submitStatus: 0,
         alerts: {
           showAlert: false,
-          alertTitle:'',
-          alertDesc:''
+          alertTitle: '',
+          alertDesc: ''
         },
         profiles: {
           id: null,
-          phone: null,
           personal: null
-        }
+        },
+        pin: null,
+        animatePin: false
       }
     },
     computed: {
@@ -144,22 +139,21 @@
           this.alerts.showAlert = true
           return
         }
-//        if (!this.profiles.phone) {
-//          this.alerts.alertTitle = '提交失败'
-//          this.alerts.alertDesc = '请检查完成手机验证是否完成'
-//          this.alerts.showAlert = true
-//          return
-//        }
         if (!this.profiles.personal) {
           this.alerts.alertTitle = '提交失败'
           this.alerts.alertDesc = '请检查个人信息是否填写完整'
           this.alerts.showAlert = true
           return
         }
+        if (!/[0-9]{4}/.test(this.pin)) {
+          this.animatePin = true
+          return
+        }
         this.$http.post(`/api/public/user/${this.uid()}/loan/application`, {
           amount: this.applicationInfo.amount,
           term: this.applicationInfo.term,
-          fee: this.applicationInfo.fee
+          fee: this.applicationInfo.fee,
+          pin: this.pin
         })
           .then((response) => {
             this.submitStatus = 1
@@ -169,7 +163,7 @@
           })
       }
     },
-    created(){
+    created() {
       this.$http.get(`/api/public/user/${this.uid()}/profile/general/status`)
         .then((response) => {
           this.profiles.personal = response.data.status === 0;
@@ -178,6 +172,9 @@
         .then((response) => {
           this.profiles.id = response.data.status === 0;
         })
+      setInterval(() => {
+        this.animatePin = false
+      }, 2000)
     }
   }
 </script>
@@ -192,11 +189,12 @@
     text-align: left;
     height: 25px;
   }
-  .wx-cell-noaccess{
+
+  .wx-cell-noaccess {
     padding-right: 0;
   }
 
   .weui-form-preview {
-    padding-top: 20px;
+    padding-top: 10vw;
   }
 </style>
