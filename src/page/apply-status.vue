@@ -13,6 +13,33 @@
     </template>
 
     <template v-else>
+
+      <div class="weui-cells__title">申请信息</div>
+      <div class="weui-form-preview" v-if="selectedApp.loanInfo">
+        <div class="weui-form-preview__bd">
+          <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">申请日期</label>
+            <span class="weui-form-preview__value">{{selectedApp.loanInfo.startDate && formatDate(selectedApp.loanInfo.startDate,'YYYY年MM月DD日')}}</span>
+          </div>
+          <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">还款日期</label>
+            <span class="weui-form-preview__value">{{selectedApp.loanInfo.deadline && formatDate(selectedApp.loanInfo.deadline,'YYYY年MM月DD日')}}</span>
+          </div>
+          <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">借款金额</label>
+
+            <span class="weui-form-preview__value">{{selectedApp.loanInfo.amount}}</span>
+            <img src="../assets/home/rmb-gray.png" class="wx-subtotal-img">
+          </div>
+          <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">手续费</label>
+
+            <span class="weui-form-preview__value">{{selectedApp.loanInfo.fee}}</span>
+            <img src="../assets/home/rmb-gray.png" class="wx-subtotal-img">
+          </div>
+        </div>
+      </div>
+
       <div class="weui-cells__title">当前审核状态</div>
       <div class="weui-cells" v-if="selectedApp.recordHistory && selectedApp.recordHistory.length > 0">
         <div class="weui-cell" v-for="record in selectedApp.recordHistory">
@@ -43,7 +70,7 @@
             <div class="weui-cell__bd">
               <img v-if="app.selected" src="../assets/service/calendar_on.png" class="wx-img-history-item"/>
               <img v-if="!app.selected" src="../assets/service/calendar_off.png" class="wx-img-history-item"/>
-              <span class="app-history-span" :class="{'wx-history-select':app.selected}">{{formatDate(app.date)}} </span>
+              <span class="app-history-span" :class="{'wx-history-select':app.selected}">{{formatDate(app.date,"YYYY-MM-DD")}} </span>
             </div>
             <div class="weui-cell__ft" ref="history">
               <img v-if="app.selected" src="../assets/service/rmb_on.png" class="wx-img-history-item"/>
@@ -69,7 +96,6 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
   import moment from 'moment'
 
   export default {
@@ -89,9 +115,6 @@
         })
         this.currentIndex = index
         this.appHistory[this.currentIndex].selected = true
-      },
-      formatDate(unixTime) {
-        return moment(unixTime).format('YYYY-MM-DD')
       },
       getApplication(appId) {
         this.$http.get(`/api/public/user/${this.uid()}/loan/application/${appId}`)
@@ -210,5 +233,13 @@
     vertical-align: middle;
     margin-right: 1px;
     padding-bottom: 4px;
+  }
+  .wx-subtotal-img {
+    height: 14px;
+    vertical-align: middle;
+    margin-top: -4px;
+  }
+  .weui-form-preview__value{
+    display: inline;
   }
 </style>
