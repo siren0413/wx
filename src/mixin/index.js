@@ -26,5 +26,22 @@ export default {
   },
   created() {
     this.checkToken()
+  },
+  filters: {
+    maskId: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return '********** ' + value.substring(value.length - 4, value.length)
+    },
+    maskName: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return '** ' + value.substring(value.length - 1, value.length)
+    },
+    maskBankAccount: function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return '尾号 ' + value.substring(value.length - 4, value.length)
+    }
   }
 }

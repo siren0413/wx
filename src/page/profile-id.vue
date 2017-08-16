@@ -164,18 +164,6 @@
           this.pendingApplication = response.data.result === true;
         })
       setInterval(this.cleanupTimer, 2000)
-    },
-    filters: {
-      maskId: function (value) {
-        if (!value) return ''
-        value = value.toString()
-        return '********** ' + value.substring(value.length - 4, value.length)
-      },
-      maskName: function (value) {
-        if (!value) return ''
-        value = value.toString()
-        return '** ' + value.substring(value.length - 1, value.length)
-      }
     }
   }
 </script>
