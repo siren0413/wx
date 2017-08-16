@@ -103,7 +103,7 @@ const router = new Router({
     },
     {
       path: '/',
-      name: 'Home',
+      name: 'Root',
       component: Home
     },
     {
