@@ -101,7 +101,7 @@
         this.waitingResponse = true
         this.$http.post(`/api/public/user/${this.uid()}/profile/identity`, {
           name: this.name,
-          idNumber: this.idNumber
+          idNumber: this.idNumber.replace(/\s+/g, '')
         })
           .then(response => {
             this.waitingResponse = false
@@ -119,7 +119,7 @@
               .catch(error => {
                 setTimeout(() => {
                   this.showToast = false
-                  router.push('/profile-person')
+                  router.push('/profile/person')
                 }, 1500)
               })
           })

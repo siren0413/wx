@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="weui-cells">
-      <router-link to="/profile-id" class="weui-cell weui-cell_access">
+      <router-link to="/profile/id" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">实名认证</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;">{{ idProfileStatus.desc }}</span>
           <span v-if="idProfileStatus.status == 1" class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>
         </div>
       </router-link>
-      <router-link to="/profile-person" class="weui-cell weui-cell_access">
+      <router-link to="/profile/person" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">个人信息</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <span style="vertical-align:middle; font-size: 17px;">{{ generalProfileStatus.desc }}</span>

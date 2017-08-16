@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import axios from '../ajax'
 import Login from '@/page/login'
 import Home from '@/page/home'
 import Repay from '@/page/repay'
@@ -15,6 +14,8 @@ import FAQ from '@/page/faq'
 import CustomerService from '@/page/customer-service'
 import ApplicationSummary from '@/page/application-summary'
 import Refer from '@/page/refer'
+import ProfileBank from '@/page/profile-bank'
+import AddBank from '@/page/add-bank'
 
 Vue.use(Router)
 
@@ -46,12 +47,12 @@ const router = new Router({
       component: Profile
     },
     {
-      path: '/profile-id',
+      path: '/profile/id',
       name: 'Profile-Id',
       component: ProfileId
     },
     {
-      path: '/profile-person',
+      path: '/profile/person',
       name: 'Profile-Person',
       component: ProfilePerson
     },
@@ -91,6 +92,16 @@ const router = new Router({
       component: ApplicationSummary
     },
     {
+      path: '/profile/bank',
+      name: 'ProfileBank',
+      component: ProfileBank
+    },
+    {
+      path: '/profile/bank/add',
+      name: 'AddBank',
+      component: AddBank
+    },
+    {
       path: '/',
       name: 'Home',
       component: Home
@@ -103,43 +114,5 @@ const router = new Router({
   ]
 })
 
-// router.beforeEach((to,from,next) => {
-//   if (to.path !== '/login') {
-//     axios.get('/api/v1/tokeninfo')
-//       .then((response) => {
-//         next()
-//       })
-//       .catch((error) => {
-//         router.push('/login')
-//       })
-//   } else {
-//     next()
-//   }
-// })
-
-// router.beforeEach(
-//   (to, from, next) => {
-//     console.log("from: " + from.path + " to: " + to.path)
-//     if (to.path !== '/login') {
-//       next()
-//     } else {
-//       if (localStorage.getItem('accessToken')) {
-//         axios.get('/api/v1/tokeninfo')
-//           .then((response) => {
-//             if (to.path === '/login') {
-//               router.push('/store')
-//             } else {
-//               next()
-//             }
-//           })
-//           .catch((error) => {
-//             next()
-//           })
-//       } else {
-//         next()
-//       }
-//     }
-//   }
-// )
 
 export default router

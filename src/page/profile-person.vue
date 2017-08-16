@@ -254,7 +254,7 @@
             .catch(error => {
               setTimeout(() => {
                 this.showToast = false
-                router.push('/profile-id')
+                router.push('/profile/id')
               }, 1500)
             })
         })
