@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="weui-cells__title">银行卡信息</div>
+    <div class="weui-cells__title">银行卡信息 (默认收款/还款银行卡)</div>
     <div class="weui-cells weui-cells_radio">
 
       <template v-for="(account, index) in bankAccounts">
@@ -13,33 +13,21 @@
           <div class="weui-cell__bd">
             <p> {{account.accountNumber | maskBankAccount}}</p>
           </div>
-          <template v-if="account.accountNumber === defaultBankAccountNumber ">
-            <img src="../assets/profile/delete_icon.png" style="height: 18px"/>
-          </template>
-          <template v-else>
-            <img src="../assets/profile/delete_icon_off.png" style="height: 18px"/>
-          </template>
+          <div @click="deleteAccount(account.accountNumber)">
+            <template v-if="account.accountNumber === defaultBankAccountNumber ">
+              <img src="../assets/profile/delete_icon.png" style="height: 18px"/>
+            </template>
+            <template v-else>
+              <img src="../assets/profile/delete_icon_off.png" style="height: 18px"/>
+            </template>
+          </div>
         </label>
       </template>
-    </div>
-
-
-    <div class="weui-cells">
-      <router-link :to="{name:'AddBank', query: {referrer: $route.query.referrer? $route.query.referrer: 'ProfileBank'}}" class="weui-cell weui-cell_access">
-        <div class="weui-cell__bd">
-          <p>添加银行卡</p>
-        </div>
-        <div class="weui-cell__ft">
-        </div>
+      <router-link :to="{name:'AddBank', query: {referrer: $route.query.referrer? $route.query.referrer: 'ProfileBank'}}" class="weui-cell weui-cell_link">
+        <div class="weui-cell__bd">添加更多</div>
       </router-link>
-      <a class="weui-cell weui-cell_access" href="javascript:;">
-        <div class="weui-cell__bd">
-          <p>删除银行卡</p>
-        </div>
-        <div class="weui-cell__ft">
-        </div>
-      </a>
     </div>
+
 
     <div class="weui-btn-area" @click="save">
       <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_loading': waitingResponse}]">
@@ -71,6 +59,7 @@
       save() {
         if (!this.defaultBankAccountNumber) {
           this.message = '请添加银行卡'
+          this.showErrorToast()
           return
         }
         let defaultAccount = this.bankAccounts.find((elem, pos, arr) => {
@@ -92,6 +81,13 @@
           this.message = "保存失败"
           this.showErrorToast()
         })
+      },
+      deleteAccount(accountNumber) {
+        this.$http.delete(`/api/public/user/${this.uid()}/profile/bank/${accountNumber}`)
+          .catch((error => {
+            this.message = "删除失败"
+            this.showErrorToast()
+          }))
       }
     },
     created() {
@@ -126,5 +122,10 @@
   .weui-icon-checked {
     width: 3vw;
     padding-right: 4vw;
+  }
+
+  .weui-cell_link {
+    /*padding-left: 10vw;*/
+    text-align: center;
   }
 </style>
