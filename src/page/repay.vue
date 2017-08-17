@@ -31,7 +31,20 @@
         </div>
       </div>
 
-      <div class="weui-cells__title">还款方式</div>
+      <div class="weui-cells__title">选择银行卡</div>
+      <div class="weui-cells">
+        <a class="weui-cell weui-cell_access" v-if="defaultBankAccount">
+          <div class="weui-cell__bd">
+            <p>{{formatRepayBankAccount()}}</p>
+          </div>
+          <router-link :to="{name:'ProfileBank', query: {referrer: 'Repay'}}" class="weui-cell__ft">
+            <span>换卡还款</span>
+          </router-link>
+        </a>
+        <router-link :to="{name:'AddBank', query: {referrer: 'Repay'}}" class="weui-cell weui-cell_link" v-if="!defaultBankAccount">
+          <div class="weui-cell__bd">添加银行卡</div>
+        </router-link>
+      </div>
 
 
       <div class="weui-btn-area" @click="repay">
@@ -39,6 +52,15 @@
           <i v-if="waitingResponse" class="weui-loading"></i>确认还款</a>
       </div>
 
+    </template>
+
+    <template v-else>
+      <div>
+        <img src="../assets/service/empty.png" style="height: 100px; margin-top: 30%"/>
+        <div style="margin-top: 20px; font-size: 16px">
+          <p>暂无记录</p>
+        </div>
+      </div>
     </template>
 
   </div>
@@ -50,13 +72,22 @@
     data() {
       return {
         waitingResponse: false,
-        application: null
+        application: null,
+        defaultBankAccount: null
       }
     },
     computed: {},
     methods: {
       repay() {
 
+      },
+      formatRepayBankAccount() {
+        if (this.defaultBankAccount && this.defaultBankAccount.accountNumber) {
+          let number = this.defaultBankAccount.accountNumber
+          return `尾号 ${number.substring(number.length - 4, number.length)}`
+        } else {
+          return '暂无'
+        }
       }
     },
     created() {
@@ -64,7 +95,10 @@
         .then((response => {
           this.application = response.data
         }))
-
+      this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
+        .then((response) => {
+          this.defaultBankAccount = response.data
+        })
     }
   }
 </script>

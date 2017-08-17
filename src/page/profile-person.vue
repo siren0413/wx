@@ -141,7 +141,6 @@
     name: 'profile-person',
     data() {
       return {
-        ...mapState(['showSuccessToast']),
         waitingResponse: false,
         editable: true,
         pendingApplication: false,
