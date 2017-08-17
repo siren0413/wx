@@ -5,7 +5,7 @@
       <div>
         <div class="weui-cells__title">申请资料</div>
         <div class="weui-cells weui-cells_form">
-          <router-link to="/profile/id" class="weui-cell weui-cell_access">
+          <router-link :to="{name:'ProfileId', query: {referrer: 'ApplicationSummary'}}" class="weui-cell weui-cell_access">
             <div class="weui-cell__bd">实名认证</div>
 
             <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.id === false">
@@ -18,7 +18,7 @@
             </div>
           </router-link>
 
-          <router-link to="/profile/person" class="weui-cell weui-cell_access">
+          <router-link :to="{name:'ProfilePerson', query: {referrer: 'ApplicationSummary'}}"  class="weui-cell weui-cell_access">
             <div class="weui-cell__bd">个人信息</div>
             <div class="weui-cell__ft" style="font-size: 0" v-if="profiles.personal === false">
               <span style="vertical-align:middle; font-size: 17px;">未完成</span>
@@ -91,7 +91,7 @@
         </div>
         <div class="weui-msg__opr-area">
           <p class="weui-btn-area">
-            <a href="javascript:history.back();" class="weui-btn weui-btn_default">返回</a>
+            <router-link to="/home" class="weui-btn weui-btn_default">返回</router-link>
           </p>
         </div>
       </div>
@@ -158,7 +158,7 @@
             this.submitStatus = 1
           })
           .catch((error) => {
-            this.submitStatus = 0
+            this.submitStatus = 2
           })
       }
     },

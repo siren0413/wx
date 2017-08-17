@@ -48,12 +48,12 @@ const router = new Router({
     },
     {
       path: '/profile/id',
-      name: 'Profile-Id',
+      name: 'ProfileId',
       component: ProfileId
     },
     {
       path: '/profile/person',
-      name: 'Profile-Person',
+      name: 'ProfilePerson',
       component: ProfilePerson
     },
     {

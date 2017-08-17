@@ -2,7 +2,7 @@
   <div>
     <div class="weui-cells__title">居住信息</div>
     <div class="weui-cells weui-cells_form">
-      <div class="weui-cell" :class="{'animated shake': animations.city}" >
+      <div class="weui-cell" :class="{'animated shake': animations.city}">
         <img class="wx-img-city" src="https://png.icons8.com/home/ultraviolet/100" title="Home">
         <div class="weui-cell__hd"><label class="weui-label">现居城市</label></div>
         <div class="weui-cell__bd">
@@ -135,7 +135,6 @@
 
 <script>
   import {mapActions, mapState} from 'vuex'
-  import router from '../router/index';
 
   export default {
     name: 'profile-person',
@@ -144,7 +143,7 @@
         waitingResponse: false,
         editable: true,
         pendingApplication: false,
-        errorToastMessage:'',
+        errorToastMessage: '',
         residentInfo: {
           residentCity: '',
           residentAddress: '',
@@ -175,7 +174,7 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['showErrorToast','showSuccessToast']),
+      ...mapActions(['showErrorToast', 'showSuccessToast']),
       save() {
         let success = true;
         if (!this.residentInfo.residentCity) {
@@ -217,9 +216,6 @@
         if (!success) return;
 
         this.waitingResponse = true
-
-
-
         this.$http.post(`/api/public/user/${this.uid()}/profile/general`, {
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,
@@ -234,21 +230,14 @@
           this.waitingResponse = false
           this.showSuccessToast()
           this.editable = false
-          this.$http.get(`/api/public/user/${this.uid()}/profile/identity`)
-            .then(response => {
-              setTimeout(()=>{
-                router.push('/profile')
-              }, 1000)
-            })
-            .catch(error => {
-              setTimeout(()=>{
-                router.push('/profile/id')
-              },1000)
-            })
+          setTimeout(() => {
+            this.goToReferrer('Profile')
+          }, 1000)
         })
           .catch(error => {
             this.waitingResponse = false
-            // TODO show error dialog
+            this.errorToastMessage="保存失败"
+            this.showErrorToast()
           })
 
       },
@@ -347,29 +336,33 @@
   .weui-select {
     padding-left: 0;
   }
-  .wx-img-city, .wx-img-time, .wx-img-age, .wx-img-education, .wx-img-job, .wx-img-qq{
-    width:20px;
-    height:20px;
+
+  .wx-img-city, .wx-img-time, .wx-img-age, .wx-img-education, .wx-img-job, .wx-img-qq {
+    width: 20px;
+    height: 20px;
     padding-bottom: 5px;
     padding-right: 8px;
   }
-  .wx-img-address{
-    width:24px;
-    height:24px;
+
+  .wx-img-address {
+    width: 24px;
+    height: 24px;
     padding-bottom: 5px;
     padding-right: 6px;
     margin-left: -2px;
   }
+
   .wx-img-income {
-    width:17px;
-    height:17px;
+    width: 17px;
+    height: 17px;
     padding-bottom: 5px;
     padding-right: 8px;
     padding-left: 2px;
   }
-  .wx-img-marriage{
-    width:26px;
-    height:28px;
+
+  .wx-img-marriage {
+    width: 26px;
+    height: 28px;
     padding-bottom: 5px;
     padding-right: 4px;
   }

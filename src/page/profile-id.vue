@@ -106,25 +106,14 @@
             this.waitingResponse = false
             this.showToast = true
             this.editable = false
-
-            this.$http.get(`/api/public/user/${this.uid()}/profile/general`)
-              .then(response => {
-                setTimeout(() => {
-                  this.showToast = false
-                  // TODO push to summary page?
-                  router.push('/profile')
-                }, 1500)
-              })
-              .catch(error => {
-                setTimeout(() => {
-                  this.showToast = false
-                  router.push('/profile/person')
-                }, 1500)
-              })
+            setTimeout(() => {
+              this.goToReferrer('Profile')
+            }, 1000)
           })
           .catch(error => {
             this.waitingResponse = false
-            // TODO show error dialog
+            this.errorToastMessage="保存失败"
+            this.showErrorToast()
           })
       },
       edit() {
