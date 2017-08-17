@@ -24,6 +24,13 @@
       </div>
     </div>
 
+    <div class="weui-cell weui-cell_switch">
+      <div class="weui-cell__bd">设为默认银行卡</div>
+      <div class="weui-cell__ft">
+        <input class="weui-switch" type="checkbox" v-model="isSetToDefault">
+      </div>
+    </div>
+
     <div class="weui-btn-area" @click="add">
       <a class="weui-btn weui-btn_primary" :class="[{'weui-btn_loading': waitingResponse}]">
         <i v-if="waitingResponse" class="weui-loading"></i>添加</a>
@@ -51,7 +58,8 @@
         message: '',
         name: '',
         idNumber: '',
-        accountNumber: ''
+        accountNumber: '',
+        isSetToDefault: true
       }
     },
     computed: {},
@@ -76,7 +84,8 @@
         this.$http.post(`/api/public/user/${this.uid()}/profile/bank`, {
           name: this.name,
           idNumber: this.idNumber.replace(/\s+/g, ''),
-          accountNumber: this.accountNumber.replace(/\s+/g, '')
+          accountNumber: this.accountNumber.replace(/\s+/g, ''),
+          setToDefault: this.isSetToDefault
         })
           .then((response => {
             this.waitingResponse = false
