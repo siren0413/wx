@@ -1,5 +1,6 @@
 import {mapActions} from 'vuex'
 import moment from 'moment'
+import router from '../router'
 
 export default {
   methods: {
@@ -22,6 +23,14 @@ export default {
     },
     formatDate(unixTime, format) {
       return moment(unixTime).format(format)
+    },
+    goToReferrer(_defaultRouteName) {
+      let referrer = this.$route.query.referrer
+      if (referrer) {
+        this.$router.push({name:referrer})
+      } else {
+        this.$router.push({name:_defaultRouteName})
+      }
     }
   },
   created() {

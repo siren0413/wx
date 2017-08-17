@@ -219,6 +219,9 @@
         if (!success) return;
 
         this.waitingResponse = true
+
+
+
         this.$http.post(`/api/public/user/${this.uid()}/profile/general`, {
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,

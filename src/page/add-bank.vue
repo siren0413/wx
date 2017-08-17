@@ -29,6 +29,7 @@
         <i v-if="waitingResponse" class="weui-loading"></i>添加</a>
     </div>
 
+    <success-toast message="添加成功"></success-toast>
     <error-toast :message="message"></error-toast>
 
   </div>
@@ -36,7 +37,6 @@
 
 <script>
   import {mapActions} from 'vuex'
-  import router from "../router";
 
   export default {
     name: 'store',
@@ -56,7 +56,7 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['showErrorToast']),
+      ...mapActions(['showErrorToast','showSuccessToast']),
       add() {
         let success = true;
         if (!this.name) {
@@ -80,12 +80,10 @@
         })
           .then((response => {
             this.waitingResponse = false
-            let referrer = this.$route.query.referrer
-            if (referrer) {
-              this.$router.push({name: referrer})
-            } else {
-              this.$router.push({name: 'Profile'})
-            }
+            this.showSuccessToast()
+            setTimeout(()=>{
+              this.goToReferrer('Profile')
+            },500)
           }))
           .catch((error) => {
             this.waitingResponse = false

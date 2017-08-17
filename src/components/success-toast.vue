@@ -1,5 +1,5 @@
 <template>
-  <div id="toast" :class="[showSuccessToast? 'toast-on': 'toast-off']">
+  <div id="toast" :class="[showSuccessToast? 'toast-success-on': 'toast-success-off']">
     <div class="weui-mask_transparent"></div>
     <div class="weui-toast">
       <i class="weui-icon-success-no-circle weui-icon_toast"></i>
@@ -21,11 +21,11 @@
 </script>
 
 <style scoped>
-  .toast-on {
+  .toast-success-on {
     opacity: 1;
   }
 
-  .toast-off {
+  .toast-success-off {
     opacity: 0;
     display: none;
   }

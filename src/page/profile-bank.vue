@@ -18,7 +18,7 @@
     </div>
 
     <div class="weui-cells">
-      <router-link :to="{name:'AddBank', query: {referrer: $route.query.referrer? $route.query.referrer: 'ProfileBank'}}" class="weui-cell weui-cell_access" >
+      <router-link :to="{name:'AddBank', query: {referrer: $route.query.referrer? $route.query.referrer: 'ProfileBank'}}" class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">
           <p>添加银行卡</p>
         </div>
@@ -40,6 +40,7 @@
     </div>
 
     <error-toast :message="message"></error-toast>
+    <success-toast message="保存成功"></success-toast>
   </div>
 </template>
 
@@ -59,7 +60,7 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['showErrorToast']),
+      ...mapActions(['showErrorToast', 'showSuccessToast']),
       save() {
         if (!this.defaultBankAccountNumber) {
           this.message = '请添加银行卡'
@@ -75,14 +76,15 @@
           accountNumber: defaultAccount.accountNumber
         }).then((response => {
           this.waitingResponse = false
-          // TODO show success toast
+          this.showSuccessToast()
+          setTimeout(() => {
+            this.goToReferrer('Profile')
+          }, 500)
         })).catch((error) => {
           this.waitingResponse = false
           this.message = "保存失败"
           this.showErrorToast()
         })
-
-
       }
     },
     created() {

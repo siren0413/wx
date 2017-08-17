@@ -50,7 +50,7 @@ const actions = {
     state.showSuccessToast = true
     setTimeout(() => {
       state.showSuccessToast = false
-    }, 1500)
+    }, 500)
   },
   checkToken() {
     let now = new Date().getTime()
