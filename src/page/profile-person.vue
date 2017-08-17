@@ -126,17 +126,9 @@
       <a class="weui-btn weui-btn_primary" :class="{'weui-btn_disabled': pendingApplication}" @click="edit">我要修改</a>
     </div>
 
-
-    <div id="toast" :class="[showToast? 'toast-on': 'toast-off']">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-        <p class="weui-toast__content">保存完成</p>
-      </div>
-    </div>
-
     <loading-toast></loading-toast>
     <error-toast :message="errorToastMessage"></error-toast>
+    <success-toast message="保存完成"></success-toast>
 
     <div class="wx-bot-margin"></div>
   </div>
@@ -145,15 +137,13 @@
 <script>
   import {mapActions, mapState} from 'vuex'
   import router from '../router/index';
-  import ErrorToast from "../components/error-toast.vue";
 
   export default {
-    components: {ErrorToast},
     name: 'profile-person',
     data() {
       return {
+        ...mapState(['showSuccessToast']),
         waitingResponse: false,
-        showToast: false,
         editable: true,
         pendingApplication: false,
         errorToastMessage:'',
@@ -187,7 +177,7 @@
     },
     computed: {},
     methods: {
-      ...mapActions(['showErrorToast']),
+      ...mapActions(['showErrorToast','showSuccessToast']),
       save() {
         let success = true;
         if (!this.residentInfo.residentCity) {
@@ -241,21 +231,18 @@
           qq: this.otherInfo.qq
         }).then(response => {
           this.waitingResponse = false
-          this.showToast = true
+          this.showSuccessToast()
           this.editable = false
           this.$http.get(`/api/public/user/${this.uid()}/profile/identity`)
             .then(response => {
-              setTimeout(() => {
-                this.showToast = false
-                // TODO push to summary page?
+              setTimeout(()=>{
                 router.push('/profile')
-              }, 1500)
+              }, 1000)
             })
             .catch(error => {
-              setTimeout(() => {
-                this.showToast = false
+              setTimeout(()=>{
                 router.push('/profile/id')
-              }, 1500)
+              },1000)
             })
         })
           .catch(error => {

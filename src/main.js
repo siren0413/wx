@@ -12,6 +12,7 @@ import Modal from './components/modal.vue'
 import Alert from './components/alert.vue'
 import LoadingToast from './components/loading-toast.vue'
 import ErrorToast from './components/error-toast.vue'
+import SuccessToast from './components/success-toast.vue'
 import mixin from './mixin'
 
 Vue.config.productionTip = false
@@ -23,6 +24,8 @@ Vue.component('modal', Modal)
 Vue.component('alert', Alert)
 Vue.component('loading-toast', LoadingToast)
 Vue.component('error-toast', ErrorToast)
+Vue.component('success-toast', SuccessToast)
+
 
 Vue.mixin(mixin)
 

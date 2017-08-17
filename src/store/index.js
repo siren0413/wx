@@ -18,7 +18,8 @@ const state = {
     expire: null
   },
   loadingCount: 0,
-  showErrorToast: false
+  showErrorToast: false,
+  showSuccessToast: false
 }
 
 const getters = {}
@@ -43,7 +44,13 @@ const actions = {
     state.showErrorToast = true
     setTimeout(() => {
       state.showErrorToast = false
-    }, 2000)
+    }, 1500)
+  },
+  showSuccessToast() {
+    state.showSuccessToast = true
+    setTimeout(() => {
+      state.showSuccessToast = false
+    }, 1500)
   },
   checkToken() {
     let now = new Date().getTime()
