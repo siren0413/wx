@@ -106,11 +106,9 @@
 
 <script>
   import {mapActions} from 'vuex'
-  import tabbar from "../components/tabbar.vue";
   import router from '../router/index'
 
   export default {
-    components: {tabbar},
     name: 'store',
     data() {
       return {
