@@ -99,7 +99,6 @@
 
     <div class="wx-bot-margin"></div>
 
-    <loading-toast></loading-toast>
     <alert v-if="alerts.showAlert" @ok="alerts.showAlert=false" :title="alerts.alertTitle" :desc="alerts.alertDesc"></alert>
   </div>
 </template>

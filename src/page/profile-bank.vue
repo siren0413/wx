@@ -13,7 +13,7 @@
           <div class="weui-cell__bd">
             <p> {{account.accountNumber | maskBankAccount}}</p>
           </div>
-          <div @click="deleteAccount(account.accountNumber)">
+          <div @click="confirmDelete(account.accountNumber)">
             <template v-if="account.accountNumber === defaultBankAccountNumber ">
               <img src="../assets/profile/delete_icon.png" style="height: 18px"/>
             </template>
@@ -36,6 +36,8 @@
 
     <error-toast :message="message"></error-toast>
     <success-toast message="保存成功"></success-toast>
+    <modal v-if="showModal" @ok="deleteAccount" @cancel="showModal=!showModal" title="确认删除" :desc="formatDeleteConfirmationDesc()" ok_text="确定删除"
+           cancel_text="取消"></modal>
   </div>
 </template>
 
@@ -49,6 +51,8 @@
       return {
         waitingResponse: false,
         message: '',
+        showModal: false,
+        accountToBeDelete: null,
         bankAccounts: [],
         defaultBankAccountNumber: null
       }
@@ -58,7 +62,7 @@
       ...mapActions(['showErrorToast', 'showSuccessToast']),
       save() {
         if (!this.defaultBankAccountNumber) {
-          this.message = '请添加银行卡'
+          this.message = '请选择银行卡'
           this.showErrorToast()
           return
         }
@@ -82,12 +86,38 @@
           this.showErrorToast()
         })
       },
-      deleteAccount(accountNumber) {
-        this.$http.delete(`/api/public/user/${this.uid()}/profile/bank/${accountNumber}`)
+      confirmDelete(accountNumber) {
+        this.accountToBeDelete = accountNumber
+        this.showModal = true
+      },
+      deleteAccount() {
+        this.$http.delete(`/api/public/user/${this.uid()}/profile/bank/${this.accountToBeDelete}`)
+          .then((response=>{
+            this.$http.get(`/api/public/user/${this.uid()}/profile/bank`)
+              .then((response) => {
+                this.bankAccounts = response.data
+              })
+            this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
+              .then((response) => {
+                this.defaultBankAccountNumber = response.data.accountNumber
+              })
+          }))
           .catch((error => {
             this.message = "删除失败"
             this.showErrorToast()
+            this.$http.get(`/api/public/user/${this.uid()}/profile/bank`)
+              .then((response) => {
+                this.bankAccounts = response.data
+              })
+            this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
+              .then((response) => {
+                this.defaultBankAccountNumber = response.data.accountNumber
+              })
           }))
+        this.showModal = false
+      },
+      formatDeleteConfirmationDesc(){
+        return `您确定要删除尾号为 ${this.accountToBeDelete.substring(this.accountToBeDelete.length - 4, this.accountToBeDelete.length)} 的银行卡吗？`
       }
     },
     created() {

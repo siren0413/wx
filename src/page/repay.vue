@@ -41,7 +41,6 @@
 
     </template>
 
-    <loading-toast></loading-toast>
   </div>
 </template>
 

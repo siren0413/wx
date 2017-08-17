@@ -99,8 +99,6 @@
       </div>
     </div>
 
-    <loading-toast></loading-toast>
-
   </div>
 </template>
 

@@ -16,7 +16,6 @@
         </div>
       </router-link>
     </div>
-    <loading-toast></loading-toast>
   </div>
 </template>
 

@@ -6,6 +6,7 @@
         <router-view class="wx-container"></router-view>
       </keep-alive>
     </transition>
+    <loading-toast></loading-toast>
     <tabbar class="wx-tabbar" v-if="$route.path !== '/login' && $route.path !== '/store-front'"></tabbar>
   </div>
 </template>
@@ -13,9 +14,12 @@
 <script>
   import tabbar from "./components/tabbar.vue";
   import wxHeader from "./components/header.vue"
+  import LoadingToast from "./components/loading-toast.vue";
 
   export default {
-    components: {tabbar, wxHeader},
+    components: {
+      LoadingToast,
+      tabbar, wxHeader},
     name: 'app',
     methods: {
       beforeEnter() {

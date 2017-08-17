@@ -57,7 +57,6 @@
       </div>
     </div>
 
-    <loading-toast></loading-toast>
     <error-toast :message="errorToastMessage"></error-toast>
 
   </div>

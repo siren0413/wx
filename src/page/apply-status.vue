@@ -91,7 +91,6 @@
     </template>
 
     <div class="wx-bot-margin"></div>
-    <loading-toast></loading-toast>
   </div>
 </template>
 

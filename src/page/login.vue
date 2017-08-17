@@ -54,7 +54,6 @@
       <p class="weui-footer__text">Copyright © 2008-2016 weui.io</p>
     </div>
 
-    <loading-toast></loading-toast>
     <error-toast :message="alertMessage"></error-toast>
   </div>
 </template>

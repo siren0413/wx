@@ -87,7 +87,6 @@
       <a class="weui-btn weui-btn_primary" @click="apply">开始申请</a>
     </div>
 
-    <loading-toast></loading-toast>
     <error-toast :message="errorMessage"></error-toast>
     <modal v-if="showModal" @ok="toApplyStatus" @cancel="showModal=!showModal" title="申请失败" desc="您已经有正在审核的申请，您可以前往查看审核进度" ok_text="查看进度"
            cancel_text="取消"></modal>

@@ -126,7 +126,6 @@
       <a class="weui-btn weui-btn_primary" :class="{'weui-btn_disabled': pendingApplication}" @click="edit">我要修改</a>
     </div>
 
-    <loading-toast></loading-toast>
     <error-toast :message="errorToastMessage"></error-toast>
     <success-toast message="保存完成"></success-toast>
 
