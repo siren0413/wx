@@ -6,16 +6,23 @@
 
       <template v-for="(account, index) in bankAccounts">
         <label class="weui-cell weui-check__label">
-          <div class="weui-cell__bd">
-            <p> {{account.accountNumber | maskBankAccount}}</p>
-          </div>
           <div class="weui-cell__ft">
             <input type="radio" class="weui-check" name="radio1" id="bankAccount" :value="account.accountNumber" v-model="defaultBankAccountNumber">
             <span class="weui-icon-checked"></span>
           </div>
+          <div class="weui-cell__bd">
+            <p> {{account.accountNumber | maskBankAccount}}</p>
+          </div>
+          <template v-if="account.accountNumber === defaultBankAccountNumber ">
+            <img src="../assets/profile/delete_icon.png" style="height: 18px"/>
+          </template>
+          <template v-else>
+            <img src="../assets/profile/delete_icon_off.png" style="height: 18px"/>
+          </template>
         </label>
       </template>
     </div>
+
 
     <div class="weui-cells">
       <router-link :to="{name:'AddBank', query: {referrer: $route.query.referrer? $route.query.referrer: 'ProfileBank'}}" class="weui-cell weui-cell_access">
@@ -105,7 +112,19 @@
     text-align: left;
   }
 
+  .weui-cell {
+    padding-left: 2vw;
+  }
+
   .weui-cells__title {
     text-align: left;
+  }
+
+  .weui-cell__bd {
+  }
+
+  .weui-icon-checked {
+    width: 3vw;
+    padding-right: 4vw;
   }
 </style>
