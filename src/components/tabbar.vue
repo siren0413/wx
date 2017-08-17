@@ -44,7 +44,7 @@
                         <img src="../assets/tab/personal-info_off.png" alt="" class="weui-tabbar__icon">
                       </template>
                     </span>
-        <p class="weui-tabbar__label" :style="computeCurrentTab === '/profile' ? 'color: #1aaba8': ''">个人信息</p>
+        <p class="weui-tabbar__label" :style="computeCurrentTab === '/profile' ? 'color: #5ca677': ''">个人信息</p>
       </div>
     </router-link>
 

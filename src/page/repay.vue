@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="weui-cells__title">选择银行卡</div>
+      <div class="weui-cells__title wx-bank-account-container">选择银行卡</div>
       <div class="weui-cells">
         <a class="weui-cell weui-cell_access" v-if="defaultBankAccount">
           <div class="weui-cell__bd">
@@ -62,6 +62,7 @@
         </div>
       </div>
     </template>
+    <div class="wx-bot-margin"></div>
 
     <error-toast :message="message"></error-toast>
     <success-toast :message="message"></success-toast>
@@ -159,5 +160,8 @@
 
   .weui-cells__title {
     text-align: left;
+  }
+  .wx-bank-account-container{
+    padding-top: 8vw;
   }
 </style>

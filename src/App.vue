@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!--<wxHeader v-if="$route.path !== '/login' && $route.path !== '/store-front'"></wxHeader>-->
-    <transition name="fade" mode="out-in" v-on:before-enter="beforeEnter" v-on:after-enter="afterEnter">
+    <transition name="fade" mode="out-in">
       <keep-alive :include=['home','profile/id','profile/person']>
         <router-view class="wx-container"></router-view>
       </keep-alive>
@@ -21,14 +21,7 @@
       LoadingToast,
       tabbar, wxHeader},
     name: 'app',
-    methods: {
-      beforeEnter() {
-        //TODO
-      },
-      afterEnter() {
-        //TODO
-      }
-    }
+    methods: {}
   }
 </script>
 
