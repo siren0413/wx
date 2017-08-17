@@ -5,7 +5,7 @@
     <div class="weui-cells weui-cells_radio">
 
       <template v-for="(account, index) in bankAccounts">
-        <label class="weui-cell weui-check__label" >
+        <label class="weui-cell weui-check__label">
           <div class="weui-cell__bd">
             <p> {{account.accountNumber | maskBankAccount}}</p>
           </div>
@@ -17,11 +17,8 @@
       </template>
     </div>
 
-    {{defaultBankAccountNumber}}
-
-
     <div class="weui-cells">
-      <router-link to="/profile/bank/add" class="weui-cell weui-cell_access" href="javascript:;">
+      <router-link :to="{name:'AddBank', query: {referrer: $route.query.referrer? $route.query.referrer: 'ProfileBank'}}" class="weui-cell weui-cell_access" >
         <div class="weui-cell__bd">
           <p>添加银行卡</p>
         </div>
@@ -43,7 +40,6 @@
     </div>
 
     <error-toast :message="message"></error-toast>
-
   </div>
 </template>
 
@@ -55,9 +51,9 @@
     name: 'profile-bank',
     data() {
       return {
-        waitingResponse:false,
-        message:'',
-        bankAccounts : [],
+        waitingResponse: false,
+        message: '',
+        bankAccounts: [],
         defaultBankAccountNumber: null
       }
     },
@@ -73,14 +69,14 @@
           return elem.accountNumber === this.defaultBankAccountNumber
         })
         this.waitingResponse = true
-        this.$http.put(`/api/public/user/${this.uid()}/profile/bank/default`,{
-          name:defaultAccount.name,
-          idNumber:defaultAccount.idNumber,
-          accountNumber:defaultAccount.accountNumber
-        }).then((response=>{
+        this.$http.put(`/api/public/user/${this.uid()}/profile/bank/default`, {
+          name: defaultAccount.name,
+          idNumber: defaultAccount.idNumber,
+          accountNumber: defaultAccount.accountNumber
+        }).then((response => {
           this.waitingResponse = false
           // TODO show success toast
-        })).catch((error) =>{
+        })).catch((error) => {
           this.waitingResponse = false
           this.message = "保存失败"
           this.showErrorToast()
@@ -91,11 +87,11 @@
     },
     created() {
       this.$http.get(`/api/public/user/${this.uid()}/profile/bank`)
-        .then((response)=>{
+        .then((response) => {
           this.bankAccounts = response.data
         })
       this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
-        .then((response)=>{
+        .then((response) => {
           this.defaultBankAccountNumber = response.data.accountNumber
         })
     }

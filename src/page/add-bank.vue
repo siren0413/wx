@@ -60,16 +60,16 @@
       add() {
         let success = true;
         if (!this.name) {
-          this.animations.name=true
+          this.animations.name = true
           success = false
         }
         if (!this.idNumber) {
-          this.animations.idNumber=true
+          this.animations.idNumber = true
           success = false
         }
         if (!this.accountNumber) {
-          this.animations.accountNumber=true
-          success =false
+          this.animations.accountNumber = true
+          success = false
         }
         if (!success) return
         this.waitingResponse = true
@@ -78,11 +78,16 @@
           idNumber: this.idNumber.replace(/\s+/g, ''),
           accountNumber: this.accountNumber.replace(/\s+/g, '')
         })
-          .then((response=>{
+          .then((response => {
             this.waitingResponse = false
-            // TODO router push
+            let referrer = this.$route.query.referrer
+            if (referrer) {
+              this.$router.push({name: referrer})
+            } else {
+              this.$router.push({name: 'Profile'})
+            }
           }))
-          .catch((error)=>{
+          .catch((error) => {
             this.waitingResponse = false
             this.message = "添加失败"
             this.showErrorToast()
