@@ -3,7 +3,7 @@
     <div class="weui-cells__title">居住信息</div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell" :class="{'animated shake': animations.city}">
-        <img class="wx-img-city" src="https://png.icons8.com/home/ultraviolet/100" title="Home">
+        <img class="wx-img-city" src="../assets/profile/city.png" title="Home">
         <div class="weui-cell__hd"><label class="weui-label">现居城市</label></div>
         <div class="weui-cell__bd">
           <input class="weui-input" type="text" placeholder="请输入您的现居城市" :disabled="!editable" :class="[{'text-mask': !editable}]"
@@ -236,7 +236,7 @@
         })
           .catch(error => {
             this.waitingResponse = false
-            this.errorToastMessage="保存失败"
+            this.errorToastMessage = "保存失败"
             this.showErrorToast()
           })
 
@@ -337,33 +337,27 @@
     padding-left: 0;
   }
 
-  .wx-img-city, .wx-img-time, .wx-img-age, .wx-img-education, .wx-img-job, .wx-img-qq {
-    width: 20px;
-    height: 20px;
-    padding-bottom: 5px;
+  .wx-img-city, .wx-img-time, .wx-img-age,  .wx-img-job, .wx-img-qq {
+    width: 16px;
+    height: 16px;
+    padding-bottom: 3px;
     padding-right: 8px;
   }
 
-  .wx-img-address {
-    width: 24px;
-    height: 24px;
-    padding-bottom: 5px;
+  .wx-img-address, .wx-img-marriage, .wx-img-education {
+    width: 20px;
+    height: 20px;
+    padding-bottom: 3px;
     padding-right: 6px;
     margin-left: -2px;
   }
 
   .wx-img-income {
-    width: 17px;
-    height: 17px;
-    padding-bottom: 5px;
+    width: 14px;
+    height: 14px;
+    padding-bottom: 3px;
     padding-right: 8px;
     padding-left: 2px;
   }
 
-  .wx-img-marriage {
-    width: 26px;
-    height: 28px;
-    padding-bottom: 5px;
-    padding-right: 4px;
-  }
 </style>

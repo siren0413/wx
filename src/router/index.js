@@ -1,21 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/page/login'
-import Home from '@/page/home'
-import Repay from '@/page/repay'
-import Profile from '@/page/profile'
-import ProfileId from '@/page/profile-id'
-import ProfilePerson from '@/page/profile-person'
-import Service from '@/page/service'
-import ApplyStatus from '@/page/apply-status'
-import StoreFront from '@/page/store-front'
-import Password from '@/page/password'
-import FAQ from '@/page/faq'
-import CustomerService from '@/page/customer-service'
-import ApplicationSummary from '@/page/application-summary'
-import Refer from '@/page/refer'
-import ProfileBank from '@/page/profile-bank'
-import AddBank from '@/page/add-bank'
+const Login = () => import('@/page/login')
+const Home = () => import('@/page/home')
+const Repay = () => import('@/page/repay')
+const Profile = () => import('@/page/profile')
+const ProfileId = () => import('@/page/profile-id')
+const ProfilePerson = () => import('@/page/profile-person')
+const Service = () => import('@/page/service')
+const ApplyStatus = () => import('@/page/apply-status')
+const StoreFront = () => import('@/page/store-front')
+const Password = () => import('@/page/password')
+const FAQ = () => import('@/page/faq')
+const CustomerService = () => import('@/page/customer-service')
+const ApplicationSummary = () => import('@/page/application-summary')
+const Refer = () => import('@/page/refer')
+const ProfileBank = () => import('@/page/profile-bank')
+const AddBank = () => import('@/page/add-bank')
 
 Vue.use(Router)
 
