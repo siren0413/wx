@@ -58,7 +58,7 @@
       <div>
         <img src="../assets/service/empty.png" style="height: 100px; margin-top: 30%"/>
         <div style="margin-top: 20px; font-size: 16px">
-          <p>暂无记录</p>
+          <p>暂无借款记录</p>
         </div>
       </div>
     </template>

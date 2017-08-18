@@ -26,7 +26,7 @@ axios.interceptors.response.use(response => {
   return response;
 }, error => {
   store.dispatch('decLoadingCount')
-  if (error.response.status === 401) {
+  if (error.response.status === 401 || error.response.status === 403) {
     localStorage.removeItem('accessToken')
     router.push('/login')
   }
