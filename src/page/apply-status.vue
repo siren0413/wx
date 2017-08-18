@@ -19,11 +19,11 @@
         <div class="weui-form-preview__bd">
           <div class="weui-form-preview__item">
             <label class="weui-form-preview__label">申请日期</label>
-            <span class="weui-form-preview__value">{{selectedApp.loanInfo.startDate && formatDate(selectedApp.loanInfo.startDate,'YYYY年MM月DD日')}}</span>
+            <span class="weui-form-preview__value">{{selectedApp.loanInfo.startDate && formatDate(selectedApp.loanInfo.startDate, 'YYYY年MM月DD日')}}</span>
           </div>
           <div class="weui-form-preview__item">
             <label class="weui-form-preview__label">还款日期</label>
-            <span class="weui-form-preview__value">{{selectedApp.loanInfo.deadline && formatDate(selectedApp.loanInfo.deadline,'YYYY年MM月DD日')}}</span>
+            <span class="weui-form-preview__value">{{selectedApp.loanInfo.deadline && formatDate(selectedApp.loanInfo.deadline, 'YYYY年MM月DD日')}}</span>
           </div>
           <div class="weui-form-preview__item">
             <label class="weui-form-preview__label">借款金额</label>
@@ -41,8 +41,8 @@
       </div>
 
       <div class="weui-cells__title">当前审核状态</div>
-      <div class="weui-cells" v-if="selectedApp.recordHistory && selectedApp.recordHistory.length > 0">
-        <div class="weui-cell" v-for="record in selectedApp.recordHistory">
+      <div class="weui-cells" v-if="getRecords">
+        <div class="weui-cell" v-for="record in getRecords">
           <div class="weui-cell__hd"></div>
           <div class="weui-cell__bd">
             <p>
@@ -54,7 +54,7 @@
           <div class="weui-cell__ft" v-if="record.status==='FAILURE'"><i class="weui-icon-warn weui-icon_toast"></i></div>
         </div>
       </div>
-      <div v-if="selectedApp.recordHistory && selectedApp.recordHistory.length == 0">
+      <div v-if="!getRecords">
         <img src="../assets/service/empty.png" style="height: 80px; margin-top: 10%"/>
         <div style="margin-top: 20px; font-size: 16px">
           <p>暂无状态</p>
@@ -70,7 +70,7 @@
             <div class="weui-cell__bd">
               <img v-if="app.selected" src="../assets/service/calendar_on.png" class="wx-img-history-item"/>
               <img v-if="!app.selected" src="../assets/service/calendar_off.png" class="wx-img-history-item"/>
-              <span class="app-history-span" :class="{'wx-history-select':app.selected}">{{formatDate(app.date,"YYYY-MM-DD")}} </span>
+              <span class="app-history-span" :class="{'wx-history-select':app.selected}">{{formatDate(app.date, "YYYY-MM-DD")}} </span>
             </div>
             <div class="weui-cell__ft" ref="history">
               <img v-if="app.selected" src="../assets/service/rmb_on.png" class="wx-img-history-item"/>
@@ -106,7 +106,28 @@
         selectedApp: {},
       }
     },
-    computed: {},
+    computed: {
+      getRecords() {
+        if (this.selectedApp && this.selectedApp.recordHistory) {
+          let records = this.selectedApp.recordHistory
+          if (this.selectedApp.currentRecord) {
+            records.push(this.selectedApp.currentRecord)
+          }
+          records.sort((a, b) => {
+            return b._dateCreated - a._dateCreated
+          })
+          // merge same event
+          let arr = []
+          for (let i = 0; i < records.length-1; i++) {
+            if (records[i].event !== records[i+1].event) {
+              arr.push(records[i])
+            }
+          }
+          arr.push(records[records.length-1])
+          return arr
+        }
+      }
+    },
     methods: {
       selectApplication(index) {
         this.appHistory.forEach((elem) => {
@@ -233,12 +254,14 @@
     margin-right: 1px;
     padding-bottom: 4px;
   }
+
   .wx-subtotal-img {
     height: 14px;
     vertical-align: middle;
     margin-top: -4px;
   }
-  .weui-form-preview__value{
+
+  .weui-form-preview__value {
     display: inline;
   }
 </style>
