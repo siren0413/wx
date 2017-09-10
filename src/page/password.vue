@@ -145,7 +145,7 @@
       },
       save() {
         if (this.isValidPassword(this.passwordCreate.input) && this.passwordCreate.input === this.passwordCreate.confirm) {
-          this.$http.post(`/api/public/user/${this.uid()}/password/create`, {
+          this.$http.post(`/api/public/user/${this.uid()}/password`, {
             password: this.passwordCreate.input
           })
             .then((response) => {
@@ -167,7 +167,7 @@
       },
       update() {
         if (this.isValidPassword(this.passwordUpdate.currentPassword) && this.isValidPassword(this.passwordUpdate.input) && this.passwordUpdate.input === this.passwordUpdate.confirm) {
-          this.$http.post(`/api/public/user/${this.uid()}/password/update`, {
+          this.$http.put(`/api/public/user/${this.uid()}/password`, {
             currentPassword: this.passwordUpdate.currentPassword,
             newPassword: this.passwordUpdate.input
           })
@@ -179,11 +179,8 @@
             })
             .catch((error) => {
               this.result.title = "失败"
-              this.result.desc = "密码修改失败"
+              this.result.desc = "密码输入错误"
               this.result.status = 1
-              if (error && error.message) {
-                this.result.desc = error.message
-              }
               this.showResultDialog = true
             })
         }

@@ -163,11 +163,11 @@
       }
     },
     created() {
-      this.$http.get(`/api/public/user/${this.uid()}/profile/general/status`)
+      this.$http.get(`/api/public/user/${this.uid()}/profile/personal/complete`)
         .then((response) => {
           this.profiles.personal = response.data.status === 0;
         })
-      this.$http.get(`/api/public/user/${this.uid()}/profile/identity/status`)
+      this.$http.get(`/api/public/user/${this.uid()}/profile/identity/complete`)
         .then((response) => {
           this.profiles.id = response.data.status === 0;
         })

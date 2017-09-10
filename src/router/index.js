@@ -8,7 +8,6 @@ const ProfileId = () => import('@/page/profile-id')
 const ProfilePerson = () => import('@/page/profile-person')
 const Service = () => import('@/page/service')
 const ApplyStatus = () => import('@/page/apply-status')
-const StoreFront = () => import('@/page/store-front')
 const Password = () => import('@/page/password')
 const FAQ = () => import('@/page/faq')
 const CustomerService = () => import('@/page/customer-service')
@@ -30,11 +29,6 @@ const router = new Router({
       path: '/home',
       name: 'Home',
       component: Home
-    },
-    {
-      path: '/store-front',
-      name: 'StoreFront',
-      component: StoreFront
     },
     {
       path: '/repay',

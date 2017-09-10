@@ -151,9 +151,9 @@
       }
     },
     created() {
-      this.$http.get(`/api/public/user/${this.uid()}/loan/application/history`)
+      this.$http.get(`/api/public/user/${this.uid()}/loan/application`)
         .then((response) => {
-          this.appHistory = response.data
+          this.appHistory = response.data.recordHistory
           if (this.appHistory) {
             let ap = this.appHistory[this.currentIndex]
             this.getApplication(ap.appId)

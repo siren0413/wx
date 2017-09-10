@@ -70,10 +70,8 @@
           return elem.accountNumber === this.defaultBankAccountNumber
         })
         this.waitingResponse = true
-        this.$http.put(`/api/public/user/${this.uid()}/profile/bank/default`, {
-          name: defaultAccount.name,
-          idNumber: defaultAccount.idNumber,
-          accountNumber: defaultAccount.accountNumber
+        this.$http.put(`/api/public/user/${this.uid()}/profile/bank`, {
+          defaultBankAccountNumber: defaultAccount.accountNumber
         }).then((response => {
           this.waitingResponse = false
           this.showSuccessToast()
@@ -91,27 +89,18 @@
         this.showModal = true
       },
       deleteAccount() {
-        this.$http.delete(`/api/public/user/${this.uid()}/profile/bank/${this.accountToBeDelete}`)
+        this.$http.delete(`/api/public/user/${this.uid()}/profile/bank/account/${this.accountToBeDelete}`)
           .then((response=>{
-            this.$http.get(`/api/public/user/${this.uid()}/profile/bank`)
-              .then((response) => {
-                this.bankAccounts = response.data
-              })
-            this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
-              .then((response) => {
-                this.defaultBankAccountNumber = response.data.accountNumber
-              })
+            this.bankAccounts = response.data.bankAccounts
+            this.defaultBankAccountNumber = response.data.defaultBankAccountNumber
           }))
           .catch((error => {
             this.message = "删除失败"
             this.showErrorToast()
             this.$http.get(`/api/public/user/${this.uid()}/profile/bank`)
               .then((response) => {
-                this.bankAccounts = response.data
-              })
-            this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
-              .then((response) => {
-                this.defaultBankAccountNumber = response.data.accountNumber
+                this.bankAccounts = response.data.bankAccounts
+                this.defaultBankAccountNumber = response.data.defaultBankAccountNumber
               })
           }))
         this.showModal = false
@@ -123,11 +112,8 @@
     created() {
       this.$http.get(`/api/public/user/${this.uid()}/profile/bank`)
         .then((response) => {
-          this.bankAccounts = response.data
-        })
-      this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
-        .then((response) => {
-          this.defaultBankAccountNumber = response.data.accountNumber
+          this.bankAccounts = response.data.bankAccounts
+          this.defaultBankAccountNumber = response.data.defaultBankAccountNumber
         })
     }
   }

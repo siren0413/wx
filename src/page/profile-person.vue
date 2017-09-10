@@ -216,7 +216,7 @@
         if (!success) return;
 
         this.waitingResponse = true
-        this.$http.post(`/api/public/user/${this.uid()}/profile/general`, {
+        this.$http.post(`/api/public/user/${this.uid()}/profile/personal`, {
           residentCity: this.residentInfo.residentCity,
           residentAddress: this.residentInfo.residentAddress,
           residentTime: this.residentInfo.residentTime,
@@ -248,7 +248,7 @@
           return
         }
         this.waitingResponse = true
-        this.$http.get(`/api/public/user/${this.uid()}/profile/general`)
+        this.$http.get(`/api/public/user/${this.uid()}/profile/personal`)
           .then((response) => {
             this.residentInfo.residentCity = response.data.residentCity
             this.residentInfo.residentAddress = response.data.residentAddress
@@ -280,21 +280,26 @@
       }
     },
     created() {
-      this.$http.get(`/api/public/user/${this.uid()}/profile/general`)
+      this.$http.get(`/api/public/user/${this.uid()}/profile/personal`)
         .then((response) => {
-          this.residentInfo.residentCity = response.data.residentCity
-          this.residentInfo.residentAddress = response.data.residentAddress
-          this.residentInfo.residentTime = response.data.residentTime
-          this.personalInfo.age = response.data.age
-          this.personalInfo.education = response.data.education
-          this.personalInfo.job = response.data.job
-          this.personalInfo.income = response.data.income
-          this.otherInfo.marriageStatus = response.data.marriageStatus
-          this.otherInfo.qq = response.data.qq
-          this.editable = false
+          if (response.data) {
+            this.residentInfo.residentCity = response.data.residentCity
+            this.residentInfo.residentAddress = response.data.residentAddress
+            this.residentInfo.residentTime = response.data.residentTime
+            this.personalInfo.age = response.data.age
+            this.personalInfo.education = response.data.education
+            this.personalInfo.job = response.data.job
+            this.personalInfo.income = response.data.income
+            this.otherInfo.marriageStatus = response.data.marriageStatus
+            this.otherInfo.qq = response.data.qq
+            this.editable = false
+          }
         });
-      this.$http.get(`/api/public/user/${this.uid()}/loan/application/pending/exist`)
-        .then((response) => {
+      this.$http.get(`/api/public/user/${this.uid()}/loan/application/search`, {
+        params: {
+          open: true
+        }
+      }).then((response) => {
           this.pendingApplication = response.data.result === true;
         })
       setInterval(this.cleanupTimer, 2000)
@@ -337,7 +342,7 @@
     padding-left: 0;
   }
 
-  .wx-img-city, .wx-img-time, .wx-img-age,  .wx-img-job, .wx-img-qq {
+  .wx-img-city, .wx-img-time, .wx-img-age, .wx-img-job, .wx-img-qq {
     width: 16px;
     height: 16px;
     padding-bottom: 3px;

@@ -15,7 +15,7 @@
       </div>
 
       <div class="weui-cell" :class="{'animated shake': animations.idNumber}">
-        <img class="wx-img-id" src="../assets/profile/id.png" title="ID Card Filled" >
+        <img class="wx-img-id" src="../assets/profile/id.png" title="ID Card Filled">
         <div class="weui-cell__hd"><label class="weui-label">身份证号</label></div>
         <div class="weui-cell__bd">
           <template v-if="editable">
@@ -74,7 +74,7 @@
         editable: true,
         showToast: false,
         pendingApplication: false,
-        errorToastMessage:'',
+        errorToastMessage: '',
         name: '',
         idNumber: '',
         animations: {
@@ -112,7 +112,7 @@
           })
           .catch(error => {
             this.waitingResponse = false
-            this.errorToastMessage="保存失败"
+            this.errorToastMessage = "保存失败"
             this.showErrorToast()
           })
       },
@@ -143,12 +143,17 @@
     created() {
       this.$http.get(`/api/public/user/${this.uid()}/profile/identity`)
         .then((response) => {
-          this.name = response.data.name
-          this.idNumber = response.data.idNumber
-          this.editable = false
+          if (response.data) {
+            this.name = response.data.name
+            this.idNumber = response.data.idNumber
+            this.editable = false
+          }
         })
-      this.$http.get(`/api/public/user/${this.uid()}/loan/application/pending/exist`)
-        .then((response) => {
+      this.$http.get(`/api/public/user/${this.uid()}/loan/application/search`, {
+        params: {
+          open: true
+        }
+      }).then((response) => {
           this.pendingApplication = response.data.result === true;
         })
       setInterval(this.cleanupTimer, 2000)
@@ -168,15 +173,17 @@
   .wx-id-label {
     width: auto;
   }
+
   .wx-img-name {
-    width:20px;
-    height:20px;
+    width: 20px;
+    height: 20px;
     padding-bottom: 5px;
     padding-right: 8px;
   }
-  .wx-img-id{
-    width:22px;
-    height:24px;
+
+  .wx-img-id {
+    width: 22px;
+    height: 24px;
     padding-bottom: 3px;
     padding-right: 6px;
   }

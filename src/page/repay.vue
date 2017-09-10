@@ -33,7 +33,7 @@
 
       <div class="weui-cells__title wx-bank-account-container">选择银行卡</div>
       <div class="weui-cells">
-        <a class="weui-cell weui-cell_access" v-if="defaultBankAccount">
+        <a class="weui-cell weui-cell_access" v-if="defaultBankAccountNumber">
           <div class="weui-cell__bd">
             <p>{{formatRepayBankAccount()}}</p>
           </div>
@@ -41,7 +41,7 @@
             <span>换卡还款</span>
           </router-link>
         </a>
-        <router-link :to="{name:'AddBank', query: {referrer: 'Repay'}}" class="weui-cell weui-cell_link" v-if="!defaultBankAccount">
+        <router-link :to="{name:'AddBank', query: {referrer: 'Repay'}}" class="weui-cell weui-cell_link" v-if="!defaultBankAccountNumber">
           <div class="weui-cell__bd">添加银行卡</div>
         </router-link>
       </div>
@@ -80,7 +80,7 @@
       return {
         waitingResponse: false,
         application: null,
-        defaultBankAccount: null,
+        defaultBankAccountNumber: null,
         message: '',
         showModal: false
       }
@@ -90,14 +90,14 @@
         return this.application.loanInfo.amount + this.application.loanInfo.fee + this.application.loanInfo.gracePeriodCharge + this.application.loanInfo.overdueCharge
       },
       maskedAccountNumber() {
-        let number = this.defaultBankAccount.accountNumber
+        let number = this.defaultBankAccountNumber
         return number.substring(number.length - 4, number.length)
       }
     },
     methods: {
       ...mapActions(['showErrorToast','showSuccessToast']),
       confirmRepay() {
-        if (!this.defaultBankAccount) {
+        if (!this.defaultBankAccountNumber) {
           this.message = '请选择银行卡'
           this.showErrorToast()
           return
@@ -106,7 +106,7 @@
       },
       repay() {
         this.showModal = false
-        if (!this.defaultBankAccount) {
+        if (!this.defaultBankAccountNumber) {
           this.message = '请选择银行卡'
           this.showErrorToast()
           return
@@ -114,7 +114,7 @@
         this.$http.post(`/api/public/user/${this.uid()}/loan/repay`,{
           appId: this.application.appId,
           repayAmount: this.subTotal,
-          repayBankAccountNumber: this.defaultBankAccount.accountNumber
+          repayBankAccountNumber: this.defaultBankAccountNumber
         })
           .then((response=>{
             this.message = "还款成功"
@@ -132,8 +132,8 @@
 
       },
       formatRepayBankAccount() {
-        if (this.defaultBankAccount && this.defaultBankAccount.accountNumber) {
-          let number = this.defaultBankAccount.accountNumber
+        if (this.defaultBankAccountNumber) {
+          let number = this.defaultBankAccountNumber
           return `尾号 ${number.substring(number.length - 4, number.length)}`
         } else {
           return '暂无'
@@ -145,9 +145,9 @@
         .then((response => {
           this.application = response.data
         }))
-      this.$http.get(`/api/public/user/${this.uid()}/profile/bank/default`)
+      this.$http.get(`/api/public/user/${this.uid()}/profile/bank`)
         .then((response) => {
-          this.defaultBankAccount = response.data
+          this.defaultBankAccountNumber = response.data.defaultBankAccountNumber
         })
     }
   }

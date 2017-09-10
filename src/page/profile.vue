@@ -43,17 +43,17 @@
     computed: {},
     methods: {},
     created() {
-      this.$http.get(`/api/public/user/${this.uid()}/profile/general/status`)
+      this.$http.get(`/api/public/user/${this.uid()}/profile/personal/complete`)
         .then((response) => {
           this.generalProfileStatus.status = response.data.status
           this.generalProfileStatus.desc = response.data.desc
         })
-      this.$http.get(`/api/public/user/${this.uid()}/profile/identity/status`)
+      this.$http.get(`/api/public/user/${this.uid()}/profile/identity/complete`)
         .then((response) => {
           this.idProfileStatus.status = response.data.status
           this.idProfileStatus.desc = response.data.desc
         })
-      this.$http.get(`/api/public/user/${this.uid()}/status/bank`)
+      this.$http.get(`/api/public/user/${this.uid()}/profile/bank/complete`)
         .then((response) => {
           this.bankStatus = response.data.status
         })

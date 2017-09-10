@@ -81,7 +81,7 @@
         }
         if (!success) return
         this.waitingResponse = true
-        this.$http.post(`/api/public/user/${this.uid()}/profile/bank`, {
+        this.$http.post(`/api/public/user/${this.uid()}/profile/bank/account`, {
           name: this.name,
           idNumber: this.idNumber.replace(/\s+/g, ''),
           accountNumber: this.accountNumber.replace(/\s+/g, ''),

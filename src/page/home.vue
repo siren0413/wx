@@ -10,17 +10,20 @@
 
     <div class="wx-square-box">
       <div class="wx-square-container">
-        <div class="wx-square" style="background: rgba(243, 202, 126, 0.25); color: rgba(115, 71, 41, 0.7);" :class="{'wx-square-select-orange':currentAmountIndex===0}" @click="currentAmountIndex=0">
+        <div class="wx-square" style="background: rgba(243, 202, 126, 0.25); color: rgba(115, 71, 41, 0.7);"
+             :class="{'wx-square-select-orange':currentAmountIndex===0}" @click="currentAmountIndex=0">
           <span class="wx-square-span">500</span>
-          <span class="wx-square-span wx-square-span-small" >元</span>
+          <span class="wx-square-span wx-square-span-small">元</span>
         </div>
-        <div class="wx-square" style="background: rgba(158, 181, 215, 0.25); color: rgba(53, 70, 119, 0.8);" :class="{'wx-square-select-blue':currentAmountIndex===1}" @click="currentAmountIndex=1">
+        <div class="wx-square" style="background: rgba(158, 181, 215, 0.25); color: rgba(53, 70, 119, 0.8);"
+             :class="{'wx-square-select-blue':currentAmountIndex===1}" @click="currentAmountIndex=1">
           <span class="wx-square-span">1000</span>
-          <span class="wx-square-span wx-square-span-small" >元</span>
+          <span class="wx-square-span wx-square-span-small">元</span>
         </div>
-        <div class="wx-square" style="background: rgba(192, 172, 205, 0.25); color: rgba(87, 47, 109, 0.8);" :class="{'wx-square-select-purple':currentAmountIndex===2}" @click="currentAmountIndex=2">
+        <div class="wx-square" style="background: rgba(192, 172, 205, 0.25); color: rgba(87, 47, 109, 0.8);"
+             :class="{'wx-square-select-purple':currentAmountIndex===2}" @click="currentAmountIndex=2">
           <span class="wx-square-span">1500</span>
-          <span class="wx-square-span wx-square-span-small" >元</span>
+          <span class="wx-square-span wx-square-span-small">元</span>
         </div>
       </div>
     </div>
@@ -134,17 +137,20 @@
         this.applicationInfo.fee = this.serviceFee
         this.applicationInfo.expire = this.computeDeadline
 
-        this.$http.get(`/api/public/user/${this.uid()}/loan/application/pending/exist`)
-          .then((response) => {
-            if (response.data.result === true) {
+        this.$http.get(`/api/public/user/${this.uid()}/loan/application/search`, {
+          params: {
+            open: true
+          }
+        }).then((response) => {
+            if (response.data) {
               this.showModal = true
             } else {
               router.push('/application-summary')
             }
           }).catch((error) => {
-            this.errorMessage = "请稍后再试"
-            this.showErrorToast()
-          })
+          this.errorMessage = "请稍后再试"
+          this.showErrorToast()
+        })
       },
       updateServiceFee() {
         this.serviceFee = null
@@ -281,12 +287,14 @@
     font-size: 8vw;
     margin-top: 5.5vw;
   }
+
   .wx-square-span-small {
     font-size: 3vw;
     font-weight: 400;
     margin-top: 8vw;
     margin-left: -1vw;
   }
+
   .wx-square-container {
     padding-left: 20px;
     padding-right: 20px;
@@ -300,17 +308,19 @@
     display: none;
   }
 
-  .wx-square-select-orange{
+  .wx-square-select-orange {
     width: 30vw;
     height: 25vw;
     /*border: 0.3vw solid rgba(243, 202, 126, 0.5);*/
   }
-  .wx-square-select-blue{
+
+  .wx-square-select-blue {
     width: 30vw;
     height: 25vw;
     /*border: 0.3vw solid rgba(158, 181, 215, 0.4);*/
   }
-  .wx-square-select-purple{
+
+  .wx-square-select-purple {
     width: 30vw;
     height: 25vw;
     /*border: 0.3vw solid rgba(192, 172, 205, 0.4);*/
